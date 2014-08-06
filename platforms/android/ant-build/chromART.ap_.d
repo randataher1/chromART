@@ -43,11 +43,13 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-th
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.css.map \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.min.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\chromart.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\index.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.eot \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.woff \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\logo.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.min.js \
