@@ -50,6 +50,8 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexSignIn.png \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexSignUp.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\logo.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.min.js \
