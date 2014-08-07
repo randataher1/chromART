@@ -1,9 +1,52 @@
+body, html {
+	height: 100%;
+}
+
 .container {
 	background-image:url('../img/indexBackground.jpg');
+	position: relative;
+	width: 360px;
+	height: 100%;
+}
+
+.logo {
+	padding-top: 50px;
 }
 
 .center {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.in-line {
+	display: inline;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.buttons {
+	position: relative;
+	top: 30%;
+}
+
+@font-face {
+  font-family: 'Bad Script';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Bad Script'), url(../fonts/badscript.woff) format('woff');
+}
+
+#welcomeText {
+	font-family: 'Bad Script', cursive;
+	text-align: center;
+	font-size: 70px;
+	color: #BDBCBD;
+	margin: auto;
+	position: relative;
+	top: 20%; left: 0; bottom: 0; right: 0;
+}
+
+.footer {
+	padding-left: 10px;
 }

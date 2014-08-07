@@ -37,6 +37,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signin.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-theme.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-theme.css.map \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-theme.min.css \
@@ -45,6 +46,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.cs
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.min.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\chromart.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\index.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\badscript.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.eot \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \
