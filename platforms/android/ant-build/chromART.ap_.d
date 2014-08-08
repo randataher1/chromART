@@ -38,6 +38,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signin.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signup.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-theme.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-theme.css.map \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap-theme.min.css \

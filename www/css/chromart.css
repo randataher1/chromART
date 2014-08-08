@@ -20,12 +20,12 @@ body, html {
 }
 
 .in-line {
-	display: inline;
+	display: inline-block;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.buttons {
+.indexButtons {
 	position: relative;
 	top: 30%;
 }
@@ -47,6 +47,23 @@ body, html {
 	top: 20%; left: 0; bottom: 0; right: 0;
 }
 
+#signUpText {
+	font-family: 'Bad Script', cursive;
+	text-align: center;
+	font-size: 50px;
+	color: #BDBCBD;
+	margin: auto;
+	position: relative;
+	top: 3%; left: 0; bottom: 0; right: 0;
+}
+
 .footer {
 	padding-left: 10px;
+}
+
+.signInButtons p {
+	position: relative;
+	top: 30%;
+	color: white;
+	background-color: green;
 }

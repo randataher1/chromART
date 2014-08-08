@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sign In</title>
+    <title>Sign Up</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -42,13 +42,30 @@
         <img src="img/logo.png" class="logo center" />
       </div>
 
-      <div id="welcomeText">
-        <p>Sign In</p>
+      <div id="SignUpText">
+        <p>Sign Up</p>
       </div>
 
-      <div class="signInButtons">
-          <p class="in-line">Confirm</p>
-          <p class="in-line">Sign Up</p>
+      <div>
+        <form role="form">
+          <div class="form-group">
+            <label for="exampleFullName">Full Name</label>
+            <input type="name" class="form-control" id="exampleFullName" placeholder="Enter full name">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="exampleUsername">Username</label>
+            <input type="username" class="form-control" id="exampleUsername" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
       </div>
 
       <div class="footer navbar-fixed-bottom">
@@ -61,15 +78,26 @@
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
     
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-      testObject.save({foo: "bar"}, {
+    var UserObject = Parse.Object.extend("UserObject");
+
+    $("#form").on("submit", function(e) {
+      e.preventDefault();
+
+      var data = {};
+      data.name = $("#exampleFullName").val();
+      data.email = $("#exampleInputEmail1").val();
+      data.username = $("#exampleUsername").val();
+      data.password = $("#exampleInputPassword1").val();
+
+      var userObject = new UserObject();
+      userObject.save(data, {foo: "bar"}, {
       success: function(object) {
         $(".success").show();
       },
       error: function(model, error) {
         $(".error").show();
       }
+    });
     });
   </script>
 
