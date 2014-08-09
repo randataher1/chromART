@@ -29,7 +29,6 @@ C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-port
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-xhdpi\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\_where-is-www.txt \
-C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\about.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova_plugins.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css \
@@ -47,11 +46,21 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.cs
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\bootstrap.min.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\chromart.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\index.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\ratchet-theme-android.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\ratchet-theme-android.min.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\ratchet-theme-ios.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\ratchet-theme-ios.min.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\ratchet.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\ratchet.min.css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\badscript.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.eot \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.woff \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.eot \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.svg \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.ttf \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexSignIn.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexSignUp.png \
@@ -59,4 +68,6 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\logo.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.min.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\index.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.min.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\AndroidManifest.xml \
