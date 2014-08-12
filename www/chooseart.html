@@ -108,16 +108,16 @@
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      data.temp = $("#inputAbstract").is(':checked');
-      data.temp = $("#inputAnime").is(':checked');
-      data.temp = $("#inputImpressionist").is(':checked');
-      data.temp = $("#inputModern").is(':checked');
-      data.temp = $("#inputNature").is(':checked');
-      data.temp = $("#inputSurreal").is(':checked');
-      data.temp = $("#inputFashion").is(':checked');
-      data.temp = $("#inputPhotography").is(':checked');
+      currentUser.set("inputAbstract", $("#inputAbstract").is(':checked'));
+      currentUser.set("inputAnime", $("#inputAnime").is(':checked'));
+      currentUser.set("inputImpressionist", $("#inputImpressionist").is(':checked'));
+      currentUser.set("inputModern", $("#inputModern").is(':checked'));
+      currentUser.set("inputNature", $("#inputNature").is(':checked'));
+      currentUser.set("inputSurreal", $("#inputSurreal").is(':checked'));
+      currentUser.set("inputFashion", $("#inputFashion").is(':checked'));
+      currentUser.set("inputPhotography", $("#inputPhotography").is(':checked'));
       
-      currentUser.save(data, {
+      currentUser.save(null, {
         success: function(object) {
           $(".success").show();
         },

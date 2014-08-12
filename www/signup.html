@@ -81,15 +81,26 @@
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      var data = {};
-      data.fullname = $("#inputFullName").val();
-      data.email = $("#inputEmail").val();
-      data.username = $("#inputUsername").val();
-      data.password = $("#inputPassword").val();
-
       var user = new Parse.User();
-      user.save(data, {
+
+      user.set("fullname", $("#inputFullName").val());
+      user.set("email", $("#inputEmail").val());
+      user.set("username", $("#inputUsername").val());
+      user.set("password", $("#inputPassword").val());
+      //user.set("emailVerified", false);
+      user.set("inputAbstract", false);
+      user.set("inputAnime", null);
+      user.set("inputImpressionist", null);
+      user.set("inputModern", null);
+      user.set("inputNature", null);
+      user.set("inputSurreal", null);
+      user.set("inputFashion", null);
+      user.set("inputPhotography", null);
+
+      
+      user.signUp(null, {
         success: function(object) {
+          console.log("yay");
           $(".success").show();
         },
         error: function(model, error) {
@@ -97,14 +108,14 @@
         }
       });
 
-      Parse.User.logIn("username", "password", {
-        success: function(user) {
-          window.location.href = 'chooseart.html';
-        },
-        error: function(user, error) {
-          $(".error").show();
-        }
-      })
+      // Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
+      //   success: function(user) {
+      //     window.location.href = 'chooseart.html';
+      //   },
+      //   error: function(user, error) {
+      //     $(".error").show();
+      //   }
+      // })
 
     });
   </script>
