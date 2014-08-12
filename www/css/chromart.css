@@ -67,6 +67,16 @@ body, html {
 	top: 3%; left: 0; bottom: 0; right: 0;
 }
 
+#signInText {
+	font-family: 'Bad Script', cursive;
+	text-align: center;
+	font-size: 50px;
+	color: #BDBCBD;
+	margin: auto;
+	position: relative;
+	top: 3%; left: 0; bottom: 0; right: 0;
+}
+
 .footer {
 	padding-left: 10px;
 }
