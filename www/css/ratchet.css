@@ -350,12 +350,12 @@ h6, .h6 {
   font-size: 12px;
 }
 
-p {
+/*p {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 14px;
   color: #777;
-}
+}*/
 
 .btn {
   position: relative;
