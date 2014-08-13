@@ -66,10 +66,8 @@
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
-      </div>
-
-      <div class="footer navbar-fixed-bottom">
-        <p>&copy; chromART 2014</p>
+        <br>
+        <button type="button" class="btn btn-default">Go Back</button>
       </div>
 
     </div> <!-- /container -->
@@ -78,6 +76,10 @@
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
     
+    $("button").click(function() {
+      window.location.href = 'index.html';
+    });
+
     $("form").on("submit", function(e) {
       e.preventDefault();
 
@@ -97,10 +99,12 @@
       user.set("inputFashion", false);
       user.set("inputPhotography", false);
 
-      
+      user.set("profileDescriptions", false);
+      user.set("profilePicture", false);
+
+
       user.signUp(null, {
         success: function(object) {
-          console.log("yay");
           $(".success").show();
         },
         error: function(model, error) {
