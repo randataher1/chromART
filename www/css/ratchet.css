@@ -547,12 +547,14 @@ input[type="button"] {
 .bar-tab {
   bottom: 0;
   display: table;
-  width: 100%;
+  width: 360px;
   height: 50px;
   padding: 0;
   table-layout: fixed;
   border-top: 1px solid #ddd;
   border-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 .bar-tab .tab-item {
   display: table-cell;
