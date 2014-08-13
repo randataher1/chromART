@@ -67,7 +67,11 @@
 
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
-    
+
+    $("button").click(function() {
+      window.location.href = 'index.html';
+    });
+
     $("form").on("submit", function(e) {
       e.preventDefault();
 
