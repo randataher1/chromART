@@ -25,6 +25,13 @@ body, html {
 	margin-right: auto;
 }
 
+@font-face {
+  font-family: 'Estrangelo Edessa';
+  font-style: normal;
+  font-weight: 400;
+  src: local('estre'), url(../fonts/estre.woff) format('woff');
+}
+
 .centerText {
 	text-align: center;
 	font-family: 'Estrangelo Edessa';
