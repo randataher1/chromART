@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <link href="css/ratchet.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+
+    <link href="css/chromart.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
+
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <img src="img/logo.png" class="logo center" />
+      </div>
+
+      <div id="titleText">
+        <p>Profile</p>
+      </div>
+
+      <div id="pic">
+
+      </div>
+
+      <div id="name">
+
+      </div>
+
+      <div id="description">
+
+      </div>
+
+      <div id="galleries">
+
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-default logout">Logout</button>
+      </div>
+
+      <div class="clear"></div>
+
+      <div>
+        <nav class="bar bar-tab">
+          <a class="tab-item" href="home.html">
+            <span class="icon icon-home"></span>
+            <span class="tab-label">Home</span>
+          </a>
+          <a class="tab-item active" href="profile.html">
+            <span class="icon icon-person"></span>
+            <span class="tab-label">Profile</span>
+          </a>
+          <a class="tab-item" href="explore.html">
+            <span class="icon icon-pages"></span>
+            <span class="tab-label">Explore</span>
+          </a>
+          <a class="tab-item" href="upload.html">
+            <span class="icon icon-share"></span>
+            <span class="tab-label">Upload</span>
+          </a>
+        </nav>
+      </div>
+
+    </div> <!-- /container -->
+
+
+  <script type="text/javascript">
+    Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+
+    var $_GET = {};
+    if(document.location.toString().indexOf('?') !== -1) {
+        var query = document.location
+                       .toString()
+                       // get the query string
+                       .replace(/^.*?\?/, '')
+                       // and remove any existing hash string (thanks, @vrijdenker)
+                       .replace(/#.*$/, '')
+                       .split('&');
+
+        for(var i=0, l=query.length; i<l; i++) {
+           var aux = decodeURIComponent(query[i]).split('=');
+           $_GET[aux[0]] = aux[1];
+        }
+    }
+
+    // set userID to the user id we get from the get variable
+    if ($_GET['userID']) {
+        userID = $_GET['userID'];
+    }
+    // handle profile.html case with the current logged in user
+    else { 
+        userID = Parse.User.current().id; // where User was previously set by the parse User object
+    }
+
+    alert(userID);
+
+    //Adding content to profile based on userID
+    var otherUser = Parse.Object.extend("_User");
+    var userQuery = new Parse.Query(otherUser);
+    userQuery.get(userID, {
+      success: function(other) {
+        // The object was retrieved successfully.
+        alert(other.id);
+        var picture = other.get("profilePicture");
+        var name = other.get("username");
+        var desc = other.get("profileDescription");
+        document.getElementById('pic').innerHTML = "<p>" + picture + "</p>";
+        document.getElementById('name').innerHTML = "<p>" + name + "</p>";
+        document.getElementById('description').innerHTML = "<p>" + desc + "</p>";
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and description.
+        alert("User load error");
+      }
+    });
+
+    //Finding galleries based on userID and adding to profile
+    var otherGallery = Parse.Object.extend("Gallery");
+    var galleryQuery = new Parse.Query(otherGallery);
+    galleryQuery.equalTo("userId", userID);
+    galleryQuery.find({
+      success: function(results) {
+        // The object was retrieved successfully.
+        for(var i = 0; i < results.length; i++) {
+          var object = results[i];
+          alert(object.id + ' - ' + object.get('Description'));
+          $("#galleries").append("<p>" + object.get('name') + "</p>");
+        }
+      },
+      error: function(error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and description.
+        alert("User load error");
+      }
+    });
+
+    $(".logout").click(function() {
+      Parse.User.logOut();
+      window.location.href = 'index.html';
+    });
+  </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

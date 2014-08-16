@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sign Up</title>
+    <title>Choose Art</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -32,7 +32,6 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
-
   </head>
 
   <body>
@@ -43,26 +42,53 @@
       </div>
 
       <div id="titleText">
-        <p>Sign Up</p>
+        <p>Choose Art</p>
       </div>
 
       <div>
         <form role="form">
-          <div class="form-group">
-            <input type="name" class="form-control" id="inputFullName" placeholder="Full Name">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputAbstract"> Abstract
+            </label>
           </div>
-          <div class="form-group">
-            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputAnime"> Anime
+            </label>
           </div>
-          <div class="form-group">
-            <input type="username" class="form-control" id="inputUsername" placeholder="Username">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputImpressionist"> Impressionist
+            </label>
           </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputModern"> Modern
+            </label>
           </div>
-          <button type="submit" class="btn blueButton">Continue</button>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputNature"> Nature
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputSurreal"> Surreal
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputFashion"> Fashion
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="inputPhotography"> Photography
+            </label>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
         </form>
-        <button type="button" class="btn btn-default toIndex">Go Back</button>
       </div>
 
       <div class="clear"></div>
@@ -72,30 +98,24 @@
 
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+    
+    var currentUser = Parse.User.current();
+
+    console.log(currentUser);
 
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      var user = new Parse.User();
-
-      user.set("fullname", $("#inputFullName").val());
-      user.set("email", $("#inputEmail").val());
-      user.set("username", $("#inputUsername").val());
-      user.set("password", $("#inputPassword").val());
-      //user.set("emailVerified", false);
-      user.set("inputAbstract", false);
-      user.set("inputAnime", false);
-      user.set("inputImpressionist", false);
-      user.set("inputModern", false);
-      user.set("inputNature", false);
-      user.set("inputSurreal", false);
-      user.set("inputFashion", false);
-      user.set("inputPhotography", false);
-
-      user.set("profileDescription", false);
-      user.set("profilePicture", false);
-
-      user.signUp(null, {
+      currentUser.set("inputAbstract", $("#inputAbstract").is(':checked'));
+      currentUser.set("inputAnime", $("#inputAnime").is(':checked'));
+      currentUser.set("inputImpressionist", $("#inputImpressionist").is(':checked'));
+      currentUser.set("inputModern", $("#inputModern").is(':checked'));
+      currentUser.set("inputNature", $("#inputNature").is(':checked'));
+      currentUser.set("inputSurreal", $("#inputSurreal").is(':checked'));
+      currentUser.set("inputFashion", $("#inputFashion").is(':checked'));
+      currentUser.set("inputPhotography", $("#inputPhotography").is(':checked'));
+      
+      currentUser.save(null, {
         success: function(object) {
           $(".success").show();
         },
@@ -103,22 +123,9 @@
           $(".error").show();
         }
       });
-
-      Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
-        success: function(user) {
-          window.location.href = 'chooseart.html';
-        },
-        error: function(user, error) {
-          $(".error").show();
-        }
-      })
-
+      console.log("f");
+      window.location.href = 'home.html';
     });
-
-    $(".toIndex").click(function() {
-      window.location.href = 'index.html';
-    });
-
   </script>
 
     <!-- Bootstrap core JavaScript

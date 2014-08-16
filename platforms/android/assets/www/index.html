@@ -10,9 +10,9 @@
     <title>Index</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-    <link href="css/ratchet.min.css" rel="stylesheet">
+    <link href="css/ratchet.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
@@ -46,18 +46,51 @@
       </div>
 
       <div class="indexButtons">
-          <a href="signin.html"><img src="img/indexSignIn.png" class="center" /></a>
-          <a href="signup.html"><img src="img/indexSignUp.png" class="center" /></a>
+        <button type="button" class="btn toSignIn blueButton">Sign In</button>
+        <button type="button" class="btn toSignUp pinkButton">Sign Up</button>
       </div>
 
-      <div class="footer navbar-fixed-bottom">
-        <p>&copy; chromART 2014</p>
-      </div>
+      <div class="clear"></div>
 
     </div> <!-- /container -->
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
+
+    $(".toSignIn").click(function() {
+      window.location.href = 'signin.html';
+    });
+
+    $(".toSignUp").click(function() {
+      window.location.href = 'signup.html';
+    });
+
+    //Hover effect doesn't work on mobile
+    // $("#signin").hover(function(){
+    //   $("#signin").css("background-color","#68EFE1");
+    //   },function(){
+    //   $("#signin").css("background-color", "#4ed5c7");
+    // });
+
+    // $("#signup").hover(function(){
+    //   $("#signup").css("background-color","#EE627F");
+    //   },function(){
+    //   $("#signup").css("background-color", "#d44865");
+    // });
+    
+    //Instead of hover, use onclick for buttons
+    // document.getElementById("signin").onclick = function() {
+    //   $("#signin").css("background-color","#68EFE1");
+    //   },function(){
+    //   $("#signin").css("background-color", "#4ed5c7");
+    // };
+
+    // document.getElementById("signup").onclick = function() {
+    //   $("#signup").css("background-color","#EE627F");
+    //   },function(){
+    //   $("#signup").css("background-color", "#d44865");
+    // };
+
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
     
     var TestObject = Parse.Object.extend("TestObject");

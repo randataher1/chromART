@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Upload</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <link href="css/ratchet.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+
+    <link href="css/chromart.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <img src="img/logo.png" class="logo center" />
+      </div>
+
+      <div id="titleText">
+        <p>Upload</p>
+      </div>
+
+      <div>
+        <h4>
+          Image Details
+        </h4>
+        <form role="form" id="galleries">
+          <div class="form-group">
+            <label for="imageName">Title</label>
+            <input type="text" class="form-control" id="imageName" placeholder="Enter title of image">
+          </div>
+          <div class="form-group">
+            <label for="imageDesc">Description</label>
+            <input type="text" class="form-control" id="imageDesc" placeholder="Enter description">
+          </div>
+          <div class="form-group">
+            <label for="imageTags">Hashtags</label>
+            <input type="text" class="form-control" id="imageTags" placeholder="Enter hashtags">
+          </div>
+        </form>
+      </div>
+
+      <br>
+
+      <div>
+        <button type="button" class="btn btn-default logout">Logout</button>
+      </div>
+
+      <div class="clear"></div>
+
+      <div>
+        <nav class="bar bar-tab">
+          <a class="tab-item" href="home.html">
+            <span class="icon icon-home"></span>
+            <span class="tab-label">Home</span>
+          </a>
+          <a class="tab-item" href="profile.html">
+            <span class="icon icon-person"></span>
+            <span class="tab-label">Profile</span>
+          </a>
+          <a class="tab-item" href="explore.html">
+            <span class="icon icon-pages"></span>
+            <span class="tab-label">Explore</span>
+          </a>
+          <a class="tab-item active" href="upload.html">
+            <span class="icon icon-share"></span>
+            <span class="tab-label">Upload</span>
+          </a>
+        </nav>
+      </div>
+
+    </div> <!-- /container -->
+
+
+  <script type="text/javascript">
+    Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+
+    userID = Parse.User.current().id;
+
+    //Finding galleries based on userID and adding to upload
+    var otherGallery = Parse.Object.extend("Gallery");
+    var galleryQuery = new Parse.Query(otherGallery);
+    galleryQuery.equalTo("userId", userID);
+    galleryQuery.find({
+      success: function(results) {
+        // The object was retrieved successfully.
+        //Loops through all galleries with the current userID and lists them in the form.
+        for(var i = 0; i < results.length; i++) {
+          var object = results[i];
+          $("#galleries").append("<div class=\"form-group radio\">" +
+            "<label>" +
+              "<input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios" + i + "\" value=\"option" + i + "\">" + object.get('name')
+              + "</label>" +
+          "</div>");
+        }
+        $("#galleries").append("<div class=\"form-group radio\">" +
+            "<label>" +
+              "<input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios" + (results.length+1) + "\" value=\"option" + (results.length+1) + "\">" +
+              "<input type=\"text\" class=\"form-control\" id=\"galleryName\" placeholder=\"Enter new gallery name\">" +
+            "</label>" +
+          "</div>" +
+          "<button type=\"submit\" class=\"btn btn-default\">Upload</button>");
+      },
+      error: function(error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and description.
+        alert("User load error");
+      }
+    });
+
+    //When the "Upload" button is pressed, a new Image is created
+    $("form").on("submit", function(e) {
+      e.preventDefault();
+
+      //Creates new Image object
+      var Img = Parse.Object.extend("Image");
+      var image = new Img();
+
+      //Sets values of image based on user input
+      image.set("userId", userID);
+      image.set("title", $("#imageName").val());
+      image.set("description", $("#imageDesc").val());
+      image.set("hashtag", $("#imageTags").val());
+
+      galleryQuery.find({
+        success: function(results) {
+          // The object was retrieved successfully.
+          //If the new gallery choice is chosen, a new Gallery object is instantiated
+          if ($("#optionsRadios" + (results.length + 1)).is(':checked')) {
+            var Gallery = Parse.Object.extend("Gallery");
+            var gallery = new Gallery();
+            //All values set for new Gallery object
+            gallery.set("userId", userID);
+            gallery.set("name", $("#galleryName").val());
+            gallery.save(null, {
+              success: function(gal) {
+                // Execute any logic that should take place after the object is saved.
+                alert('New gallery created with objectId: ' + gal.id);
+              },
+              error: function(img, error) {
+                // Execute any logic that should take place if the save fails.
+                // error is a Parse.Error with an error code and description.
+                alert('Failed to create new gallery, with error code: ' + error.message);
+              }
+            });
+            image.set("galleryId", gallery.id);
+          }
+          //Loops through all galleries in the form and checks to see if an existing gallery has been chosen
+          else {
+            for(var i = 0; i < results.length; i++) {
+              var object = results[i];
+              //If an existing gallery is chosen, the Image "galleryId" value is assigned to that gallery's ID
+              if ($("#optionsRadios" + i).is(':checked')) {
+                image.set("galleryId", object.id);
+              }
+              //Error checking if user has not chosen a radio button
+              else {
+                alert("Please choose a gallery");
+              }
+            }
+          }
+          //Saves all values to new Image object
+          image.save(null, {
+            success: function(img) {
+              // Execute any logic that should take place after the object is saved.
+              alert('New image created with objectId: ' + image.id);
+            },
+            error: function(img, error) {
+              // Execute any logic that should take place if the save fails.
+              // error is a Parse.Error with an error code and description.
+              alert('Failed to create new image, with error code: ' + error.message);
+            }
+          });
+        },
+        error: function(error) {
+          // The object was not retrieved successfully.
+          // error is a Parse.Error with an error code and description.
+          alert("Submit error");
+        }
+      });
+      window.location.href = 'profile.html';
+
+    });
+
+    $(".logout").click(function() {
+      Parse.User.logOut();
+      window.location.href = 'index.html';
+    });
+
+  </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

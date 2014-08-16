@@ -5,8 +5,10 @@ body, html {
 .container {
 	background-image:url('../img/indexBackground.jpg');
 	position: relative;
-	width: 360px;
-	height: 100%;
+	width: 100%;
+	height: auto !important;
+	min-height: 100%;
+	min-width: 360px; 
 }
 
 .logo {
@@ -25,9 +27,38 @@ body, html {
 	margin-right: auto;
 }
 
+@font-face {
+  font-family: 'Estrangelo Edessa';
+  font-style: normal;
+  font-weight: 400;
+  src: local('estre'), url(../fonts/estre.woff) format('woff');
+}
+
+.centerText {
+	text-align: center;
+	font-family: 'Estrangelo Edessa';
+	font-size: 22pt;
+	padding: 10px;
+	color: white;
+	width: 300px;
+	display: block;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0px 0px 0px 5px rgba(255,255,255,0.15);
+}
+
+#signin {
+	background-color: #4ed5c7;
+}
+
+#signup {
+	background-color: #d44865;
+}
+
 .indexButtons {
 	position: relative;
-	top: 30%;
+	top: 15%;
 }
 
 @font-face {
@@ -44,10 +75,10 @@ body, html {
 	color: #BDBCBD;
 	margin: auto;
 	position: relative;
-	top: 20%; left: 0; bottom: 0; right: 0;
+	top: 10%; left: 0; bottom: 0; right: 0;
 }
 
-#signUpText {
+#titleText {
 	font-family: 'Bad Script', cursive;
 	text-align: center;
 	font-size: 50px;
@@ -57,13 +88,52 @@ body, html {
 	top: 3%; left: 0; bottom: 0; right: 0;
 }
 
-.footer {
-	padding-left: 10px;
-}
-
 .signInButtons p {
 	position: relative;
 	top: 30%;
 	color: white;
 	background-color: green;
+}
+
+.clear {
+	clear: both;
+	height: 60px;
+}
+
+.blueButton {
+	height: 50px;
+	width: 300px;
+	color: #ffffff;
+	background-color: #4caf99;
+	font-family: 'Estrangelo Edessa';
+	font-size: 26px;
+}
+
+.blueButton:hover,
+.blueButton:focus,
+.blueButton:active,
+.blueButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #66C9B3;
+  border-color: #adadad;
+}
+
+.pinkButton {
+	height: 50px;
+	width: 300px;
+	color: #ffffff;
+	background-color: #d44865;
+	font-family: 'Estrangelo Edessa';
+	font-size: 26px;
+}
+
+.pinkButton:hover,
+.pinkButton:focus,
+.pinkButton:active,
+.pinkButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #EE627F;
+  border-color: #adadad;
 }

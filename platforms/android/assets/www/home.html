@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sign In</title>
+    <title>Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -43,51 +43,45 @@
       </div>
 
       <div id="titleText">
-        <p>Sign In</p>
+        <p>Home</p>
       </div>
 
       <div>
-        <form role="form">
-          <div class="form-group">
-            <input type="username" class="form-control" id="loginUsername" placeholder="Enter username">
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="loginPassword" placeholder="Enter password">
-          </div>
-          <button type="submit" class="btn pinkButton">Confirm</button>
-        </form>
-        <button type="button" class="btn toSignUp blueButton">Sign Up</button>
-        <button type="button" class="btn btn-default toIndex">Go Back</button>
+        <button type="button" class="btn btn-default logout">Logout</button>
       </div>
 
       <div class="clear"></div>
+
+      <div>
+        <nav class="bar bar-tab">
+          <a class="tab-item active" href="home.html">
+            <span class="icon icon-home"></span>
+            <span class="tab-label">Home</span>
+          </a>
+          <a class="tab-item" href="profile.html?userID=">
+            <span class="icon icon-person"></span>
+            <span class="tab-label">Profile</span>
+          </a>
+          <a class="tab-item" href="explore.html">
+            <span class="icon icon-pages"></span>
+            <span class="tab-label">Explore</span>
+          </a>
+          <a class="tab-item" href="upload.html">
+            <span class="icon icon-share"></span>
+            <span class="tab-label">Upload</span>
+          </a>
+        </nav>
+      </div>
 
     </div> <!-- /container -->
 
 
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
-
-    $(".toSignUp").click(function() {
-      window.location.href = 'signup.html';
-    });
-
-    $(".toIndex").click(function() {
+    
+    $(".logout").click(function() {
+      Parse.User.logOut();
       window.location.href = 'index.html';
-    });
-
-    $("form").on("submit", function(e) {
-      e.preventDefault();
-
-      Parse.User.logIn($("#loginUsername").val(), $("#loginPassword").val(), {
-        success: function(user) {
-          window.location.href = 'home.html';
-        },
-        error: function(user, error) {
-          $(".error").show();
-        }
-      })
-
     });
   </script>
 

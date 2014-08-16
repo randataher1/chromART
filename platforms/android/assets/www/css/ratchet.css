@@ -234,7 +234,7 @@ th {
           box-sizing: border-box;
 }
 
-body {
+/*body {
   position: fixed;
   top: 0;
   right: 0;
@@ -245,7 +245,7 @@ body {
   line-height: 21px;
   color: #000;
   background-color: #fff;
-}
+}*/
 
 a {
   color: #428bca;
@@ -350,14 +350,14 @@ h6, .h6 {
   font-size: 12px;
 }
 
-p {
+/*p {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 14px;
   color: #777;
-}
+}*/
 
-.btn {
+/*.btn {
   position: relative;
   display: inline-block;
   padding: 6px 8px 7px;
@@ -483,7 +483,7 @@ input[type="button"] {
 .btn .icon {
   font-size: inherit;
 }
-
+*/
 .bar {
   position: fixed;
   right: 0;
@@ -553,6 +553,8 @@ input[type="button"] {
   table-layout: fixed;
   border-top: 1px solid #ddd;
   border-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 .bar-tab .tab-item {
   display: table-cell;
@@ -823,13 +825,13 @@ input[type="button"] {
 
 input,
 textarea,
-button,
+/*button,*/
 select {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 17px;
 }
 
-select,
+/*select,
 textarea,
 input[type="text"],
 input[type="search"],
@@ -855,7 +857,7 @@ input[type="color"] {
   border: 1px solid #ddd;
   border-radius: 3px;
   outline: none;
-}
+}*/
 
 input[type="search"] {
   -webkit-box-sizing: border-box;
