@@ -75,10 +75,6 @@
 
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
-    
-    $(".toIndex").click(function() {
-      window.location.href = 'index.html';
-    });
 
     $("form").on("submit", function(e) {
       e.preventDefault();
@@ -99,9 +95,8 @@
       user.set("inputFashion", false);
       user.set("inputPhotography", false);
 
-      user.set("profileDescriptions", false);
+      user.set("profileDescription", false);
       user.set("profilePicture", false);
-
 
       user.signUp(null, {
         success: function(object) {
@@ -122,6 +117,11 @@
       })
 
     });
+
+    $(".toIndex").click(function() {
+      window.location.href = 'index.html';
+    });
+
   </script>
 
     <!-- Bootstrap core JavaScript
