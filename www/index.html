@@ -46,14 +46,39 @@
       </div>
 
       <div class="indexButtons">
-          <a href="signin.html"><img src="img/indexSignIn.png" class="center" /></a>
-          <a href="signup.html"><img src="img/indexSignUp.png" class="center" /></a>
+        <div class="wrap" id="signin">
+          <a href="signin.html">
+            <div class="centerText">
+              Sign In
+            </div>
+          </a>
+        </div>
+        <div class="wrap" id="signup">
+          <a href="signup.html">
+            <div class="centerText">
+              Sign Up
+            </div>
+          </a>
+        </div>
       </div>
 
     </div> <!-- /container -->
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
+
+    $("#signin").hover(function(){
+      $("#signin").css("background-color","#68EFE1");
+      },function(){
+      $("#signin").css("background-color", "#4ed5c7");
+    });
+
+    $("#signup").hover(function(){
+      $("#signup").css("background-color","#EE627F");
+      },function(){
+      $("#signup").css("background-color", "#d44865");
+    });
+
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
     
     var TestObject = Parse.Object.extend("TestObject");

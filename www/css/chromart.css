@@ -5,7 +5,7 @@ body, html {
 .container {
 	background-image:url('../img/indexBackground.jpg');
 	position: relative;
-	width: 360px;
+	width: 100%;
 	height: 100%;
 }
 
@@ -25,9 +25,42 @@ body, html {
 	margin-right: auto;
 }
 
+.centerText {
+	text-align: center;
+	font-family: 'Estrangelo Edessa';
+	font-size: 22pt;
+	padding: 20px;
+	color: white;
+	width: 300px;
+	display: block;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0px 0px 0px 5px rgba(255,255,255,0.15);
+}
+
+#signin {
+	background-color: #4ed5c7;
+}
+
+#signup {
+	background-color: #d44865;
+}
+
 .indexButtons {
 	position: relative;
-	top: 30%;
+	top: 15%;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+.wrap {
+	width: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 @font-face {
@@ -44,7 +77,7 @@ body, html {
 	color: #BDBCBD;
 	margin: auto;
 	position: relative;
-	top: 20%; left: 0; bottom: 0; right: 0;
+	top: 10%; left: 0; bottom: 0; right: 0;
 }
 
 #titleText {
