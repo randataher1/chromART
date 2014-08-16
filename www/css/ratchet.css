@@ -357,7 +357,7 @@ h6, .h6 {
   color: #777;
 }*/
 
-.btn {
+/*.btn {
   position: relative;
   display: inline-block;
   padding: 6px 8px 7px;
@@ -483,7 +483,7 @@ input[type="button"] {
 .btn .icon {
   font-size: inherit;
 }
-
+*/
 .bar {
   position: fixed;
   right: 0;
@@ -825,13 +825,13 @@ input[type="button"] {
 
 input,
 textarea,
-button,
+/*button,*/
 select {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 17px;
 }
 
-select,
+/*select,
 textarea,
 input[type="text"],
 input[type="search"],
@@ -857,7 +857,7 @@ input[type="color"] {
   border: 1px solid #ddd;
   border-radius: 3px;
   outline: none;
-}
+}*/
 
 input[type="search"] {
   -webkit-box-sizing: border-box;

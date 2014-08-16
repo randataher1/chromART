@@ -61,18 +61,6 @@ body, html {
 	top: 15%;
 }
 
-.wrap {
-	width: 300px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	text-decoration: none;
-}
-
-.wrap > a:link {
-	text-decoration: none;
-}
-
 @font-face {
   font-family: 'Bad Script';
   font-style: normal;
@@ -110,4 +98,38 @@ body, html {
 .clear {
 	clear: both;
 	height: 60px;
+}
+
+.blueButton {
+	height: 50px;
+	width: 300px;
+	color: #ffffff;
+	background-color: #4caf99;
+}
+
+.blueButton:hover,
+.blueButton:focus,
+.blueButton:active,
+.blueButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #66C9B3;
+  border-color: #adadad;
+}
+
+.pinkButton {
+	height: 50px;
+	width: 300px;
+	color: #ffffff;
+	background-color: #d44865;
+}
+
+.pinkButton:hover,
+.pinkButton:focus,
+.pinkButton:active,
+.pinkButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #EE627F;
+  border-color: #adadad;
 }
