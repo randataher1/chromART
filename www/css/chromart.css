@@ -100,13 +100,14 @@ body, html {
 	top: 3%; left: 0; bottom: 0; right: 0;
 }
 
-.footer {
-	padding-left: 10px;
-}
-
 .signInButtons p {
 	position: relative;
 	top: 30%;
 	color: white;
 	background-color: green;
+}
+
+.clear {
+	clear: both;
+	height: 60px;
 }
