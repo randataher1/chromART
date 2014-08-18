@@ -30,7 +30,7 @@ body, html {
 @font-face {
   font-family: 'Estrangelo Edessa';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 200;
   src: local('estre'), url(../fonts/estre.woff) format('woff');
 }
 
@@ -84,15 +84,7 @@ body, html {
 	font-size: 50px;
 	color: #BDBCBD;
 	margin: auto;
-	position: relative;
-	top: 3%; left: 0; bottom: 0; right: 0;
-}
-
-.signInButtons p {
-	position: relative;
-	top: 30%;
-	color: white;
-	background-color: green;
+	margin: -30px;
 }
 
 .clear {

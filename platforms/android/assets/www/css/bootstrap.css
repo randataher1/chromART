@@ -2354,11 +2354,11 @@ output {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
-  height: 34px;
+  width: 300px;
+  height: 50px;
   padding: 6px 12px;
   text-align: center;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;

@@ -84,8 +84,7 @@ body, html {
 	font-size: 50px;
 	color: #BDBCBD;
 	margin: auto;
-	position: relative;
-	top: 3%; left: 0; bottom: 0; right: 0;
+	margin: -30px;
 }
 
 .clear {
