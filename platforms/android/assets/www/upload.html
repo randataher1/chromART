@@ -146,6 +146,10 @@
       image.set("title", $("#imageName").val());
       image.set("description", $("#imageDesc").val());
       image.set("hashtag", $("#imageTags").val());
+      
+      var otherGallery = Parse.Object.extend("Gallery");
+      var galleryQuery = new Parse.Query(otherGallery);
+      galleryQuery.equalTo("userId", userID);
 
       galleryQuery.find({
         success: function(results) {
@@ -203,7 +207,7 @@
           alert("Submit error");
         }
       });
-      window.location.href = 'profile.html';
+      //window.location.href = 'profile.html';
 
     });
 
