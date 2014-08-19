@@ -41,7 +41,7 @@
         <img src="img/logo.png" class="logo center" />
       </div>
 
-      <div id="titleText">
+      <div class="titleText">
         <p>Upload</p>
       </div>
 
@@ -114,7 +114,7 @@
           var object = results[i];
           $("#galleries").append("<div class=\"form-group radio\">" +
             "<label>" +
-              "<input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios" + i + "\" value=\"option" + i + "\">" + object.get('name')
+              "<input type=\"radio\" name=\"optionsRadios\" id=\"" + i + "\" value=\"option" + i + "\">" + object.get('name')
               + "</label>" +
           "</div>");
         }
@@ -154,8 +154,17 @@
       galleryQuery.find({
         success: function(results) {
           // The object was retrieved successfully.
+          //Creates a variable galleryID which can later be set to the chosen gallery
+          var galleryID = null;
+          //Loops through all existing galleries and sets a variable to the ID of the chosen gallery
+          for (var i = 0; i < results.length; i++) {
+            if ($("#" + i).is(':checked')) {
+              galleryID = results[i].id;
+              alert('Chosen gallery has ID: ' + galleryID);
+            }
+          }
           //If the new gallery choice is chosen, a new Gallery object is instantiated
-          if ($("#optionsRadios" + (results.length + 1)).is(':checked')) {
+          if ($("#" + (results.length + 1)).is(':checked')) {
             var Gallery = Parse.Object.extend("Gallery");
             var gallery = new Gallery();
             //All values set for new Gallery object
@@ -172,34 +181,29 @@
                 alert('Failed to create new gallery, with error code: ' + error.message);
               }
             });
-            image.set("galleryId", gallery.id);
+            galleryID = gal.id;
           }
-          //Loops through all galleries in the form and checks to see if an existing gallery has been chosen
+          //Error checking if user has not chosen a radio button
+          if (galleryID === null) {
+            alert("Please choose a gallery");
+          }
+          //If a gallery has been chosen, the image is given a galleryId
           else {
-            for(var i = 0; i < results.length; i++) {
-              var object = results[i];
-              //If an existing gallery is chosen, the Image "galleryId" value is assigned to that gallery's ID
-              if ($("#optionsRadios" + i).is(':checked')) {
-                image.set("galleryId", object.id);
+            image.set("galleryId", galleryID);
+            //Saves all values to new Image object
+            image.save(null, {
+              success: function(img) {
+                // Execute any logic that should take place after the object is saved.
+                alert('New image created with objectId: ' + image.id);
+                alert('Image added to: ' + galleryID);
+              },
+              error: function(img, error) {
+                // Execute any logic that should take place if the save fails.
+                // error is a Parse.Error with an error code and description.
+                alert('Failed to update image');
               }
-              //Error checking if user has not chosen a radio button
-              else {
-                alert("Please choose a gallery");
-              }
-            }
+            });
           }
-          //Saves all values to new Image object
-          image.save(null, {
-            success: function(img) {
-              // Execute any logic that should take place after the object is saved.
-              alert('New image created with objectId: ' + image.id);
-            },
-            error: function(img, error) {
-              // Execute any logic that should take place if the save fails.
-              // error is a Parse.Error with an error code and description.
-              alert('Failed to create new image, with error code: ' + error.message);
-            }
-          });
         },
         error: function(error) {
           // The object was not retrieved successfully.
@@ -207,7 +211,7 @@
           alert("Submit error");
         }
       });
-      //window.location.href = 'profile.html';
+      window.location.href = 'profile.html';
 
     });
 
