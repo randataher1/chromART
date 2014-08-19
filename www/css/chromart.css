@@ -129,3 +129,66 @@ body, html {
   background-color: #EE627F;
   border-color: #adadad;
 }
+
+#newButton {
+	height: 45px;
+	width: 163px;
+	color: #ffffff;
+	background-color: #4caf99;
+	font-family: 'Estrangelo Edessa';
+	font-size: 26px;
+}
+
+#newButton:hover,
+#newButton:focus,
+#newButton:active,
+#newButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #66C9B3;
+  border-color: #adadad;
+}
+
+#popularButton {
+	height: 45px;
+	width: 163px;
+	color: #ffffff;
+	background-color: #d44865;
+	font-family: 'Estrangelo Edessa';
+	font-size: 26px;
+}
+
+#popularButton:hover,
+#popularButton:focus,
+#popularButton:active,
+#popularButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #EE627F;
+  border-color: #adadad;
+}
+
+#explore {
+	text-align: center;
+}
+
+.exploreButtons {
+  display: inline-block;
+  padding: 5px 12px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+}

@@ -46,6 +46,11 @@
         <p>Explore</p>
       </div>
 
+      <div id="explore">
+        <button type="button" class="exploreButtons toExploreNew" id="newButton">New</button>
+        <button type="button" class="exploreButtons toExplorePopular" id="popularButton">Popular</button>
+      </div>
+
       <div>
         <button type="button" class="btn btn-default logout">Logout</button>
       </div>
@@ -77,6 +82,14 @@
 
   <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+
+    $(".toExploreNew").click(function() {
+      window.location.href = 'explorenew.html';
+    });
+
+    $(".toExplorePopular").click(function() {
+      window.location.href = 'explorepopular.html';
+    });
     
     $(".logout").click(function() {
       Parse.User.logOut();
