@@ -196,6 +196,7 @@
                 // Execute any logic that should take place after the object is saved.
                 alert('New image created with ID: ' + image.id);
                 alert('Image added to: ' + galleryID);
+                window.location.href = 'profile.html';
               },
               error: function(img, error) {
                 // Execute any logic that should take place if the save fails.
@@ -204,14 +205,14 @@
               }
             });
           }
+          
         },
         error: function(error) {
           // The object was not retrieved successfully.
           // error is a Parse.Error with an error code and description.
-          alert("Submit error");
+          alert("Please create a new gallery");
         }
       });
-      window.location.href = 'profile.html';
 
     });
 
