@@ -107,7 +107,8 @@
     //Finding most recenly created images and adding to imageScroll
     var otherImage = Parse.Object.extend("Image");
     var imageQuery = new Parse.Query(otherImage);
-    imageQuery.ascending("createdAt");
+    imageQuery.descending("createdAt");
+    imageQuery.include('user');
     imageQuery.limit(10);
     imageQuery.find({
       success: function(results) {
@@ -115,41 +116,32 @@
         //Loops through 10 most recently created images and adds them to the page
         for(var i = 0; i < results.length; i++) {
           var object = results[i];
-          var user = Parse.Object.extend("_User");
-          var userQuery = new Parse.Query(user);
-          userQuery.get(object.get('userId'), {
-            success: function(userObject) {
-              // The object was retrieved successfully.
-              $(".imageScroll").append(
-                "<div class=\"image\">" +
+          var userObject = object.get('user');
+          // The object was retrieved successfully.
+          $(".imageScroll").append(
+            "<div class=\"image\">" +
+              "<div class=\"row\">" +
+                "<div class=\"col-sm-12\">" +
+                  object.id +
                   "<div class=\"row\">" +
-                    "<div class=\"col-sm-12\">" +
-                      object.id +
+                    "<div class=\"col-xs-3\">" +
+                      userObject.get('profilePicture') +
+                    "</div>" +
+                    "<div class=\"col-xs-9\">" +
                       "<div class=\"row\">" +
-                        "<div class=\"col-xs-3\">" +
-                          userObject.get('profilePicture') +
-                        "</div>" +
-                        "<div class=\"col-xs-9\">" +
-                          "<div class=\"row\">" +
-                            userObject.get('username') +
-                          "</div>" +
-                          "<div class=\"row\">" +
-                            object.get('description') +
-                          "</div>" +
-                          "<div class=\"row\">" +
-                            object.get('hashtag') +
-                          "</div>" +
-                        "</div>" +
+                        userObject.get('username') +
+                      "</div>" +
+                      "<div class=\"row\">" +
+                        object.get('description') +
+                      "</div>" +
+                      "<div class=\"row\">" +
+                        object.get('hashtag') +
                       "</div>" +
                     "</div>" +
                   "</div>" +
-                "</div>");
-            },
-            error: function(object, error) {
-              // The object was not retrieved successfully.
-              // error is a Parse.Error with an error code and description.
-            }
-          });
+                "</div>" +
+              "</div>" +
+            "</div>");
         }
       },
       error: function(error) {

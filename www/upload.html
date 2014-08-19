@@ -143,6 +143,7 @@
 
       //Sets values of image based on user input
       image.set("userId", userID);
+      image.set("user", Parse.User.current());
       image.set("title", $("#imageName").val());
       image.set("description", $("#imageDesc").val());
       image.set("hashtag", $("#imageTags").val());
