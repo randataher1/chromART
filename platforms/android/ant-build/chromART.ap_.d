@@ -34,6 +34,8 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova_plugins.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explore.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorenew.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorepopular.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\home.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \

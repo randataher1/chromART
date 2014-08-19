@@ -92,15 +92,15 @@
       user.set("inputFashion", false);
       user.set("inputPhotography", false);
 
-      user.set("profileDescription", false);
+      user.set("profileDescription", "");
       user.set("profilePicture", false);
 
       user.signUp(null, {
         success: function(object) {
-          $(".success").show();
+          alert("Success!");
         },
         error: function(model, error) {
-          $(".error").show();
+          alert("There was an error signing up. Please try again.");
         }
       });
 
@@ -109,7 +109,7 @@
           window.location.href = 'chooseart.html';
         },
         error: function(user, error) {
-          $(".error").show();
+          alert("There was an error logging in. Please try again.");
         }
       })
 

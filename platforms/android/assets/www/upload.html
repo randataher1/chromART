@@ -114,13 +114,13 @@
           var object = results[i];
           $("#galleries").append("<div class=\"form-group radio\">" +
             "<label>" +
-              "<input type=\"radio\" name=\"optionsRadios\" id=\"" + i + "\" value=\"option" + i + "\">" + object.get('name')
+              "<input type=\"radio\" name=\"optionsRadios\" id=\"option" + i + "\" value=\"option" + i + "\">" + object.get('name')
               + "</label>" +
           "</div>");
         }
         $("#galleries").append("<div class=\"form-group radio\">" +
             "<label>" +
-              "<input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios" + (results.length+1) + "\" value=\"option" + (results.length+1) + "\">" +
+              "<input type=\"radio\" name=\"optionsRadios\" id=\"optionLast\" value=\"optionLast\">" +
               "<input type=\"text\" class=\"form-control\" id=\"galleryName\" placeholder=\"Enter new gallery name\">" +
             "</label>" +
           "</div>" +
@@ -155,16 +155,16 @@
         success: function(results) {
           // The object was retrieved successfully.
           //Creates a variable galleryID which can later be set to the chosen gallery
-          var galleryID = null;
+          var galleryID;
           //Loops through all existing galleries and sets a variable to the ID of the chosen gallery
           for (var i = 0; i < results.length; i++) {
-            if ($("#" + i).is(':checked')) {
+            if ($("#option" + i).is(':checked')) {
               galleryID = results[i].id;
               alert('Chosen gallery has ID: ' + galleryID);
             }
           }
           //If the new gallery choice is chosen, a new Gallery object is instantiated
-          if ($("#" + (results.length + 1)).is(':checked')) {
+          if ($("#optionLast").is(':checked')) {
             var Gallery = Parse.Object.extend("Gallery");
             var gallery = new Gallery();
             //All values set for new Gallery object
@@ -173,18 +173,18 @@
             gallery.save(null, {
               success: function(gal) {
                 // Execute any logic that should take place after the object is saved.
-                alert('New gallery created with objectId: ' + gal.id);
+                alert('New gallery created with ID: ' + gallery.id);
+                galleryID = gallery.id;
               },
               error: function(img, error) {
                 // Execute any logic that should take place if the save fails.
                 // error is a Parse.Error with an error code and description.
-                alert('Failed to create new gallery, with error code: ' + error.message);
+                alert('Failed to create new gallery');
               }
             });
-            galleryID = gal.id;
           }
           //Error checking if user has not chosen a radio button
-          if (galleryID === null) {
+          if (! ($("[id^=option]").is(':checked'))) {
             alert("Please choose a gallery");
           }
           //If a gallery has been chosen, the image is given a galleryId
@@ -194,8 +194,9 @@
             image.save(null, {
               success: function(img) {
                 // Execute any logic that should take place after the object is saved.
-                alert('New image created with objectId: ' + image.id);
+                alert('New image created with ID: ' + image.id);
                 alert('Image added to: ' + galleryID);
+                window.location.href = 'profile.html';
               },
               error: function(img, error) {
                 // Execute any logic that should take place if the save fails.
@@ -204,14 +205,14 @@
               }
             });
           }
+          
         },
         error: function(error) {
           // The object was not retrieved successfully.
           // error is a Parse.Error with an error code and description.
-          alert("Submit error");
+          alert("Please create a new gallery");
         }
       });
-      window.location.href = 'profile.html';
 
     });
 

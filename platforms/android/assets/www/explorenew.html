@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore</title>
+    <title>Explore New</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -43,12 +43,7 @@
       </div>
 
       <div class="titleText">
-        <p>Explore</p>
-      </div>
-
-      <div id="explore">
-        <button type="button" class="exploreButtons toExploreNew" id="newButton">New</button>
-        <button type="button" class="exploreButtons toExplorePopular" id="popularButton">Popular</button>
+        <p>Explore New</p>
       </div>
 
       <div>
@@ -82,14 +77,6 @@
 
   <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
-
-    $(".toExploreNew").click(function() {
-      window.location.href = 'explorenew.html';
-    });
-
-    $(".toExplorePopular").click(function() {
-      window.location.href = 'explorepopular.html';
-    });
     
     $(".logout").click(function() {
       Parse.User.logOut();
