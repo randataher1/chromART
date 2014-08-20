@@ -38,12 +38,38 @@
   <body>
 
     <div class="container">
-      <div class="header">
+      <div class="pageHeader">
         <img src="img/logo.png" class="logo center" />
       </div>
 
       <div class="titleText">
         <p>Explore New</p>
+      </div>
+
+      <div class="imageScroll">
+        <div class="image">
+          <div class="row">
+            <div class="col-sm-12">
+              Image
+              <div class="row">
+                <div class="col-xs-3">
+                  Profile Picture
+                </div>
+                <div class="col-xs-9">
+                  <div class="row">
+                    Username
+                  </div>
+                  <div class="row">
+                    Description
+                  </div>
+                  <div class="row">
+                    Hashtags
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div>
@@ -77,6 +103,58 @@
 
   <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+
+    //Finding most recenly created images and adding to imageScroll
+    var otherImage = Parse.Object.extend("Image");
+    var imageQuery = new Parse.Query(otherImage);
+    imageQuery.descending("createdAt");
+    imageQuery.include('user');
+    imageQuery.limit(10);
+    imageQuery.find({
+      success: function(results) {
+        // The object was retrieved successfully.
+        //Loops through 10 most recently created images and adds them to the page
+        for(var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var userObject = object.get('user');
+          // The object was retrieved successfully.
+          $(".imageScroll").append(
+            "<div class=\"image\">" +
+              "<div class=\"row\">" +
+                "<div class=\"col-sm-12\">" +
+                  "<img src=\"" + object.get('url') + "\" />" +
+                  "<div class=\"row\">" +
+                    "<div class=\"col-xs-3\">" +
+                      userObject.get('profilePicture') +
+                    "</div>" +
+                    "<div class=\"col-xs-6\">" +
+                      "<div class=\"row\">" +
+                        userObject.get('username') +
+                      "</div>" +
+                      "<div class=\"row\">" +
+                        object.get('description') +
+                      "</div>" +
+                      "<div class=\"row\">" +
+                        object.get('hashtag') +
+                      "</div>" +
+                    "</div>" +
+                    "<div class=\"col-xs-3\">" +
+                      "<div class=\"row\">" +
+                        "Likes" +
+                      "</div>" +
+                    "</div>" +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+            "</div>");
+        }
+      },
+      error: function(error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and description.
+        alert("Error retrieving images");
+      }
+    });
     
     $(".logout").click(function() {
       Parse.User.logOut();

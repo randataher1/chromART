@@ -11,8 +11,16 @@ body, html {
 	min-width: 360px; 
 }
 
+.pageHeader {
+	background-color: #404040;
+	width: 360px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .logo {
-	padding-top: 50px;
+	padding-top: 25px;
+	padding-bottom: 25px;
 }
 
 .center {
@@ -191,4 +199,18 @@ body, html {
           user-select: none;
   background-image: none;
   border: 1px solid transparent;
+}
+
+.image {
+	width: 360px;
+	margin: 0 0 20px 0;
+	padding: 10px;
+}
+
+.imageScroll {
+	width: 360px;
+	background-color: white;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }

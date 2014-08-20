@@ -122,12 +122,12 @@
             "<div class=\"image\">" +
               "<div class=\"row\">" +
                 "<div class=\"col-sm-12\">" +
-                  object.id +
+                  "<img src=\"" + object.get('url') + "\" />" +
                   "<div class=\"row\">" +
                     "<div class=\"col-xs-3\">" +
                       userObject.get('profilePicture') +
                     "</div>" +
-                    "<div class=\"col-xs-9\">" +
+                    "<div class=\"col-xs-6\">" +
                       "<div class=\"row\">" +
                         userObject.get('username') +
                       "</div>" +
@@ -136,6 +136,11 @@
                       "</div>" +
                       "<div class=\"row\">" +
                         object.get('hashtag') +
+                      "</div>" +
+                    "</div>" +
+                    "<div class=\"col-xs-3\">" +
+                      "<div class=\"row\">" +
+                        "Likes" +
                       "</div>" +
                     "</div>" +
                   "</div>" +
