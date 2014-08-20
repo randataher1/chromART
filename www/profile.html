@@ -43,29 +43,25 @@
 
       <div class="profileContainer">
         <div class="row">
-          <div class="col-sm-12">
-            <div class="row">
-              <div class="col-xs-4" id="proPic">
-                Profile Picture
+          <div class="col-xs-4" id="proPic">
+            Profile Picture
+          </div>
+          <div class="col-xs-8">
+            <div class="row" id="proName">
+              Username
+            </div>
+            <div class="row" id="proDescription">
+              Description
+            </div>
+            <div class="row" id="proContact">
+              <div class="col-xs-1 col-xs-offset-5">
+                Facebook
               </div>
-              <div class="col-xs-8">
-                <div class="row" id="proName">
-                  Username
-                </div>
-                <div class="row" id="proDescription">
-                  Description
-                </div>
-                <div class="row" id="proContact">
-                  <div class="col-sm-1 col-md-offset-5">
-                    Facebook
-                  </div>
-                  <div class="col-sm-1">
-                    Twitter
-                  </div>
-                  <div class="col-sm-1">
-                    Email
-                  </div>
-                </div>
+              <div class="col-xs-1">
+                Twitter
+              </div>
+              <div class="col-xs-1">
+                Email
               </div>
             </div>
           </div>
@@ -142,6 +138,8 @@
         userID = Parse.User.current().id; // where User was previously set by the parse User object
     }
 
+    var otherUserObject;
+
     //Adding content to profile based on userID
     var otherUser = Parse.Object.extend("_User");
     var userQuery = new Parse.Query(otherUser);
@@ -154,6 +152,69 @@
         document.getElementById('proPic').innerHTML = "<img src=\"" + picture + "\" class=\"img-circle\"/>";
         document.getElementById('proName').innerHTML = name;
         document.getElementById('proDescription').innerHTML = desc;
+        otherUserObject = other;
+        //If userID is not that of current user, check if current user is following the user with that userID
+        if(userID != Parse.User.current().id) {
+          var following = Parse.Object.extend("Follow");
+          var followingQuery = new Parse.Query(following);
+          //Look for an existing Follow object that points to current user and the other user
+          followingQuery.equalTo("user", Parse.User.current());
+          followingQuery.equalTo("followedUser", otherUserObject);
+          followingQuery.find({
+            success: function(results) {
+              //If there is a following object, appends an active button
+              if(results.length === 0) {
+                $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
+                  "id=\"followButton\">Follow</button>");
+              }
+              //If there isn't, appends a non-active button
+              else {
+                $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton active\"" +
+                  "id=\"followButton\">Following</button>");
+              }
+
+              //Adds follow functionality to button
+              $("#followButton").click(function() {
+                if($("#followButton").hasClass("active")) {
+                  $("#followButton").removeClass("active");
+                  document.getElementById("followButton").innerHTML="Follow";
+                  var following = Parse.Object.extend("Follow");
+                  var followingQuery = new Parse.Query(following);
+                  //Look for an existing Follow object that points to current user and the other user
+                  followingQuery.equalTo("user", Parse.User.current());
+                  followingQuery.equalTo("followedUser", otherUserObject);
+                  followingQuery.find({
+                    success: function(results) {
+                      results[0].destroy({});
+                    },
+                    error: function(object, error) {
+                      alert("Failed to find Follow object");
+                    }
+                  });
+                }
+                else {
+                  $("#followButton").addClass("active");
+                  document.getElementById("followButton").innerHTML="Following";
+                  var Follow = Parse.Object.extend("Follow");
+                  var follow = new Follow();
+                  follow.set("user", Parse.User.current());
+                  follow.set("followedUser", otherUserObject);
+                  follow.save(null, {
+                    success: function(object) {
+                      alert("Success!");
+                    },
+                    error: function(object, error) {
+                      alert("Failed to create new Follow object");
+                    }
+                  });
+                }
+              });
+            },
+            error: function(error) {
+              alert("No Follow object that points to these users");
+            }
+          });
+        }
       },
       error: function(object, error) {
         // The object was not retrieved successfully.
@@ -184,11 +245,6 @@
     //If userID is that of current user, add Settings bar
     if(userID === Parse.User.current().id) {
       $(".pageHeader").append("Settings");
-    }
-
-    //If userID is not that of current user, add Follow button
-    if(userID != Parse.User.current().id) {
-      $("#proFollowButton").append("<button type=\"button\" class=\"btn followButton blueButton\">Follow</button>");
     }
 
     $(".logout").click(function() {

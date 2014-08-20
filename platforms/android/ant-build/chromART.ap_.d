@@ -101,8 +101,10 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.ttf \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.woff \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\dislikeButton.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\Icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\likeButton.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\logo.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.min.js \

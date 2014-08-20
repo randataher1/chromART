@@ -38,28 +38,46 @@
   <body>
 
     <div class="container">
-      <div class="header">
-        <img src="img/logo.png" class="logo center" />
+      <div class="pageHeader">
       </div>
 
-      <div class="titleText">
-        <p>Profile</p>
-      </div>
+      <div class="profileContainer">
+        <div class="row">
+          <div class="col-xs-4" id="proPic">
+            Profile Picture
+          </div>
+          <div class="col-xs-8">
+            <div class="row" id="proName">
+              Username
+            </div>
+            <div class="row" id="proDescription">
+              Description
+            </div>
+            <div class="row" id="proContact">
+              <div class="col-xs-1 col-xs-offset-5">
+                Facebook
+              </div>
+              <div class="col-xs-1">
+                Twitter
+              </div>
+              <div class="col-xs-1">
+                Email
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div id="pic">
+        <div id="proFollowButton">
+          
+        </div>
 
-      </div>
+        <div id="proFollowInfo">
+          
+        </div>
 
-      <div id="name">
+        <div id="proGalleries">
 
-      </div>
-
-      <div id="description">
-
-      </div>
-
-      <div id="galleries">
-
+        </div>
       </div>
 
       <div>
@@ -120,21 +138,18 @@
         userID = Parse.User.current().id; // where User was previously set by the parse User object
     }
 
-    alert(userID);
-
     //Adding content to profile based on userID
     var otherUser = Parse.Object.extend("_User");
     var userQuery = new Parse.Query(otherUser);
     userQuery.get(userID, {
       success: function(other) {
         // The object was retrieved successfully.
-        alert(other.id);
-        var picture = other.get("profilePicture");
+        var picture = other.get("profilePictureUrl");
         var name = other.get("username");
         var desc = other.get("profileDescription");
-        document.getElementById('pic').innerHTML = "<p>" + picture + "</p>";
-        document.getElementById('name').innerHTML = "<p>" + name + "</p>";
-        document.getElementById('description').innerHTML = "<p>" + desc + "</p>";
+        document.getElementById('proPic').innerHTML = "<img src=\"" + picture + "\" class=\"img-circle\"/>";
+        document.getElementById('proName').innerHTML = name;
+        document.getElementById('proDescription').innerHTML = desc;
       },
       error: function(object, error) {
         // The object was not retrieved successfully.
@@ -152,7 +167,6 @@
         // The object was retrieved successfully.
         for(var i = 0; i < results.length; i++) {
           var object = results[i];
-          alert(object.id + ' - ' + object.get('Description'));
           $("#galleries").append("<p>" + object.get('name') + "</p>");
         }
       },
@@ -160,6 +174,27 @@
         // The object was not retrieved successfully.
         // error is a Parse.Error with an error code and description.
         alert("User load error");
+      }
+    });
+
+    //If userID is that of current user, add Settings bar
+    if(userID === Parse.User.current().id) {
+      $(".pageHeader").append("Settings");
+    }
+
+    //If userID is not that of current user, add Follow button
+    if(userID != Parse.User.current().id) {
+      $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\" id=\"followButton\">Follow</button>");
+    }
+
+    $("#followButton").click(function() {
+      if($("#followButton").hasClass("active")) {
+        $("#followButton").removeClass("active");
+        document.getElementById("followButton").innerHTML="Follow";
+      }
+      else {
+        $("#followButton").addClass("active");
+        document.getElementById("followButton").innerHTML="Following";
       }
     });
 
