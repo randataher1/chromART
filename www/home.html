@@ -42,6 +42,44 @@
         <img src="img/logo.png" class="logo center" />
       </div>
 
+
+      <div class="imageScroll">
+        <div class="image">
+          <div class="row">
+            <div class="col-sm-12">
+              Image
+              <div class="row">
+                <div class="col-xs-3">
+                  Profile Picture
+                </div>
+                <div class="col-xs-6">
+                  <div class="row">
+                    Username
+                  </div>
+                  <div class="row">
+                    Description
+                  </div>
+                  <div class="row">
+                    Hashtags
+                  </div>
+                </div>
+                <div class="col-xs-1">
+                  <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                  </button>
+                </div>
+                <div class="col-xs-1">
+                  <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div>
         <button type="button" class="btn btn-default logout">Logout</button>
       </div>
@@ -74,6 +112,58 @@
 
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+
+    //Finding most recenly created images and adding to imageScroll
+    var otherImage = Parse.Object.extend("Image");
+    var imageQuery = new Parse.Query(otherImage);
+    imageQuery.descending("createdAt");
+    imageQuery.include('user');
+    imageQuery.limit(10);
+    imageQuery.find({
+      success: function(results) {
+        // The object was retrieved successfully.
+        //Loops through 10 most recently created images and adds them to the page
+        for(var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var userObject = object.get('user');
+          // The object was retrieved successfully.
+          $(".imageScroll").append(
+            "<div class=\"image\">" +
+              "<div class=\"row\">" +
+                "<div class=\"col-sm-12\">" +
+                  "<img src=\"" + object.get('url') + "\" />" +
+                  "<div class=\"row\">" +
+                    "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
+                      userObject.get('profilePicture') +
+                    "</a></div>" +
+                    "<div class=\"col-xs-5\">" +
+                      "<div class=\"row\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
+                        userObject.get('username') +
+                      "</a></div>" +
+                      "<div class=\"row\">" +
+                        object.get('description') +
+                      "</div>" +
+                      "<div class=\"row\">" +
+                        object.get('hashtag') +
+                      "</div>" +
+                    "</div>" +
+                    "<div class=\"col-xs-4\">" +
+                      "<div class=\"row\">" +
+                        "Likes" +
+                      "</div>" +
+                    "</div>" +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+            "</div>");
+        }
+      },
+      error: function(error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and description.
+        alert("Error retrieving images");
+      }
+    });
     
     $(".logout").click(function() {
       Parse.User.logOut();
