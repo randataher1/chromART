@@ -232,3 +232,14 @@ body, html {
 	padding-top: 10px;
 	margin-bottom: 10px;
 }
+
+.profileContainer {
+	width: 360px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.like {
+	margin: 5px;
+}
