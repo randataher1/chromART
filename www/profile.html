@@ -39,7 +39,6 @@
 
     <div class="container">
       <div class="pageHeader">
-        Settings
       </div>
 
       <div class="profileContainer">
@@ -72,7 +71,11 @@
           </div>
         </div>
 
-        <div id="proFollow">
+        <div id="proFollowButton">
+          
+        </div>
+
+        <div id="proFollowInfo">
           
         </div>
 
@@ -177,6 +180,16 @@
         alert("User load error");
       }
     });
+
+    //If userID is that of current user, add Settings bar
+    if(userID === Parse.User.current().id) {
+      $(".pageHeader").append("Settings");
+    }
+
+    //If userID is not that of current user, add Follow button
+    if(userID != Parse.User.current().id) {
+      $("#proFollowButton").append("<button type=\"button\" class=\"btn followButton blueButton\">Follow</button>");
+    }
 
     $(".logout").click(function() {
       Parse.User.logOut();
