@@ -41,7 +41,7 @@
       <div class="pageHeader">
         <img src="img/logo.png" class="logo center" />
       </div>
-      
+
       <div class="imageScroll">
         <div class="image">
           <div class="row">
@@ -110,7 +110,7 @@
   <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
 
-    //Finding most recenly created images and adding to imageScroll
+    //Finding most recently created images and adding to imageScroll
     var otherImage = Parse.Object.extend("Image");
     var imageQuery = new Parse.Query(otherImage);
     imageQuery.descending("createdAt");
@@ -130,8 +130,10 @@
                 "<div class=\"col-sm-12\">" +
                   "<img src=\"" + object.get('url') + "\" />" +
                   "<div class=\"row\">" +
-                    "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
-                      userObject.get('profilePicture') +
+                    "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id +"\">" + 
+                    "<img src=\"" +
+                      userObject.get('profilePictureUrl') +
+                    "\" />" +
                     "</a></div>" +
                     "<div class=\"col-xs-5\">" +
                       "<div class=\"row\"><a href=\"profile.html?userID=" + userObject.id + "\">" +

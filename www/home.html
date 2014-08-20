@@ -113,49 +113,63 @@
 <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
 
-    //Finding most recenly created images and adding to imageScroll
-    var otherImage = Parse.Object.extend("Image");
-    var imageQuery = new Parse.Query(otherImage);
-    imageQuery.descending("createdAt");
-    imageQuery.include('user');
-    imageQuery.limit(10);
-    imageQuery.find({
-      success: function(results) {
+    //Finding all Follow objects of the current user
+    var Follow = Parse.Object.extend("Follow");
+    var followQuery = new Parse.Query(Follow);
+    followQuery.equalTo("user", Parse.User.current());
+    followQuery.find({
+      success: function(followResults) {
         // The object was retrieved successfully.
-        //Loops through 10 most recently created images and adds them to the page
-        for(var i = 0; i < results.length; i++) {
-          var object = results[i];
-          var userObject = object.get('user');
-          // The object was retrieved successfully.
-          $(".imageScroll").append(
-            "<div class=\"image\">" +
-              "<div class=\"row\">" +
-                "<div class=\"col-sm-12\">" +
-                  "<img src=\"" + object.get('url') + "\" />" +
-                  "<div class=\"row\">" +
-                    "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
-                      userObject.get('profilePicture') +
-                    "</a></div>" +
-                    "<div class=\"col-xs-5\">" +
-                      "<div class=\"row\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
-                        userObject.get('username') +
-                      "</a></div>" +
+        //Loops through most recently created images of followed users and adds them to the page
+        for(var i = 0; i < followResults.length; i++) {
+          var followObject = followResults[i];
+          var Img = Parse.Object.extend("Image");
+          var imageQuery = new Parse.Query(Img);
+          imageQuery.equalTo("user", followObject.get("followedUser"));
+          imageQuery.find({
+            success: function(imageResults) {
+              // The object was retrieved successfully.
+              for(var j = 0; j < imageResults.length; j++) {
+                var imageObject = imageResults[j];
+                $(".imageScroll").append(
+                  "<div class=\"image\">" +
+                    "<div class=\"row\">" +
+                      "<div class=\"col-sm-12\">" +
+                      "<img src=\"" + imageObject.get('url') + "\" />" +
                       "<div class=\"row\">" +
-                        object.get('description') +
-                      "</div>" +
-                      "<div class=\"row\">" +
-                        object.get('hashtag') +
+                        "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" +
+                        imageObject.get('user').id +"\">" + 
+                        "<img src=\"" +
+                          imageObject.get('user').get('profilePictureUrl') +
+                        "\" />" +
+                        "</a></div>" +
+                          "<div class=\"col-xs-5\">" +
+                            "<div class=\"row\"><a href=\"profile.html?userID=" +
+                              imageObject.get('user').id + "\">" +
+                              imageObject.get('user').get('username') +
+                            "</a></div>" +
+                            "<div class=\"row\">" +
+                              imageObject.get('description') +
+                            "</div>" +
+                            "<div class=\"row\">" +
+                              imageObject.get('hashtag') +
+                            "</div>" +
+                          "</div>" +
+                          "<div class=\"col-xs-4\">" +
+                            "<div class=\"row\">" +
+                              "Likes" +
+                            "</div>" +
+                          "</div>" +
+                        "</div>" +
                       "</div>" +
                     "</div>" +
-                    "<div class=\"col-xs-4\">" +
-                      "<div class=\"row\">" +
-                        "Likes" +
-                      "</div>" +
-                    "</div>" +
-                  "</div>" +
-                "</div>" +
-              "</div>" +
-            "</div>");
+                  "</div>");
+              }
+            },
+            error: function(object, error) {
+              alert("Error");
+            }
+          });
         }
       },
       error: function(error) {
