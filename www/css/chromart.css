@@ -237,10 +237,6 @@ body, html {
 	margin-right: auto;
 }
 
-.like {
-	margin: 5px;
-}
-
 #followButton {
 	height: 36px;
 	width: 300px;
@@ -268,6 +264,7 @@ body, html {
 	margin-right: auto;
 	width: 280px;
 	height: auto;
+	margin-bottom: 10px;
 }
 
 .imageProfilePicture {
@@ -278,4 +275,12 @@ body, html {
 .profilePicture {
 	width: 100px;
 	height: 100px;
+}
+
+.imageDetails {
+	padding: 10px;
+}
+
+.uploadButton {
+	margin-top: 20px;
 }
