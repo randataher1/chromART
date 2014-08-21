@@ -14,7 +14,8 @@ body, html {
 .pageHeader {
 	background-color: #404040;
 	width: 360px;
-	margin-left: -15px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .logo {
@@ -168,7 +169,8 @@ body, html {
 #explore {
 	text-align: center;
 	width: 360px;
-	margin-left: -15px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .exploreButtons {
@@ -206,7 +208,8 @@ body, html {
 	width: 360px;
 	background-color: white;
 	display: block;
-	margin-left: -15px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .fileupload {
@@ -257,4 +260,22 @@ body, html {
   color: #ffffff;
   background-color: #339680;
   border-color: #adadad;
+}
+
+.imageResize {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 280px;
+	height: auto;
+}
+
+.imageProfilePicture {
+	width: 50px;
+	height: 50px;
+}
+
+.profilePicture {
+	width: 100px;
+	height: 100px;
 }

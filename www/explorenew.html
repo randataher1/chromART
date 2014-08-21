@@ -51,7 +51,7 @@
                 <div class="col-xs-3">
                   Profile Picture
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-5">
                   <div class="row">
                     Username
                   </div>
@@ -62,7 +62,7 @@
                     Hashtags
                   </div>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-2">
                   <button type="button" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-thumbs-up"></span>
                   </button>
@@ -128,10 +128,10 @@
             "<div class=\"image\">" +
               "<div class=\"row\">" +
                 "<div class=\"col-sm-12\">" +
-                  "<img src=\"" + object.get('url') + "\" />" +
+                  "<img class=\"imageResize\" src=\"" + object.get('url') + "\" />" +
                   "<div class=\"row\">" +
                     "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id +"\">" + 
-                    "<img src=\"" +
+                    "<img class=\"img-circle imageProfilePicture\" src=\"" +
                       userObject.get('profilePictureUrl') +
                     "\" />" +
                     "</a></div>" +
