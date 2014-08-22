@@ -91,14 +91,6 @@
       user.set("username", $("#inputUsername").val());
       user.set("password", $("#inputPassword").val());
       //user.set("emailVerified", false);
-      user.set("inputAbstract", false);
-      user.set("inputAnime", false);
-      user.set("inputImpressionist", false);
-      user.set("inputModern", false);
-      user.set("inputNature", false);
-      user.set("inputSurreal", false);
-      user.set("inputFashion", false);
-      user.set("inputPhotography", false);
 
       user.set("profileDescription", "");
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
@@ -125,7 +117,7 @@
               alert("Success!");
               Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
                 success: function(user) {              
-                  window.location.href = 'chooseart.html';
+                  window.location.href = 'profile.html';
                 },
                 error: function(user, error) {
                   alert("There was an error logging in. Please try again.");

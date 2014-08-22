@@ -183,6 +183,7 @@
                   //Look for an existing Follow object that points to current user and the other user
                   followingQuery.equalTo("user", Parse.User.current());
                   followingQuery.equalTo("followedUser", otherUserObject);
+                  //Deletes Follow object if user deselects the Follow button
                   followingQuery.find({
                     success: function(results) {
                       results[0].destroy({});
@@ -195,6 +196,7 @@
                 else {
                   $("#followButton").addClass("active");
                   document.getElementById("followButton").innerHTML="Following";
+                  //Creates new Follow object if user selects the Follow button
                   var Follow = Parse.Object.extend("Follow");
                   var follow = new Follow();
                   follow.set("user", Parse.User.current());

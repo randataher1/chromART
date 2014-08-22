@@ -29,7 +29,6 @@ C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-port
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-xhdpi\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\_where-is-www.txt \
-C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\chooseart.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova_plugins.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css \
@@ -41,6 +40,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\home.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\profile.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signin.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signup.html \
@@ -112,4 +112,10 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\icheck.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\index.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.min.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera\www \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera\www\Camera.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera\www\CameraConstants.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera\www\CameraPopoverHandle.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera\www\CameraPopoverOptions.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\AndroidManifest.xml \

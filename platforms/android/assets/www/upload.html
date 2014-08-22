@@ -28,9 +28,27 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="cordova.js"></script>
+
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
+
+    <script type="text/javascript">
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
+
+    // Wait for Cordova to connect with the device
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // Cordova is ready to be used!
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+    </script>
 
   </head>
 
@@ -45,15 +63,21 @@
         <p>Upload</p>
       </div>
 
+      <div>
+        <button onclick="takePicture()" type="button" class="btn btn-default takePic">Take Picture</button>
+        <input type="hidden" name="cameraData" id="cameraData" value="" />
+        <input type="hidden" id="photoTaken" value="" />
+      </div>
+
       <div class="imageUpload">
         <form class="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
           <fieldset class="fieldset">
-            <input type="file" name="fileselect" class="fileselect"></input>
+            <input type="file" capture="camera" accept="image/*" name="fileselect" class="fileselect"></input>
           </fieldset>
         </form>
       </div>
 
-      <div>
+      <div class="imageDetails">
         <h4>
           Image Details
         </h4>
@@ -70,10 +94,16 @@
             <label for="imageTags">Hashtags</label>
             <input type="text" class="form-control" id="imageTags" placeholder="Enter hashtags">
           </div>
+        <div id="gallerySelect">
+          <div class="form-group radio">
+              <input type="radio" name="optionsRadios" id="optionLast" value="optionLast">
+            <label>Add new gallery</label>
+              <input type="text" name="newGalleryName" class="form-control" id="galleryName" placeholder="Enter new gallery name" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default uploadButton\">Upload</button>
         </form>
       </div>
-
-      <br>
 
       <div>
         <button type="button" class="btn btn-default logout">Logout</button>
@@ -106,7 +136,28 @@
 
 
   <script type="text/javascript">
+
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
+
+    function takePicture() {
+      alert("Click");
+      navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL
+      });
+    }    
+
+    function onSuccess(imageData) {
+      alert("yay");
+      var image = document.getElementById('cameraData');
+      image.value = imageData;
+      var photoTaken = document.getElementById('photoTaken');
+      photoTaken.value = "true";
+      alert(photoTaken.value);
+    }
+
+    function onFail(message) {
+        alert('Failed because: ' + message);
+    }
 
     userID = Parse.User.current().id;
 
@@ -120,19 +171,12 @@
         //Loops through all galleries with the current userID and lists them in the form.
         for(var i = 0; i < results.length; i++) {
           var object = results[i];
-          $("#galleries").append("<div class=\"form-group radio\">" +
+          $("#gallerySelect").prepend("<div class=\"form-group radio\">" +
             "<label>" +
               "<input type=\"radio\" name=\"optionsRadios\" id=\"option" + i + "\" value=\"option" + i + "\">" + object.get('name')
               + "</label>" +
           "</div>");
         }
-        $("#galleries").append("<div class=\"form-group radio\">" +
-            "<label>" +
-              "<input type=\"radio\" name=\"optionsRadios\" id=\"optionLast\" value=\"optionLast\">" +
-              "<input type=\"text\" class=\"form-control\" id=\"galleryName\" placeholder=\"Enter new gallery name\">" +
-            "</label>" +
-          "</div>" +
-          "<button type=\"submit\" class=\"btn btn-default\">Upload</button>");
       },
       error: function(error) {
         // The object was not retrieved successfully.
@@ -145,22 +189,19 @@
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+      var photoTaken = document.getElementById('photoTaken');
+      if(photoTaken.value != "true") {
+        alert("Take a picture first");
+        return false;
+      }
 
-      $.ajax({
-        type: "POST",
-        beforeSend: function(request) {
-          request.setRequestHeader("X-Parse-Application-Id", 'OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP');
-          request.setRequestHeader("X-Parse-REST-API-Key", 'zj1rLnIGUQZTCi4HrAYg6aJMErXTQJemsZ4vXw8w');
-          request.setRequestHeader("Content-Type", file.type);
-        },
-        url: serverUrl,
-        data: file,
-        processData: false,
-        contentType: false,
-        dataType: 'json',
-        success: function(data) {
-          alert("File available at: " + data.url);
+      var fileName = Parse.User.current().id + ".jpeg";
+      var serverUrl = 'https://api.parse.com/1/files/' + fileName;
+      imageData = document.getElementById("cameraData");
+      var parseFile = new Parse.File(fileName, {base64:imageData.value});
+
+      parseFile.save().then(function() {
+          alert("File available at: " + parseFile.url());
 
           //Creates new Image object
           var Img = Parse.Object.extend("Image");
@@ -171,7 +212,7 @@
           image.set("title", $("#imageName").val());
           image.set("description", $("#imageDesc").val());
           image.set("hashtag", $("#imageTags").val());
-          image.set("url", data.url);
+          image.set("url", parseFile.url());
           
           var otherGallery = Parse.Object.extend("Gallery");
           var galleryQuery = new Parse.Query(otherGallery);
@@ -240,16 +281,8 @@
           });
 
 
-        },
-        error: function(data) {
-          var obj = jQuery.parseJSON(data);
-          alert(obj.error);
-        }
+        });
       });
-
-      
-
-    });
 
     $(".logout").click(function() {
       Parse.User.logOut();

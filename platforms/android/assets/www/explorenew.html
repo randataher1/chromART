@@ -41,7 +41,7 @@
       <div class="pageHeader">
         <img src="img/logo.png" class="logo center" />
       </div>
-      
+
       <div class="imageScroll">
         <div class="image">
           <div class="row">
@@ -51,7 +51,7 @@
                 <div class="col-xs-3">
                   Profile Picture
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-5">
                   <div class="row">
                     Username
                   </div>
@@ -62,7 +62,7 @@
                     Hashtags
                   </div>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-2">
                   <button type="button" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-thumbs-up"></span>
                   </button>
@@ -110,7 +110,7 @@
   <script type="text/javascript">
     Parse.initialize("OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP", "mQK3VkWpDgGHoxDH0kroP1UFd7WPUbm0ZT2vzf21");
 
-    //Finding most recenly created images and adding to imageScroll
+    //Finding most recently created images and adding to imageScroll
     var otherImage = Parse.Object.extend("Image");
     var imageQuery = new Parse.Query(otherImage);
     imageQuery.descending("createdAt");
@@ -128,10 +128,12 @@
             "<div class=\"image\">" +
               "<div class=\"row\">" +
                 "<div class=\"col-sm-12\">" +
-                  "<img src=\"" + object.get('url') + "\" />" +
+                  "<img class=\"imageResize\" src=\"" + object.get('url') + "\" />" +
                   "<div class=\"row\">" +
-                    "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
-                      userObject.get('profilePicture') +
+                    "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" + userObject.id +"\">" + 
+                    "<img class=\"img-circle imageProfilePicture\" src=\"" +
+                      userObject.get('profilePictureUrl') +
+                    "\" />" +
                     "</a></div>" +
                     "<div class=\"col-xs-5\">" +
                       "<div class=\"row\"><a href=\"profile.html?userID=" + userObject.id + "\">" +
@@ -144,10 +146,15 @@
                         object.get('hashtag') +
                       "</div>" +
                     "</div>" +
-                    "<div class=\"col-xs-4\">" +
-                      "<div class=\"row\">" +
-                        "Likes" +
-                      "</div>" +
+                    "<div class=\"col-xs-2\">" +
+                      "<button type=\"button\" class=\"btn btn-default btn-sm\">" +
+                        "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
+                      "</button>" +
+                    "</div>" +
+                    "<div class=\"col-xs-1\">" +
+                      "<button type=\"button\" class=\"btn btn-default btn-sm\">" +
+                        "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+                      "</button>" +
                     "</div>" +
                   "</div>" +
                 "</div>" +
