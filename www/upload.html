@@ -227,7 +227,7 @@
                 var Gallery = Parse.Object.extend("Gallery");
                 var galleryObject = new Gallery();
                 //All values set for new Gallery object
-                galleryObject.set("userId", userID);
+                galleryObject.set("user", Parse.User.current());
                 galleryObject.set("name", $("#galleryName").val());
                 galleryObject.save(null, {
                   success: function(gal) {

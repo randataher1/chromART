@@ -69,14 +69,6 @@
         <input type="hidden" id="photoTaken" value="" />
       </div>
 
-      <div class="imageUpload">
-        <form class="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
-          <fieldset class="fieldset">
-            <input type="file" capture="camera" accept="image/*" name="fileselect" class="fileselect"></input>
-          </fieldset>
-        </form>
-      </div>
-
       <div class="imageDetails">
         <h4>
           Image Details
@@ -235,7 +227,7 @@
                 var Gallery = Parse.Object.extend("Gallery");
                 var galleryObject = new Gallery();
                 //All values set for new Gallery object
-                galleryObject.set("userId", userID);
+                galleryObject.set("user", Parse.User.current());
                 galleryObject.set("name", $("#galleryName").val());
                 galleryObject.save(null, {
                   success: function(gal) {
@@ -287,15 +279,6 @@
     $(".logout").click(function() {
       Parse.User.logOut();
       window.location.href = 'index.html';
-    });
-
-    var file;
-
-    // Set an event listener on the Choose File field.
-    $('.fileselect').bind("change", function(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      file = files[0];
     });
 
   </script>

@@ -212,24 +212,6 @@ body, html {
 	margin-right: auto;
 }
 
-.fileupload {
-	width: 320px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: rgba(255,255,255,0.5);
-}
-
-.fileselect {
-	text-align: center;
-}
-
-.fieldset {
-	border: 1px solid transparent;
-	padding-top: 10px;
-	margin-bottom: 10px;
-}
-
 .profileContainer {
 	width: 330px;
 	display: block;

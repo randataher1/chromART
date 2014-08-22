@@ -93,46 +93,21 @@
       //user.set("emailVerified", false);
 
       user.set("profileDescription", "");
-      var serverUrl = 'https://api.parse.com/1/files/' + file.name;
 
-      $.ajax({
-        type: "POST",
-        beforeSend: function(request) {
-          request.setRequestHeader("X-Parse-Application-Id",
-            'OmBCFAsCIuhnhzrCLtvKyGIdxQHYBW89XS3QqkvP');
-          request.setRequestHeader("X-Parse-REST-API-Key",
-            'zj1rLnIGUQZTCi4HrAYg6aJMErXTQJemsZ4vXw8w');
-          request.setRequestHeader("Content-Type", file.type);
-        },
-        url: serverUrl,
-        data: file,
-        processData: false,
-        contentType: false,
-        dataType: 'json',
-        success: function(data) {
-          alert("File available at: " + data.url);
-          user.set("profilePictureUrl", data.url);
-          user.signUp(null, {
-            success: function(object) {
-              alert("Success!");
-              Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
-                success: function(user) {              
-                  window.location.href = 'profile.html';
-                },
-                error: function(user, error) {
-                  alert("There was an error logging in. Please try again.");
-                }
-              })
+      user.signUp(null, {
+        success: function(object) {
+          alert("Success!");
+          Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
+            success: function(user) {              
+              window.location.href = 'profile.html';
             },
-            error: function(model, error) {
-              alert("There was an error signing up. Please try again.");
+            error: function(user, error) {
+              alert("There was an error logging in. Please try again.");
             }
-          });
+          })
         },
-        error: function(data) {
-          var obj = jQuery.parseJSON(data);
-          alert(obj.error);
-          alert("error");
+        error: function(model, error) {
+          alert("There was an error signing up. Please try again.");
         }
       });
 
