@@ -120,12 +120,12 @@
     followQuery.find({
       success: function(followResults) {
         // The object was retrieved successfully.
-        //Loops through most recently created images of followed users and adds them to the page
+        //Adds followedUser strings of followObjects to an array
         var followObjects = [];
         $.each(followResults, function(object, user) {
           followObjects[object] = user.get('followedUser');
         });
-        console.log(followObjects);
+        //Loops through most recently created images of followed users and adds them to the page
         var Img = Parse.Object.extend("Image");
         var imageQuery = new Parse.Query(Img);
         imageQuery.descending("createdAt");
