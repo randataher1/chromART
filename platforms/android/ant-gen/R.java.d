@@ -14,6 +14,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\res\drawable-port-xhdpi\scr
 C:\Users\User\Desktop\src\chromART\platforms\android\res\drawable-xhdpi\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\res\values\strings.xml \
 C:\Users\User\Desktop\src\chromART\platforms\android\res\xml\config.xml \
+C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-hdpi\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-land-hdpi\screen.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-land-ldpi\screen.png \

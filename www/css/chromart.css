@@ -273,3 +273,15 @@ body, html {
 #galleryName {
 	margin-top: 10px;
 }
+
+@font-face {
+  font-family: 'Asap';
+  font-style: normal;
+  font-weight: 400;
+  src: local('asap'), url(../fonts/asap.woff2) format('woff2');
+}
+
+input {
+	font-family: "Asap";
+	font-size: 18px;
+}

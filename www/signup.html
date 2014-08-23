@@ -28,10 +28,27 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="cordova.js"></script>
+
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
+    <script type="text/javascript">
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
+
+    // Wait for Cordova to connect with the device
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // Cordova is ready to be used!
+    //
+    function onDeviceReady() {
+        pictureSource = navigator.camera.PictureSourceType;
+        destinationType = navigator.camera.DestinationType;
+    }
+    </script>
 
   </head>
 
@@ -46,12 +63,10 @@
         <p>Sign Up</p>
       </div>
 
-      <div class="imageUpload">
-        <form class="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
-          <fieldset class="fieldset">
-            <input type="file" name="fileselect" class="fileselect"></input>
-          </fieldset>
-        </form>
+      <div>
+        <button onclick="takePicture()" type="button" class="btn btn-default takePic">Take Picture</button>
+        <input type="hidden" name="cameraData" id="cameraData" value="" />
+        <input type="hidden" id="photoTaken" value="" />
       </div>
 
       <div>
@@ -81,49 +96,89 @@
 <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
+    function takePicture() {
+      alert("Click");
+      navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL
+      });
+    }    
+
+    function onSuccess(imageData) {
+      alert("yay");
+      var image = document.getElementById('cameraData');
+      image.value = imageData;
+      var photoTaken = document.getElementById('photoTaken');
+      photoTaken.value = "true";
+      alert(photoTaken.value);
+    }
+
+    function onFail(message) {
+        alert('Failed because: ' + message);
+    }
+
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      var user = new Parse.User();
+      var photoTaken = document.getElementById('photoTaken');
+      if(photoTaken.value != "true") {
+        alert("Take a picture first");
+        return false;
+      }
 
-      user.set("fullname", $("#inputFullName").val());
-      user.set("email", $("#inputEmail").val());
-      user.set("username", $("#inputUsername").val());
-      user.set("password", $("#inputPassword").val());
-      //user.set("emailVerified", false);
+      var fileName = "photo" + ".jpeg";
+      var serverUrl = 'https://api.parse.com/1/files/' + fileName;
+      imageData = document.getElementById("cameraData");
+      var parseFile = new Parse.File(fileName, {base64:imageData.value});
 
-      user.set("profileDescription", "");
+      parseFile.save().then(function() {
+        alert("File available at: " + parseFile.url());
 
-      user.signUp(null, {
-        success: function(object) {
-          alert("Success!");
-          Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
-            success: function(user) {              
-              window.location.href = 'profile.html';
-            },
-            error: function(user, error) {
-              alert("There was an error logging in. Please try again.");
-            }
-          })
-        },
-        error: function(model, error) {
-          alert("There was an error signing up. Please try again.");
-        }
+        var user = new Parse.User();
+
+        user.set("fullname", $("#inputFullName").val());
+        user.set("email", $("#inputEmail").val());
+        user.set("username", $("#inputUsername").val());
+        user.set("password", $("#inputPassword").val());
+        //user.set("emailVerified", false);
+
+        user.set("profileDescription", "");
+        user.set("profilePictureUrl", parseFile.url());
+
+        user.signUp(null, {
+          success: function(object) {
+            alert("Success!");
+            Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
+              success: function(user) {
+
+                user.save(null, {
+                  success: function(save) {
+                    // Execute any logic that should take place after the object is saved.
+                    window.location.href = 'profile.html';
+                  },
+                  error: function(save, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and description.
+                    alert('Failed to create new user');
+                  }
+                });
+
+              },
+              error: function(user, error) {
+                alert("There was an error logging in. Please try again.");
+              }
+            })
+          },
+          error: function(model, error) {
+            alert("There was an error signing up. Please try again.");
+          }
+        });
+
       });
 
     });
 
     $(".toIndex").click(function() {
       window.location.href = 'index.html';
-    });
-
-    var file;
-
-    // Set an event listener on the Choose File field.
-    $('.fileselect').bind("change", function(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      file = files[0];
     });
 
   </script>

@@ -116,6 +116,7 @@
     var Follow = Parse.Object.extend("Follow");
     var followQuery = new Parse.Query(Follow);
     followQuery.equalTo("user", Parse.User.current());
+    followQuery.include('user');
     followQuery.find({
       success: function(followResults) {
         // The object was retrieved successfully.
@@ -130,6 +131,7 @@
               // The object was retrieved successfully.
               for(var j = 0; j < imageResults.length; j++) {
                 var imageObject = imageResults[j];
+                var userObject = imageObject.get('user');
                 $(".imageScroll").append(
                   "<div class=\"image\">" +
                     "<div class=\"row\">" +
@@ -137,15 +139,14 @@
                       "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
                       "<div class=\"row\">" +
                         "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" +
-                        imageObject.get('user').id +"\">" + 
+                        userObject.id +"\">" + 
                         "<img class=\"img-circle imageProfilePicture\" src=\"" +
-                          imageObject.get('user').get('profilePictureUrl') +
+                          userObject.get('profilePictureUrl') +
                         "\" />" +
                         "</a></div>" +
                           "<div class=\"col-xs-5\">" +
                             "<div class=\"row\"><a href=\"profile.html?userID=" +
-                              imageObject.get('user').id + "\">" +
-                              imageObject.get('user').get('username') +
+                              userObject.id + "\">" + userObject.get('username') +
                             "</a></div>" +
                             "<div class=\"row\">" +
                               imageObject.get('description') +
@@ -180,7 +181,8 @@
                   success: function(results) {
                     //If there is, alerts user
                     if(results.length === 0) {
-                      alert("No likes or dislikes");
+                      $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
+                        "id=\"followButton\">Follow</button>");
                     }
                     //If there isn't, alert user
                     else {

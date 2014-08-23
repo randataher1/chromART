@@ -91,6 +91,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\minimal\yell
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\minimal\yellow.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\minimal\yellow@2x.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css\minimal\_all.css \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\asap.woff2 \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\badscript.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\estre.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.eot \
