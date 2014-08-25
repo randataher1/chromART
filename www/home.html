@@ -147,6 +147,25 @@
       });
     }
 
+    //Returns all ImageLike objects of images
+    function searchForUserLikeObjectsOf (imageUploadedByFollowedUser, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("image", imageUploadedByFollowedUser);
+      imageLikeQuery.find({
+        success: function(imageLikeResults) {
+          alert("Found user likes of images");
+          callback(imageLikeResults);
+        },
+        error: function (error) {
+          alert("Error finding likes of images of followed users");
+        }
+      });
+    }
+
     //Adds each image and their contents to page
     function addHTMLForEach (individualImage, imagesUploaded) {
       var imageObject = imagesUploaded[individualImage];
@@ -175,10 +194,10 @@
                   "</div>" +
                 "</div>" +
                 "<div class=\"col-xs-2\">" +
-                  "<button type=\"button\" id=\"imageLike" + individualImage +
-                  "\" class=\"btn btn-default btn-sm like\">" +
-                    "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
-                  "</button>" +
+                    "<button type=\"button\" id=\"imageLike" + individualImage +
+                    "\" class=\"btn btn-default btn-sm like\">" +
+                      "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
+                    "</button>" +
                 "</div>" +
                 "<div class=\"col-xs-1\">" +
                   "<button type=\"button\" id=\"imageDislike" + individualImage +
@@ -192,28 +211,9 @@
         "</div>");
     }
 
-    //Returns all ImageLike objects of images
-    function searchForUserLikeOf (imageUploadedByFollowedUser, callback) {
-      var imageLikeObject = Parse.Object.extend("ImageLike");
-      var imageLikeQuery = new Parse.Query(imageLikeObject);
-      //Look for an existing ImageLike object that points to current user and the image
-      imageLikeQuery.include(['user.image']);
-      imageLikeQuery.equalTo("user", Parse.User.current());
-      imageLikeQuery.equalTo("image", imageUploadedByFollowedUser);
-      imageLikeQuery.find({
-        success: function(imageLikeResults) {
-          alert("Found user likes of images");
-          callback(imageLikeResults);
-        },
-        error: function (error) {
-          alert("Error finding likes of images of followed users");
-        }
-      });
-    }
-
     //Searches for like objects, and if there are, changes look of like buttons
     function modifyHTMLOfButtons (imageUploaded, imageCount) {
-      searchForUserLikeOf(imageUploaded, function (imageLike) {
+      searchForUserLikeObjectsOf(imageUploaded, function (imageLike) {
         console.log(imageLike);
         if(imageLike.length === 0) {
           console.log("No likes or dislikes for image: " + imageCount);
@@ -233,7 +233,7 @@
       //Adds like functionality to like button
       $("#imageLike" + imageCount).click(function() {
         //Every time button is clicked, searches for existing ImageLike object
-        searchForUserLikeOf(imageUploaded, function (imageLike) {
+        searchForUserLikeObjectsOf(imageUploaded, function (imageLike) {
           //If the like button is clicked and there isn't an ImageLike object, creates a new one with type like
           if(imageLike.length === 0) {
             $("#imageLike" + imageCount).addClass("active");
@@ -279,7 +279,7 @@
       //Adds like functionality to dislike button
       $("#imageDislike" + imageCount).click(function() {
         //Every time button is clicked, searches for existing ImageLike object
-        searchForUserLikeOf(imageUploaded, function (imageLike) {
+        searchForUserLikeObjectsOf(imageUploaded, function (imageLike) {
           //If the dislike button is clicked and there isn't an ImageLike object, creates a new one with type dislike
           if(imageLike.length === 0) {
             $("#imageDislike" + imageCount).addClass("active");
