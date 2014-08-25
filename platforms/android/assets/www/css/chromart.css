@@ -285,3 +285,19 @@ input {
 	font-family: "Asap";
 	font-size: 18px;
 }
+
+.like:hover,
+.like:focus,
+.like:active,
+.like.active,
+.open > .dropdown-toggle.btn-default {
+	background-color: green;
+}
+
+.dislike:hover,
+.dislike:focus,
+.dislike:active,
+.dislike.active,
+.open > .dropdown-toggle.btn-default {
+	background-color: red;
+}

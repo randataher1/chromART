@@ -112,143 +112,220 @@
 <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    //Finding all Follow objects of the current user
-    var Follow = Parse.Object.extend("Follow");
-    var followQuery = new Parse.Query(Follow);
-    followQuery.equalTo("user", Parse.User.current());
-    followQuery.include('user');
-    followQuery.find({
-      success: function(followResults) {
-        // The object was retrieved successfully.
-        //Loops through most recently created images of followed users and adds them to the page
-        for(var i = 0; i < followResults.length; i++) {
-          var followObject = followResults[i];
-          var Img = Parse.Object.extend("Image");
-          var imageQuery = new Parse.Query(Img);
-          imageQuery.equalTo("user", followObject.get("followedUser"));
-          imageQuery.find({
-            success: function(imageResults) {
-              // The object was retrieved successfully.
-              for(var j = 0; j < imageResults.length; j++) {
-                var imageObject = imageResults[j];
-                var userObject = imageObject.get('user');
-                $(".imageScroll").append(
-                  "<div class=\"image\">" +
-                    "<div class=\"row\">" +
-                      "<div class=\"col-sm-12\">" +
-                      "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
-                      "<div class=\"row\">" +
-                        "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" +
-                        userObject.id +"\">" + 
-                        "<img class=\"img-circle imageProfilePicture\" src=\"" +
-                          userObject.get('profilePictureUrl') +
-                        "\" />" +
-                        "</a></div>" +
-                          "<div class=\"col-xs-5\">" +
-                            "<div class=\"row\"><a href=\"profile.html?userID=" +
-                              userObject.id + "\">" + userObject.get('username') +
-                            "</a></div>" +
-                            "<div class=\"row\">" +
-                              imageObject.get('description') +
-                            "</div>" +
-                            "<div class=\"row\">" +
-                              imageObject.get('hashtag') +
-                            "</div>" +
-                          "</div>" +
-                          "<div class=\"col-xs-2\">" +
-                            "<button type=\"button\" id=\"imageLike" + j +
-                            "\" class=\"btn btn-default btn-sm like\">" +
-                              "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
-                            "</button>" +
-                          "</div>" +
-                          "<div class=\"col-xs-1\">" +
-                            "<button type=\"button\" id=\"imageDislike" + j +
-                            "\" class=\"btn btn-default btn-sm\">" +
-                              "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
-                            "</button>" +
-                          "</div>" +
-                        "</div>" +
-                      "</div>" +
-                    "</div>" +
-                  "</div>");
-
-                var imageLikeObject = Parse.Object.extend("ImageLike");
-                var imageLikeQuery = new Parse.Query(imageLikeObject);
-                //Look for an existing ImageLike object that points to current user and the image
-                imageLikeQuery.equalTo("user", Parse.User.current());
-                imageLikeQuery.equalTo("image", imageObject);
-                imageLikeQuery.find({
-                  success: function(results) {
-                    //If there is, alerts user
-                    if(results.length === 0) {
-                      $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
-                        "id=\"followButton\">Follow</button>");
-                    }
-                    //If there isn't, alert user
-                    else {
-                      alert("There is a like or dislike");
-                    }
-
-                    //Adds like functionality to button
-                    $("#imageLike").click(function() {
-                      //If the Like button is already selected
-                      if($("#imageLike").hasClass("active")) {
-                        $("#imageLike").removeClass("active");
-                        var imageLikeObject = Parse.Object.extend("ImageLike");
-                        var imageLikeQuery = new Parse.Query(imageLikeObject);
-                        //Look for an existing ImageLike object that points to current user and the image
-                        imageLikeQuery.equalTo("user", Parse.User.current());
-                        imageLikeQuery.equalTo("image", imageObject);
-                        //Deletes ImageLike object if user deselects the Like button
-                        imageLikeQuery.find({
-                          success: function(results) {
-                            results[0].destroy({});
-                          },
-                          error: function(object, error) {
-                            alert("Failed to find Like object");
-                          }
-                        });
-                      }
-                      //If the Like button is not selected
-                      else {
-                        $("#followButton").addClass("active");
-                        document.getElementById("followButton").innerHTML="Following";
-                        //Creates new Follow object if user selects the Follow button
-                        var Follow = Parse.Object.extend("Follow");
-                        var follow = new Follow();
-                        follow.set("user", Parse.User.current());
-                        follow.set("followedUser", otherUserObject);
-                        follow.save(null, {
-                          success: function(object) {
-                            alert("Success!");
-                          },
-                          error: function(object, error) {
-                            alert("Failed to create new Follow object");
-                          }
-                        });
-                      }
-                    });
-                  },
-                  error: function(error) {
-                    alert("No Follow object that points to these users");
-                  }
-                });
-              }
-            },
-            error: function(object, error) {
-              alert("Error");
-            }
-          });
+    //Returns all Follow objects of the current user
+    function searchForFollowedUserObjects () {
+      var Follow = Parse.Object.extend("Follow");
+      var followQuery = new Parse.Query(Follow);
+      followQuery.equalTo("user", Parse.User.current());
+      followQuery.include("user");
+      followQuery.find({
+        success: function(followResults) {
+          alert("Found followed users");
+          console.log(followResults);
+          return followResults;
+        },
+        error: function(error) {
+          alert("Error finding followed users");
         }
-      },
-      error: function(error) {
-        // The object was not retrieved successfully.
-        // error is a Parse.Error with an error code and description.
-        alert("Error retrieving images");
-      }
-    });
+      });
+    }
 
-      
+    var x = searchForFollowedUserObjects();
+
+    //Returns all Image objects of followed users
+    function searchForImagesUploadedBy (followedUsers) {
+      var Img = Parse.Object.extend("Image");
+      var imageQuery = new Parse.Query(Img);
+      imageQuery.descending("createdAt");
+      //imageQuery.containedIn("user", followedUsers);
+      imageQuery.include(["user.image"]);
+      imageQuery.find({
+        success: function(imageResults) {
+          alert("Found images of followed users");
+          console.log(imageResults);
+          return imageResults;
+        },
+        error: function (error) {
+          alert("Error finding images of followed users");
+        }
+      });
+    }
+
+    searchForImagesUploadedBy(x);
+
+    // //Returns all ImageLike objects of images
+    // function searchForUserLikeOf (imageUploadedByFollowedUser) {
+    //   var imageLikeObject = Parse.Object.extend("ImageLike");
+    //   var imageLikeQuery = new Parse.Query(imageLikeObject);
+    //   //Look for an existing ImageLike object that points to current user and the image
+    //   imageLikeQuery.include(['user.image']);
+    //   imageLikeQuery.equalTo("user", Parse.User.current());
+    //   imageLikeQuery.equalTo("image", imageUploadedByFollowedUser);
+    //   imageLikeQuery.find({
+    //     success: function(imageLikeResults) {
+    //       alert("Found user likes of images");
+    //       console.log(ImageLikeResults);
+    //       return imageLikeResults;
+    //     },
+    //     error: function (error) {
+    //       alert("Error finding likes of images of followed users");
+    //     }
+    //   });
+    // }
+
+    // //Creates array of Follow objects
+    // var followedUserObjects = searchForFollowedUserObjects();
+
+    // //Takes all Follow objects and puts their followedUser values into an array to access the users that the current user follows
+    // var followedUsers = [];
+    // $.each(followedUserObjects, function(object, user) {
+    //   followedUsers[object] = user.get('followedUser');
+    // });
+
+    // //Creates array of Image objects of followed users
+    // var imagesUploadedByFollowedUsers = searchForImagesUploadedBy(followedUsers);
+
+    // for(var eachImage = 0; eachImage < imagesUploadedByFollowedUsers.length; eachImage++) {
+    //   var imageObject = imagesUploadedByFollowedUsers[eachImage];
+    //   var userWhoCreatedImage = imageObject.get('user');
+    //   $(".imageScroll").append(
+    //     "<div class=\"image\">" +
+    //       "<div class=\"row\">" +
+    //         "<div class=\"col-sm-12\">" +
+    //         "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
+    //         "<div class=\"row\">" +
+    //           "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" +
+    //           userWhoCreatedImage.id +"\">" + 
+    //           "<img class=\"img-circle imageProfilePicture\" src=\"" +
+    //             userWhoCreatedImage.get('profilePictureUrl') +
+    //           "\" />" +
+    //           "</a></div>" +
+    //             "<div class=\"col-xs-5\">" +
+    //               "<div class=\"row\"><a href=\"profile.html?userID=" +
+    //                 userWhoCreatedImage.id + "\">" + userWhoCreatedImage.get('username') +
+    //               "</a></div>" +
+    //               "<div class=\"row\">" +
+    //                 imageObject.get('description') +
+    //               "</div>" +
+    //               "<div class=\"row\">" +
+    //                 imageObject.get('hashtag') +
+    //               "</div>" +
+    //             "</div>" +
+    //             "<div class=\"col-xs-2\">" +
+    //               "<button type=\"button\" id=\"imageLike" + eachImage +
+    //               "\" class=\"btn btn-default btn-sm like\">" +
+    //                 "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
+    //               "</button>" +
+    //             "</div>" +
+    //             "<div class=\"col-xs-1\">" +
+    //               "<button type=\"button\" id=\"imageDislike" + eachImage +
+    //               "\" class=\"btn btn-default btn-sm dislike\">" +
+    //                 "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+    //               "</button>" +
+    //             "</div>" +
+    //           "</div>" +
+    //         "</div>" +
+    //       "</div>" +
+    //     "</div>");
+
+    //   var likeObject = searchForUserLikeOf(imageObject);
+
+    //   //If there isn't, alerts user
+    //   if(likeObject.length === 0) {
+    //     alert("No likes for image: " + imageObject.id);
+    //   }
+    //   //If there is an object with type like, make the like button active
+    //   else if(likeObject[0].get("type") === "like") {
+    //     $("#imageLike" + eachImage).addClass("active");
+    //   }
+    //   //If there is an object with type dislike, make the dislike button active
+    //   else {
+    //     $("#imageDislike" + eachImage).addClass("active");
+    //   }
+
+    //   //Adds like functionality to like button
+    //   $("#imageLike" + eachImage).click(function() {
+    //     //If the like button is clicked and there isn't an ImageLike object, creates a new one with type like
+    //     if(likeObject.length === 0) {
+    //       $("#imageLike" + eachImage).addClass("active");
+    //       var imageLikeObject = Parse.Object.extend("ImageLike");
+    //       var imageLike = new imageLikeObject();
+    //       imageLike.set("user", Parse.User.current());
+    //       imageLike.set("image", imageObject);
+    //       imageLike.set("type", "like");
+    //       imageLike.save(null, {
+    //         success: function(object) {
+    //           alert("Successfully created new ImageLike object with type like!");
+    //         },
+    //         error: function(object, error) {
+    //           alert("Failed to create new ImageLike object with type like");
+    //         }
+    //       });
+    //     }
+    //     //If there is a like object with type like, removes the like object
+    //     else if (likeObject[0].get("type") === "like") {
+    //       $("#imageLike" + eachImage).removeClass("active");
+    //       likeObject[0].destroy({});
+    //       alert("Successfully destroyed ImageLike object with type like!");
+    //     }
+    //     //If there is a like object with type dislike, changes the type of the object
+    //     else {
+    //       $("#imageDislike" + eachImage).removeClass("active");
+    //       $("#imageLike" + eachImage).addClass("active");
+    //       likeObject[0].set("type", "like");
+    //       likeObject[0].save(null, {
+    //         success: function(object) {
+    //           alert("Successfully changed type of ImageLike object to type like!");
+    //         },
+    //         error: function(object, error) {
+    //           alert("Failed to change type of ImageLike object to type like");
+    //         }
+    //       });
+    //     }
+    //   });
+
+    //   //Adds like functionality to dislike button
+    //   $("#imageDislike" + eachImage).click(function() {
+    //     //If the dislike button is clicked and there isn't an ImageLike object, creates a new one with type dislike
+    //     if(likeObject.length === 0) {
+    //       $("#imageDislike" + eachImage).addClass("active");
+    //       var imageLikeObject = Parse.Object.extend("ImageLike");
+    //       var imageLike = new imageLikeObject();
+    //       imageLike.set("user", Parse.User.current());
+    //       imageLike.set("image", imageObject);
+    //       imageLike.set("type", "dislike");
+    //       imageLike.save(null, {
+    //         success: function(object) {
+    //           alert("Successfully created new ImageLike object with type dislike!");
+    //         },
+    //         error: function(object, error) {
+    //           alert("Failed to create new ImageLike object with type dislike");
+    //         }
+    //       });
+    //     }
+    //     //If there is a like object with type dislike, removes the like object
+    //     else if (likeObject[0].get("type") === "dislike") {
+    //       $("#imageDislike" + eachImage).removeClass("active");
+    //       likeObject[0].destroy({});
+    //       alert("Successfully destroyed ImageLike object with type dislike!");
+    //     }
+    //     //If there is a like object with type like, changes the type of the object
+    //     else {
+    //       $("#imageLike" + eachImage).removeClass("active");
+    //       $("#imageDislike" + eachImage).addClass("active");
+    //       likeObject[0].set("type", "dislike");
+    //       likeObject[0].save(null, {
+    //         success: function(object) {
+    //           alert("Successfully changed type of ImageLike object to type dislike!");
+    //         },
+    //         error: function(object, error) {
+    //           alert("Failed to change type of ImageLike object to type dislike");
+    //         }
+    //       });
+    //     }
+        
+    //   });
+    // }
     
     $(".logout").click(function() {
       Parse.User.logOut();
