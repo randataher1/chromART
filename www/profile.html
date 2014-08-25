@@ -138,116 +138,151 @@
         userID = Parse.User.current().id; // where User was previously set by the parse User object
     }
 
-    var otherUserObject;
+    //Returns user based on the GET variable in the URL
+    function searchForUserBasedOnID (callback) {
+      var otherUser = Parse.Object.extend("_User");
+      var userQuery = new Parse.Query(otherUser);
+      userQuery.get(userID, {
+        success: function(userBasedonID) {
+          alert("Found user");
+          callback(userBasedonID);
+        },
+        error: function(error) {
+          alert("Error finding user");
+        }
+      });
+    }
 
-    //Adding content to profile based on userID
-    var otherUser = Parse.Object.extend("_User");
-    var userQuery = new Parse.Query(otherUser);
-    userQuery.get(userID, {
-      success: function(other) {
-        // The object was retrieved successfully.
-        var picture = other.get("profilePictureUrl");
-        var name = other.get("username");
-        var desc = other.get("profileDescription");
-        document.getElementById('proPic').innerHTML = "<img src=\"" + picture + "\" class=\"img-circle profilePicture\"/>";
-        document.getElementById('proName').innerHTML = name;
-        document.getElementById('proDescription').innerHTML = desc;
-        otherUserObject = other;
-        //If userID is not that of current user, check if current user is following the user with that userID
-        if(userID != Parse.User.current().id) {
-          var following = Parse.Object.extend("Follow");
-          var followingQuery = new Parse.Query(following);
-          //Look for an existing Follow object that points to current user and the other user
-          followingQuery.equalTo("user", Parse.User.current());
-          followingQuery.equalTo("followedUser", otherUserObject);
-          followingQuery.find({
-            success: function(results) {
-              //If there is a following object, appends an active button
-              if(results.length === 0) {
-                $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
-                  "id=\"followButton\">Follow</button>");
-              }
-              //If there isn't, appends a non-active button
-              else {
-                $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton active\"" +
-                  "id=\"followButton\">Following</button>");
-              }
+    //If the current user ID is the same as the ID in the URL
+    function checkIfUserIDIsCurrentUserID (userId) {
+      if(userId === Parse.User.current().id) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
 
-              //Adds follow functionality to button
-              $("#followButton").click(function() {
-                if($("#followButton").hasClass("active")) {
-                  $("#followButton").removeClass("active");
-                  document.getElementById("followButton").innerHTML="Follow";
-                  var following = Parse.Object.extend("Follow");
-                  var followingQuery = new Parse.Query(following);
-                  //Look for an existing Follow object that points to current user and the other user
-                  followingQuery.equalTo("user", Parse.User.current());
-                  followingQuery.equalTo("followedUser", otherUserObject);
-                  //Deletes Follow object if user deselects the Follow button
-                  followingQuery.find({
-                    success: function(results) {
-                      results[0].destroy({});
-                    },
-                    error: function(object, error) {
-                      alert("Failed to find Follow object");
-                    }
-                  });
-                }
-                else {
-                  $("#followButton").addClass("active");
-                  document.getElementById("followButton").innerHTML="Following";
-                  //Creates new Follow object if user selects the Follow button
-                  var Follow = Parse.Object.extend("Follow");
-                  var follow = new Follow();
-                  follow.set("user", Parse.User.current());
-                  follow.set("followedUser", otherUserObject);
-                  follow.save(null, {
-                    success: function(object) {
-                      alert("Success!");
-                    },
-                    error: function(object, error) {
-                      alert("Failed to create new Follow object");
-                    }
-                  });
-                }
-              });
+    function addSettingsBar () {
+      $(".pageHeader").append("Settings");
+      //If userID is that of current user, add Settings bar
+    }
+
+    var userObject;
+
+    //Adds information of user to page
+    function addHTMLBasedOnUser (user) {
+      var profilePicture = user.get("profilePictureUrl");
+      var profileUsername = user.get("username");
+      var profileDesc = user.get("profileDescription");
+      document.getElementById("proPic").innerHTML =  "<img src=\"" + profilePicture + "\" class=\"img-circle profilePicture\"/>";
+      document.getElementById("proName").innerHTML = profileUsername;
+      document.getElementById("proDescription").innerHTML = profileDesc;
+      userObject = user;
+    }
+
+    //Checks if the current user is following the user of the profile that is being viewed
+    function searchForFollowObjectBasedOnID (user, callback) {
+      var following = Parse.Object.extend("Follow");
+      var followingQuery = new Parse.Query(following);
+      followingQuery.equalTo("user", Parse.User.current());
+      followingQuery.equalTo("followedUser", user);
+      followingQuery.find({
+        success: function(followObject) {
+          alert("Found Follow object");
+          callback(followObject);
+        },
+        error: function(error) {
+          alert("Error finding Follow object");
+        }
+      });
+    }
+
+    //Adds follow button based on whether the current user is following the user or not
+    function addFollowButtonToProfile (followingObject) {
+      //If there is a following object, appends an active button
+      if(followingObject.length === 0) {
+        $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
+          "id=\"followButton\">Follow</button>");
+      }
+      //If there isn't, appends a non-active button
+      else {
+        $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton active\"" +
+          "id=\"followButton\">Following</button>");
+      }
+    }
+
+    function addFollowFunctionToFollowButton (user) {
+      //Adds follow functionality to button
+      $("#followButton").click(function() {
+        //If the user clicks the button when it is active, the Follow object is removed and the button becomes unactive
+        if($("#followButton").hasClass("active")) {
+          $("#followButton").removeClass("active");
+          document.getElementById("followButton").innerHTML="Follow";
+          searchForFollowObjectBasedOnID(user, function (followingObject) {
+            followingObject[0].destroy({});
+            alert("Destroyed Follow object");
+          })
+        }
+        else {
+          $("#followButton").addClass("active");
+          document.getElementById("followButton").innerHTML="Following";
+          //Creates new Follow object if user selects the Follow button
+          var Follow = Parse.Object.extend("Follow");
+          var follow = new Follow();
+          follow.set("user", Parse.User.current());
+          follow.set("followedUser", user);
+          follow.save(null, {
+            success: function(object) {
+              alert("Success!");
             },
-            error: function(error) {
-              alert("No Follow object that points to these users");
+            error: function(object, error) {
+              alert("Failed to create new Follow object");
             }
           });
         }
-      },
-      error: function(object, error) {
-        // The object was not retrieved successfully.
-        // error is a Parse.Error with an error code and description.
-        alert("User load error");
-      }
-    });
-
-    //Finding galleries based on userID and adding to profile
-    var otherGallery = Parse.Object.extend("Gallery");
-    var galleryQuery = new Parse.Query(otherGallery);
-    galleryQuery.equalTo("userId", userID);
-    galleryQuery.find({
-      success: function(results) {
-        // The object was retrieved successfully.
-        for(var i = 0; i < results.length; i++) {
-          var object = results[i];
-          $("#galleries").append("<p>" + object.get('name') + "</p>");
-        }
-      },
-      error: function(error) {
-        // The object was not retrieved successfully.
-        // error is a Parse.Error with an error code and description.
-        alert("User load error");
-      }
-    });
-
-    //If userID is that of current user, add Settings bar
-    if(userID === Parse.User.current().id) {
-      $(".pageHeader").append("Settings");
+      });
     }
+
+    //Finding galleries based on user
+    function searchForGalleryBasedOnUser (user, callback) {
+      var gallery = Parse.Object.extend("Gallery");
+      var galleryQuery = new Parse.Query(gallery);
+      galleryQuery.equalTo("user", user);
+      galleryQuery.find({
+        success: function(galleryObjects) {
+          alert("Found Gallery objects!");
+          callback(galleryObjects);
+        },
+        error: function(error) {
+          alert("Error finding Gallery objects");
+        }
+      });
+    }
+
+    //Adding galleries to profile
+    function addGalleries (galleries) {
+      for(var eachGallery = 0; eachGallery < galleries.length; eachGallery++) {
+        var individualGallery = galleries[eachGallery];
+        $("#proGalleries").append("<p>" + individualGallery.get('name') + "</p>");
+      }
+    }
+
+    searchForUserBasedOnID(function (userObjectBasedOnID) {
+      addHTMLBasedOnUser(userObjectBasedOnID);
+      searchForGalleryBasedOnUser(userObjectBasedOnID, function(galleriesBasedOnUser) {
+        addGalleries(galleriesBasedOnUser);
+      });
+      if(!checkIfUserIDIsCurrentUserID(userID)) {
+        searchForFollowObjectBasedOnID(userObject, function (followObjectBasedOnID) {
+          addFollowButtonToProfile(followObjectBasedOnID);
+          addFollowFunctionToFollowButton(userObject);
+        });
+      }
+      else {
+        addSettingsBar();
+      }
+    });
 
     $(".logout").click(function() {
       Parse.User.logOut();
