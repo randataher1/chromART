@@ -14,9 +14,6 @@
 
     <link href="css/ratchet.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/jumbotron-narrow.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -33,6 +30,8 @@
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
+
+    <script type="text/javascript" src="js/bootstrap.js"></script>
 
     <script type="text/javascript">
     var pictureSource;   // picture source
@@ -82,18 +81,40 @@
             <label for="imageDesc">Description</label>
             <input type="text" class="form-control" id="imageDesc" placeholder="Enter description">
           </div>
-          <div class="form-group">
-            <label for="imageTags">Hashtags</label>
-            <input type="text" class="form-control" id="imageTags" placeholder="Enter hashtags">
-          </div>
-        <div id="gallerySelect">
-          <div class="form-group radio">
-              <input type="radio" name="optionsRadios" id="optionLast" value="optionLast">
-            <label>Add new gallery</label>
-              <input type="text" name="newGalleryName" class="form-control" id="galleryName" placeholder="Enter new gallery name" />
-          </div>
+        </form>
+
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+            Categories
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Abstract</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Anime</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Impressionist</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Modern</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Nature</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Surreal</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Fashion</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Cultural</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Photography</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Other</a></li>
+          </ul>
         </div>
-        <button type="submit" class="btn btn-default uploadButton\">Upload</button>
+
+        <div>
+          <input type="hidden" id="dropdownValue" value="" />
+        </div>
+
+        <form role="form">
+          <div id="gallerySelect">
+            <div class="form-group radio">
+                <input type="radio" name="optionsRadios" id="optionLast" value="optionLast">
+              <label>Add new gallery</label>
+                <input type="text" name="newGalleryName" class="form-control" id="galleryName" placeholder="Enter new gallery name" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default uploadButton\">Upload</button>
         </form>
       </div>
 
@@ -130,6 +151,23 @@
   <script type="text/javascript">
 
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+
+    $('.dropdown-toggle').dropdown();
+
+    $(".dropdown-menu").each(function(){
+      var parentWidth = $(this).parent().innerWidth();
+      var menuWidth = $(this).innerWidth();
+      var margin = (parentWidth / 2) - (menuWidth / 2);
+      margin = margin + "px";
+      $(this).css("margin-left", margin);
+    });
+
+    $(".dropdown-menu li a").click(function(){
+      var selText = $(this).text();
+      $(this).parents('.dropdown').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+      dropdownValue.value = selText;
+      alert(dropdownValue.value);
+    });
 
     function takePicture() {
       alert("Click");
@@ -203,7 +241,7 @@
           image.set("user", Parse.User.current());
           image.set("title", $("#imageName").val());
           image.set("description", $("#imageDesc").val());
-          image.set("hashtag", $("#imageTags").val());
+          image.set("category", dropdownValue.value);
           image.set("url", parseFile.url());
           
           var otherGallery = Parse.Object.extend("Gallery");
