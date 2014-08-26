@@ -212,6 +212,22 @@
       }
     }
 
+    //Creates new follow object
+    function createNewFollowObject (otherUser) {
+      var Follow = Parse.Object.extend("Follow");
+      var follow = new Follow();
+      follow.set("user", Parse.User.current());
+      follow.set("followedUser", otherUser);
+      follow.save(null, {
+        success: function(object) {
+          alert("Success!");
+        },
+        error: function(error) {
+          alert("Failed to create new Follow object");
+        }
+      });
+    }
+
     function addFollowFunctionToFollowButton (user) {
       //Adds follow functionality to button
       $("#followButton").click(function() {
@@ -228,18 +244,7 @@
           $("#followButton").addClass("active");
           document.getElementById("followButton").innerHTML="Following";
           //Creates new Follow object if user selects the Follow button
-          var Follow = Parse.Object.extend("Follow");
-          var follow = new Follow();
-          follow.set("user", Parse.User.current());
-          follow.set("followedUser", user);
-          follow.save(null, {
-            success: function(object) {
-              alert("Success!");
-            },
-            error: function(object, error) {
-              alert("Failed to create new Follow object");
-            }
-          });
+          createNewFollowObject(user);
         }
       });
     }
