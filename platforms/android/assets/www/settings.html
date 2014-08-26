@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore Popular</title>
+    <title>Profile</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -29,46 +29,61 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
+
   </head>
 
   <body>
 
     <div class="container">
-      <div class="pageHeader">
-        <img src="img/logo.png" class="logo center" />
+      <div class="containerDark">
+
+        <div class="pageHeader">
+          <div class="settingsBar">
+            <div class="settings">
+              
+            </div>
+          </div>
+        </div>
+
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-default logout">Logout</button>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div>
+          <nav class="bar bar-tab">
+            <a class="tab-item" href="home.html">
+              <span class="icon icon-home"></span>
+              <span class="tab-label">Home</span>
+            </a>
+            <a class="tab-item active" href="profile.html">
+              <span class="icon icon-person"></span>
+              <span class="tab-label">Profile</span>
+            </a>
+            <a class="tab-item" href="explore.html">
+              <span class="icon icon-pages"></span>
+              <span class="tab-label">Explore</span>
+            </a>
+            <a class="tab-item" href="upload.html">
+              <span class="icon icon-share"></span>
+              <span class="tab-label">Upload</span>
+            </a>
+          </nav>
+        </div>
+
       </div>
-
-      <div class="titleText">
-        <p>Explore Popular</p>
-      </div>
-
-      <div class="clear"></div>
-
-      <div>
-        <nav class="bar bar-tab">
-          <a class="tab-item" href="home.html">
-            <span class="icon icon-home"></span>
-            <span class="tab-label">Home</span>
-          </a>
-          <a class="tab-item" href="profile.html">
-            <span class="icon icon-person"></span>
-            <span class="tab-label">Profile</span>
-          </a>
-          <a class="tab-item active" href="explore.html">
-            <span class="icon icon-pages"></span>
-            <span class="tab-label">Explore</span>
-          </a>
-          <a class="tab-item" href="upload.html">
-            <span class="icon icon-share"></span>
-            <span class="tab-label">Upload</span>
-          </a>
-        </nav>
-      </div>
-
     </div> <!-- /container -->
+
 
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+
+    $(".logout").click(function() {
+      Parse.User.logOut();
+      window.location.href = 'index.html';
+    });
   </script>
 
     <!-- Bootstrap core JavaScript

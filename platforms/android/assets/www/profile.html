@@ -38,6 +38,7 @@
       <div class="containerDark">
 
         <div class="pageHeader">
+          
         </div>
 
         <div class="profileContainer">
@@ -75,18 +76,7 @@
           </div>
 
           <div id="proGalleries">
-            <!-- <div class="col-xs-6 gallery">
-              Nature
-            </div>
-            <div class="col-xs-6 gallery">
-              Modern
-            </div>
-            <div class="col-xs-6 gallery">
-              Surreal
-            </div>
-            <div class="col-xs-6 gallery">
-              Impressionist
-            </div> -->
+            
           </div>
 
           <div class="col-xs-12">
@@ -102,7 +92,7 @@
               <span class="icon icon-home"></span>
               <span class="tab-label">Home</span>
             </a>
-            <a class="tab-item active" href="profile.html">
+            <a class="tab-item profileNav" href="profile.html">
               <span class="icon icon-person"></span>
               <span class="tab-label">Profile</span>
             </a>
@@ -174,9 +164,18 @@
       }
     }
 
+    //If userID is that of current user, add Settings bar
     function addSettingsBar () {
-      $(".pageHeader").append("Settings");
-      //If userID is that of current user, add Settings bar
+      $(".pageHeader").append(
+        "<div class=\"settingsBar\">" +
+          "<div class=\"settings\">" +
+            "<span class=\"glyphicon glyphicon-cog\">" +
+            "</span>" +
+          "</div>" +
+        "</div>");
+      $(".settings").click(function() {
+        window.location.href = 'settings.html';
+      });
     }
 
     var userObject;
@@ -311,7 +310,7 @@
       }
       if(galleries.length === 0) {
         $("#proGalleries").append(
-          "<div id=\"noGalleries\">" +
+          "<div class=\"noGalleries\">" +
             user.get("username") + " has no galleries" +
           "</div>");
       }
@@ -330,6 +329,7 @@
       }
       else {
         addSettingsBar();
+        $(".profileNav").addClass("active");
       }
     });
 

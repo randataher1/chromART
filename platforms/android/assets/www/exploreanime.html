@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Home</title>
+    <title>Explore Anime</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -29,6 +29,7 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
+
   </head>
 
   <body>
@@ -38,7 +39,6 @@
         <div class="pageHeader">
           <img src="img/logo.png" class="logo center" />
         </div>
-
 
         <div class="imageScroll">
           <div class="image">
@@ -63,10 +63,10 @@
                 </div>
               </div>
               <div class="col-xs-3">
-                <button type="button" class="btn btn-default btn-sm like">
+                <button type="button" class="btn btn-default btn-sm">
                   <span class="glyphicon glyphicon-thumbs-up"></span>
                 </button>
-                <button type="button" class="btn btn-default btn-sm dislike">
+                <button type="button" class="btn btn-default btn-sm">
                   <span class="glyphicon glyphicon-thumbs-down"></span>
                 </button>
               </div>
@@ -74,19 +74,23 @@
           </div>
         </div>
 
+        <div>
+          <button type="button" class="btn btn-default logout">Logout</button>
+        </div>
+
         <div class="clear"></div>
 
         <div>
           <nav class="bar bar-tab">
-            <a class="tab-item active" href="home.html">
+            <a class="tab-item" href="home.html">
               <span class="icon icon-home"></span>
               <span class="tab-label">Home</span>
             </a>
-            <a class="tab-item" href="profile.html?userID=">
+            <a class="tab-item" href="profile.html">
               <span class="icon icon-person"></span>
               <span class="tab-label">Profile</span>
             </a>
-            <a class="tab-item" href="explore.html">
+            <a class="tab-item active" href="explore.html">
               <span class="icon icon-pages"></span>
               <span class="tab-label">Explore</span>
             </a>
@@ -99,60 +103,53 @@
       </div>
     </div> <!-- /container -->
 
-
-<script type="text/javascript">
+  <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    //Returns all Follow objects of the current user
-    function searchForFollowedUserObjects (callback) {
-      var Follow = Parse.Object.extend("Follow");
-      var followQuery = new Parse.Query(Follow);
-      followQuery.equalTo("user", Parse.User.current());
-      followQuery.include("user");
-      followQuery.find({
-        success: function(followResults) {
-          alert("Found followed users");
-          callback(followResults);
+    //Finding most recently created images
+    function searchForAnimeImages (callback) {
+      //Finding most recently created images and adding to imageScroll
+      var otherImage = Parse.Object.extend("Image");
+      var imageQuery = new Parse.Query(otherImage);
+      imageQuery.descending("createdAt");
+      imageQuery.equalTo("category", "Anime");
+      imageQuery.include('user');
+      imageQuery.limit(10);
+      imageQuery.find({
+        success: function(results) {
+          alert("Found Anime images");
+          callback(results);
         },
         error: function(error) {
-          alert("Error finding followed users");
+          alert("Error finding Anime images");
         }
       });
     }
 
-    //Returns all Image objects of followed users
-    function searchForImagesUploadedBy (followedUsers, callback) {
-      var Img = Parse.Object.extend("Image");
-      var imageQuery = new Parse.Query(Img);
-      imageQuery.descending("createdAt");
-      imageQuery.containedIn("user", followedUsers);
-      imageQuery.include(["user.image"]);
-      imageQuery.find({
-        success: function(imageResults) {
-          alert("Found images of followed users");
-          callback(imageResults);
-        },
-        error: function (error) {
-          alert("Error finding images of followed users");
-        }
-      });
+    function displayMessageIfThereAreNo (images) {
+      if(images.length === 0) {
+        $(".imageScroll").append(
+          "<div class=\"noImages\">" +
+            "There are no Anime images" +
+          "</div>");
+      }
     }
 
     //Returns all ImageLike objects of images
-    function searchForUserLikeObjectsOf (imageUploadedByFollowedUser, callback) {
+    function searchForUserLikeObjectsOf (animeImage, callback) {
       var imageLikeObject = Parse.Object.extend("ImageLike");
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
       imageLikeQuery.equalTo("user", Parse.User.current());
-      imageLikeQuery.equalTo("image", imageUploadedByFollowedUser);
+      imageLikeQuery.equalTo("image", animeImage);
       imageLikeQuery.find({
         success: function(imageLikeResults) {
           alert("Found user likes of images");
           callback(imageLikeResults);
         },
         error: function (error) {
-          alert("Error finding likes of images of followed users");
+          alert("Error finding likes of images");
         }
       });
     }
@@ -165,11 +162,11 @@
         "<div class=\"image\">" +
           "<div class=\"row\">" +
             "<div class=\"col-sm-12\">" +
-            "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
+              "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
             "</div>" +
           "</div>" +
           "<div class=\"row imageContents\">" +
-            "<div class=\"col-xs-3\">" +
+            "<div class=\"col-xs-3\">" + 
               "<a href=\"profile.html?userID=" + userWhoCreatedImage.id +"\">" + 
                 "<img class=\"img-circle imageProfilePicture\" src=\"" + userWhoCreatedImage.get('profilePictureUrl') + "\" />" +
               "</a>" +
@@ -189,11 +186,11 @@
             "</div>" +
             "<div class=\"col-xs-3\">" +
               "<button type=\"button\" id=\"imageLike" + individualImage + "\" class=\"btn btn-default btn-sm like\">" +
-                  "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
+                "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
               "</button>" +
               "<button type=\"button\" id=\"imageDislike" + individualImage + "\" class=\"btn btn-default btn-sm dislike\">" +
-                "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
-              "</button>" +
+                  "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+                "</button>" +
             "</div>" +
           "</div>" +
         "</div>");
@@ -309,29 +306,22 @@
       });
     }
 
-    //Creates array for User objects of followed users
-    var followedUsers = [];
+    searchForAnimeImages(function (animeImagesUploaded) {
+      console.log(animeImagesUploaded);
+      displayMessageIfThereAreNo(animeImagesUploaded);
+      //For each image, appends HTML
+      for (var eachImage = 0; eachImage < animeImagesUploaded.length; eachImage++) {
+        var imageObject = animeImagesUploaded[eachImage];
+        addHTMLForEach(eachImage, animeImagesUploaded);
+        modifyHTMLOfButtons(imageObject, eachImage);
+        addLikeFunctionToLikeButton(imageObject, eachImage);
+        addDislikeFunctionToDislikeButton(imageObject, eachImage);
+      }
+    });
     
-    //Uses callback to obtain all information in order
-    //Searches for followed users
-    searchForFollowedUserObjects(function (followedUserObjects) {
-      //For each followed user, gets user object and adds to array
-      $.each(followedUserObjects, function(object, user) {
-        followedUsers[object] = user.get('followedUser');
-      });
-      console.log(followedUsers);
-      //For each followed user, gets all images uploaded
-      searchForImagesUploadedBy(followedUsers, function (imagesUploadedByFollowedUsers) {
-        console.log(imagesUploadedByFollowedUsers);
-        //For each image, appends HTML
-        for (var eachImage = 0; eachImage < imagesUploadedByFollowedUsers.length; eachImage++) {
-          var imageObject = imagesUploadedByFollowedUsers[eachImage];
-          addHTMLForEach(eachImage, imagesUploadedByFollowedUsers);
-          modifyHTMLOfButtons(imageObject, eachImage);
-          addLikeFunctionToLikeButton(imageObject, eachImage);
-          addDislikeFunctionToDislikeButton(imageObject, eachImage);
-        }
-      });
+    $(".logout").click(function() {
+      Parse.User.logOut();
+      window.location.href = 'index.html';
     });
   </script>
 

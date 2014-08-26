@@ -417,3 +417,14 @@ input {
 	font-size: 13px;
 	word-wrap: break-word;
 }
+
+.settingsBar {
+	height: 45px;
+	padding: 5px;
+}
+
+.glyphicon-cog {
+	font-size: 35px;
+	color: #ffffff;
+	float: right;
+}

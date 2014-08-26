@@ -34,8 +34,17 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova_plugins.
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explore.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploreabstract.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploreanime.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorecultural.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorefashion.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploreimpressionist.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploremodern.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorenature.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorenew.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploreother.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorephotography.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorepopular.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploresurreal.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\home.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
@@ -43,6 +52,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\profile.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\settings.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signin.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\signup.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\upload.html \

@@ -126,6 +126,15 @@
       });
     }
 
+    function displayMessageIfThereAreNo (images) {
+      if(images.length === 0) {
+        $(".imageScroll").append(
+          "<div class=\"noImages\">" +
+            "There are no Abstract images" +
+          "</div>");
+      }
+    }
+
     //Returns all ImageLike objects of images
     function searchForUserLikeObjectsOf (abstractImage, callback) {
       var imageLikeObject = Parse.Object.extend("ImageLike");
@@ -299,6 +308,7 @@
 
     searchForAbstractImages(function (abstractImagesUploaded) {
       console.log(abstractImagesUploaded);
+      displayMessageIfThereAreNo(abstractImagesUploaded);
       //For each image, appends HTML
       for (var eachImage = 0; eachImage < abstractImagesUploaded.length; eachImage++) {
         var imageObject = abstractImagesUploaded[eachImage];

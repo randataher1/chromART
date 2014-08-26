@@ -29,7 +29,6 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
-
   </head>
 
   <body>
@@ -72,10 +71,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div>
-          <button type="button" class="btn btn-default logout">Logout</button>
         </div>
 
         <div class="clear"></div>
@@ -317,11 +312,6 @@
         addLikeFunctionToLikeButton(imageObject, eachImage);
         addDislikeFunctionToDislikeButton(imageObject, eachImage);
       }
-    });
-    
-    $(".logout").click(function() {
-      Parse.User.logOut();
-      window.location.href = 'index.html';
     });
   </script>
 
