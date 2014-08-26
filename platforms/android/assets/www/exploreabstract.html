@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore New</title>
+    <title>Explore Abstract</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -107,32 +107,33 @@
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
     //Finding most recently created images
-    function searchForRecentlyUploadedImages (callback) {
+    function searchForAbstractImages (callback) {
       //Finding most recently created images and adding to imageScroll
       var otherImage = Parse.Object.extend("Image");
       var imageQuery = new Parse.Query(otherImage);
       imageQuery.descending("createdAt");
+      imageQuery.equalTo("category", "Abstract");
       imageQuery.include('user');
       imageQuery.limit(10);
       imageQuery.find({
         success: function(results) {
-          alert("Found most recently uploaded images");
+          alert("Found Abstract images");
           callback(results);
         },
         error: function(error) {
-          alert("Error finding most recently uploaded images");
+          alert("Error finding Abstract images");
         }
       });
     }
 
     //Returns all ImageLike objects of images
-    function searchForUserLikeObjectsOf (recentlyUploadedImage, callback) {
+    function searchForUserLikeObjectsOf (abstractImage, callback) {
       var imageLikeObject = Parse.Object.extend("ImageLike");
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
       imageLikeQuery.equalTo("user", Parse.User.current());
-      imageLikeQuery.equalTo("image", recentlyUploadedImage);
+      imageLikeQuery.equalTo("image", abstractImage);
       imageLikeQuery.find({
         success: function(imageLikeResults) {
           alert("Found user likes of images");
@@ -296,12 +297,12 @@
       });
     }
 
-    searchForRecentlyUploadedImages(function (recentImagesUploaded) {
-      console.log(recentImagesUploaded);
+    searchForAbstractImages(function (abstractImagesUploaded) {
+      console.log(abstractImagesUploaded);
       //For each image, appends HTML
-      for (var eachImage = 0; eachImage < recentImagesUploaded.length; eachImage++) {
-        var imageObject = recentImagesUploaded[eachImage];
-        addHTMLForEach(eachImage, recentImagesUploaded);
+      for (var eachImage = 0; eachImage < abstractImagesUploaded.length; eachImage++) {
+        var imageObject = abstractImagesUploaded[eachImage];
+        addHTMLForEach(eachImage, abstractImagesUploaded);
         modifyHTMLOfButtons(imageObject, eachImage);
         addLikeFunctionToLikeButton(imageObject, eachImage);
         addDislikeFunctionToDislikeButton(imageObject, eachImage);

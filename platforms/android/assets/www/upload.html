@@ -85,7 +85,7 @@
 
         <div class="dropdown">
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-            Categories
+            Choose a category
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -107,6 +107,7 @@
         </div>
 
         <form role="form">
+          <label for="imageGallery">Gallery</label>
           <div id="gallerySelect">
             <div class="form-group radio">
                 <input type="radio" name="optionsRadios" id="optionLast" value="optionLast">
@@ -194,7 +195,7 @@
     //Finding galleries based on userID and adding to upload
     var otherGallery = Parse.Object.extend("Gallery");
     var galleryQuery = new Parse.Query(otherGallery);
-    galleryQuery.equalTo("userId", userID);
+    galleryQuery.equalTo("user", Parse.User.current());
     galleryQuery.find({
       success: function(results) {
         // The object was retrieved successfully.
@@ -246,7 +247,7 @@
           
           var otherGallery = Parse.Object.extend("Gallery");
           var galleryQuery = new Parse.Query(otherGallery);
-          galleryQuery.equalTo("userId", userID);
+          galleryQuery.equalTo("user", Parse.User.current());
 
           galleryQuery.find({
             success: function(results) {

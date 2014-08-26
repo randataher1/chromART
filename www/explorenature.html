@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore New</title>
+    <title>Explore Nature</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -107,32 +107,42 @@
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
     //Finding most recently created images
-    function searchForRecentlyUploadedImages (callback) {
+    function searchForNatureImages (callback) {
       //Finding most recently created images and adding to imageScroll
       var otherImage = Parse.Object.extend("Image");
       var imageQuery = new Parse.Query(otherImage);
       imageQuery.descending("createdAt");
+      imageQuery.equalTo("category", "Nature");
       imageQuery.include('user');
       imageQuery.limit(10);
       imageQuery.find({
         success: function(results) {
-          alert("Found most recently uploaded images");
+          alert("Found Nature images");
           callback(results);
         },
         error: function(error) {
-          alert("Error finding most recently uploaded images");
+          alert("Error finding Nature images");
         }
       });
     }
 
+    function displayMessageIfThereAreNo (images) {
+      if(images.length === 0) {
+        $(".imageScroll").append(
+          "<div class=\"noImages\">" +
+            "There are no Nature images" +
+          "</div>");
+      }
+    }
+
     //Returns all ImageLike objects of images
-    function searchForUserLikeObjectsOf (recentlyUploadedImage, callback) {
+    function searchForUserLikeObjectsOf (natureImage, callback) {
       var imageLikeObject = Parse.Object.extend("ImageLike");
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
       imageLikeQuery.equalTo("user", Parse.User.current());
-      imageLikeQuery.equalTo("image", recentlyUploadedImage);
+      imageLikeQuery.equalTo("image", natureImage);
       imageLikeQuery.find({
         success: function(imageLikeResults) {
           alert("Found user likes of images");
@@ -296,12 +306,13 @@
       });
     }
 
-    searchForRecentlyUploadedImages(function (recentImagesUploaded) {
-      console.log(recentImagesUploaded);
+    searchForNatureImages(function (natureImagesUploaded) {
+      console.log(natureImagesUploaded);
+      displayMessageIfThereAreNo(natureImagesUploaded);
       //For each image, appends HTML
-      for (var eachImage = 0; eachImage < recentImagesUploaded.length; eachImage++) {
-        var imageObject = recentImagesUploaded[eachImage];
-        addHTMLForEach(eachImage, recentImagesUploaded);
+      for (var eachImage = 0; eachImage < natureImagesUploaded.length; eachImage++) {
+        var imageObject = natureImagesUploaded[eachImage];
+        addHTMLForEach(eachImage, natureImagesUploaded);
         modifyHTMLOfButtons(imageObject, eachImage);
         addLikeFunctionToLikeButton(imageObject, eachImage);
         addDislikeFunctionToDislikeButton(imageObject, eachImage);
