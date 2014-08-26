@@ -38,74 +38,73 @@
   <body>
 
     <div class="container">
-      <div class="pageHeader">
-        <img src="img/logo.png" class="logo center" />
-      </div>
+      <div class="containerWhite">
+        <div class="pageHeader">
+          <img src="img/logo.png" class="logo center" />
+        </div>
 
 
-      <div class="imageScroll">
-        <div class="image">
-          <div class="row">
-            <div class="col-sm-12">
-              Image
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-3">
-              Profile Picture
-            </div>
-            <div class="col-xs-5">
-              <div class="row">
-                Username
-              </div>
-              <div class="row">
-                Description
-              </div>
-              <div class="row">
-                Hashtags
+        <div class="imageScroll">
+          <div class="image">
+            <div class="row">
+              <div class="col-sm-12">
+                Image
               </div>
             </div>
-            <div class="col-xs-2">
-              <button type="button" class="btn btn-default btn-sm like">
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-              </button>
-            </div>
-            <div class="col-xs-1">
-              <button type="button" class="btn btn-default btn-sm dislike">
-                <span class="glyphicon glyphicon-thumbs-down"></span>
-              </button>
+            <div class="row imageContents">
+              <div class="col-xs-3">
+                Profile Picture
+              </div>
+              <div class="col-xs-5">
+                <div class="row">
+                  Username
+                </div>
+                <div class="row">
+                  Description
+                </div>
+                <div class="row">
+                  Hashtags
+                </div>
+              </div>
+              <div class="col-xs-2 col-xs-offset-1">
+                <button type="button" class="btn btn-default btn-sm like">
+                  <span class="glyphicon glyphicon-thumbs-up"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-sm dislike">
+                  <span class="glyphicon glyphicon-thumbs-down"></span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        <div>
+          <button type="button" class="btn btn-default logout">Logout</button>
+        </div>
+
+        <div class="clear"></div>
+
+        <div>
+          <nav class="bar bar-tab">
+            <a class="tab-item active" href="home.html">
+              <span class="icon icon-home"></span>
+              <span class="tab-label">Home</span>
+            </a>
+            <a class="tab-item" href="profile.html?userID=">
+              <span class="icon icon-person"></span>
+              <span class="tab-label">Profile</span>
+            </a>
+            <a class="tab-item" href="explore.html">
+              <span class="icon icon-pages"></span>
+              <span class="tab-label">Explore</span>
+            </a>
+            <a class="tab-item" href="upload.html">
+              <span class="icon icon-share"></span>
+              <span class="tab-label">Upload</span>
+            </a>
+          </nav>
+        </div>
       </div>
-
-      <div>
-        <button type="button" class="btn btn-default logout">Logout</button>
-      </div>
-
-      <div class="clear"></div>
-
-      <div>
-        <nav class="bar bar-tab">
-          <a class="tab-item active" href="home.html">
-            <span class="icon icon-home"></span>
-            <span class="tab-label">Home</span>
-          </a>
-          <a class="tab-item" href="profile.html?userID=">
-            <span class="icon icon-person"></span>
-            <span class="tab-label">Profile</span>
-          </a>
-          <a class="tab-item" href="explore.html">
-            <span class="icon icon-pages"></span>
-            <span class="tab-label">Explore</span>
-          </a>
-          <a class="tab-item" href="upload.html">
-            <span class="icon icon-share"></span>
-            <span class="tab-label">Upload</span>
-          </a>
-        </nav>
-      </div>
-
     </div> <!-- /container -->
 
 
@@ -177,7 +176,7 @@
             "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
             "</div>" +
           "</div>" +
-          "<div class=\"row\">" +
+          "<div class=\"row imageContents\">" +
             "<div class=\"col-xs-3\">" +
               "<a href=\"profile.html?userID=" + userWhoCreatedImage.id +"\">" + 
                 "<img class=\"img-circle imageProfilePicture\" src=\"" + userWhoCreatedImage.get('profilePictureUrl') + "\" />" +
@@ -196,12 +195,10 @@
                 imageObject.get('hashtag') +
               "</div>" +
             "</div>" +
-            "<div class=\"col-xs-1 col-xs-offset-1\">" +
+            "<div class=\"col-xs-2 col-xs-offset-1\">" +
               "<button type=\"button\" id=\"imageLike" + individualImage + "\" class=\"btn btn-default btn-sm like\">" +
                   "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
               "</button>" +
-            "</div>" +
-            "<div class=\"col-xs-1 col-xs-offset-1\">" +
               "<button type=\"button\" id=\"imageDislike" + individualImage + "\" class=\"btn btn-default btn-sm dislike\">" +
                 "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
               "</button>" +

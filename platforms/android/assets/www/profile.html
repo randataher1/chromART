@@ -38,86 +38,89 @@
   <body>
 
     <div class="container">
-      <div class="pageHeader">
+      <div class="containerDark">
+
+        <div class="pageHeader">
+        </div>
+
+        <div class="profileContainer">
+          <div class="row profileInfo">
+            <div class="col-xs-4" id="proPic">
+              Profile Picture
+            </div>
+            <div class="col-xs-8">
+              <div class="row" id="proName">
+                Username
+              </div>
+              <div class="row" id="proDescription">
+                Description
+              </div>
+              <div class="row" id="proContact">
+                <div class="col-xs-1 col-xs-offset-5">
+                  Facebook
+                </div>
+                <div class="col-xs-1">
+                  Twitter
+                </div>
+                <div class="col-xs-1">
+                  Email
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="proFollowButton">
+            
+          </div>
+
+          <div id="proFollowInfo">
+            
+          </div>
+
+          <div id="proGalleries">
+            <!-- <div class="col-xs-6 gallery">
+              Nature
+            </div>
+            <div class="col-xs-6 gallery">
+              Modern
+            </div>
+            <div class="col-xs-6 gallery">
+              Surreal
+            </div>
+            <div class="col-xs-6 gallery">
+              Impressionist
+            </div> -->
+          </div>
+
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-default logout">Logout</button>
+          </div>
+        </div>      
+
+        <div class="clear"></div>
+
+        <div>
+          <nav class="bar bar-tab">
+            <a class="tab-item" href="home.html">
+              <span class="icon icon-home"></span>
+              <span class="tab-label">Home</span>
+            </a>
+            <a class="tab-item active" href="profile.html">
+              <span class="icon icon-person"></span>
+              <span class="tab-label">Profile</span>
+            </a>
+            <a class="tab-item" href="explore.html">
+              <span class="icon icon-pages"></span>
+              <span class="tab-label">Explore</span>
+            </a>
+            <a class="tab-item" href="upload.html">
+              <span class="icon icon-share"></span>
+              <span class="tab-label">Upload</span>
+            </a>
+          </nav>
+        </div>
+
       </div>
-
-      <div class="profileContainer">
-        <div class="row">
-          <div class="col-xs-4" id="proPic">
-            Profile Picture
-          </div>
-          <div class="col-xs-8">
-            <div class="row" id="proName">
-              Username
-            </div>
-            <div class="row" id="proDescription">
-              Description
-            </div>
-            <div class="row" id="proContact">
-              <div class="col-xs-1 col-xs-offset-5">
-                Facebook
-              </div>
-              <div class="col-xs-1">
-                Twitter
-              </div>
-              <div class="col-xs-1">
-                Email
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="proFollowButton">
-          
-        </div>
-
-        <div id="proFollowInfo">
-          
-        </div>
-
-        <div id="proGalleries">
-          <div class="col-xs-6 gallery">
-            Gallery 1
-          </div>
-          <div class="col-xs-6 gallery">
-            Gallery 2
-          </div>
-          <div class="col-xs-6 gallery">
-            Gallery 3
-          </div>
-          <div class="col-xs-6 gallery">
-            Gallery 4
-          </div>
-        </div>
-
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-default logout">Logout</button>
-        </div>
-      </div>      
-
-      <div class="clear"></div>
-
-      <div>
-        <nav class="bar bar-tab">
-          <a class="tab-item" href="home.html">
-            <span class="icon icon-home"></span>
-            <span class="tab-label">Home</span>
-          </a>
-          <a class="tab-item active" href="profile.html">
-            <span class="icon icon-person"></span>
-            <span class="tab-label">Profile</span>
-          </a>
-          <a class="tab-item" href="explore.html">
-            <span class="icon icon-pages"></span>
-            <span class="tab-label">Explore</span>
-          </a>
-          <a class="tab-item" href="upload.html">
-            <span class="icon icon-share"></span>
-            <span class="tab-label">Upload</span>
-          </a>
-        </nav>
-      </div>
-
     </div> <!-- /container -->
 
 
@@ -276,13 +279,43 @@
       });
     }
 
+    function searchForFirstImageIn (gallery, callback) {
+      var image = Parse.Object.extend("Image");
+      var imageQuery = new Parse.Query(image);
+      imageQuery.equalTo("gallery", gallery);
+      imageQuery.first({
+        success: function(firstImage) {
+          alert("Found first Image object in gallery!");
+          callback(firstImage);
+        },
+        error: function(error) {
+          alert("Error finding Image object");
+        }
+      });
+    }
+
+    function changeImageOf (galleryDiv, gallery) {
+      searchForFirstImageIn(gallery, function(backgroundImage) {
+        $("#gallery" + galleryDiv).append("<img src=\"" + backgroundImage.get("url") + "\" />");
+      });
+    }
+
     //Adding galleries to profile
-    function addGalleries (galleries) {
+    function addGalleries (galleries, user) {
       for(var eachGallery = 0; eachGallery < galleries.length; eachGallery++) {
         var individualGallery = galleries[eachGallery];
         $("#proGalleries").append(
-          "<div class=\"col-xs-6 gallery\">" +
-            individualGallery.get('name') +
+          "<div class=\"col-xs-6 gallery\" id=\"gallery" + eachGallery + "\">" +
+            "<div>" +
+              individualGallery.get('name') +
+            "</div>" +
+          "</div>");
+        changeImageOf(eachGallery, individualGallery);
+      }
+      if(galleries.length === 0) {
+        $("#proGalleries").append(
+          "<div id=\"noGalleries\">" +
+            user.get("username") + " has no galleries" +
           "</div>");
       }
     }
@@ -290,7 +323,7 @@
     searchForUserBasedOnID(function (userObjectBasedOnID) {
       addHTMLBasedOnUser(userObjectBasedOnID);
       searchForGalleryBasedOnUser(userObjectBasedOnID, function(galleriesBasedOnUser) {
-        addGalleries(galleriesBasedOnUser);
+        addGalleries(galleriesBasedOnUser, userObjectBasedOnID);
       });
       if(!checkIfUserIDIsCurrentUserID(userID)) {
         searchForFollowObjectBasedOnID(userObject, function (followObjectBasedOnID) {
