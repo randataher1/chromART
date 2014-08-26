@@ -76,27 +76,24 @@
         </div>
 
         <div id="proGalleries">
-          <div class="row">
-            <div class="col-xs-6" class="gallery">
-              Gallery 1
-            </div>
-            <div class="col-xs-6" class="gallery">
-              Gallery 2
-            </div>
+          <div class="col-xs-6 gallery">
+            Nature
+          </div>
+          <div class="col-xs-6 gallery">
+            Modern
+          </div>
+          <div class="col-xs-6 gallery">
+            Surreal
+          </div>
+          <div class="col-xs-6 gallery">
+            Impressionist
+          </div>
         </div>
-        <div class="row">
-            <div class="col-xs-6" class="gallery">
-              Gallery 3
-            </div>
-            <div class="col-xs-6" class="gallery">
-              Gallery 4
-            </div>
-        </div>
-      </div>
 
-      <div>
-        <button type="button" class="btn btn-default logout">Logout</button>
-      </div>
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-default logout">Logout</button>
+        </div>
+      </div>      
 
       <div class="clear"></div>
 
@@ -279,18 +276,51 @@
       });
     }
 
+    function searchForFirstImageIn (gallery, callback) {
+      var image = Parse.Object.extend("Image");
+      var imageQuery = new Parse.Query(image);
+      imageQuery.equalTo("gallery", gallery);
+      imageQuery.first({
+        success: function(firstImage) {
+          alert("Found first Image object in gallery!");
+          callback(firstImage);
+        },
+        error: function(error) {
+          alert("Error finding Image object");
+        }
+      });
+    }
+
+    function changeImageOf (galleryDiv, gallery) {
+      searchForFirstImageIn(gallery, function(backgroundImage) {
+        $("#gallery" + galleryDiv).append("<img src=\"" + backgroundImage.get("url") + "\" height=\"140px\" width=\"180px\" />");
+      });
+    }
+
     //Adding galleries to profile
-    function addGalleries (galleries) {
+    function addGalleries (galleries, user) {
       for(var eachGallery = 0; eachGallery < galleries.length; eachGallery++) {
         var individualGallery = galleries[eachGallery];
-        $("#proGalleries").append("<p>" + individualGallery.get('name') + "</p>");
+        $("#proGalleries").append(
+          "<div class=\"col-xs-6 gallery\" id=\"gallery" + eachGallery + "\">" +
+            "<div>" +
+              individualGallery.get('name') +
+            "</div>" +
+          "</div>");
+        changeImageOf(eachGallery, individualGallery);
+      }
+      if(galleries.length === 0) {
+        $("#proGalleries").append(
+          "<div id=\"noGalleries\">" +
+            user.get("username") + " has no galleries" +
+          "</div>");
       }
     }
 
     searchForUserBasedOnID(function (userObjectBasedOnID) {
       addHTMLBasedOnUser(userObjectBasedOnID);
       searchForGalleryBasedOnUser(userObjectBasedOnID, function(galleriesBasedOnUser) {
-        addGalleries(galleriesBasedOnUser);
+        addGalleries(galleriesBasedOnUser, userObjectBasedOnID);
       });
       if(!checkIfUserIDIsCurrentUserID(userID)) {
         searchForFollowObjectBasedOnID(userObject, function (followObjectBasedOnID) {

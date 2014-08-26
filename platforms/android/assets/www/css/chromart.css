@@ -200,8 +200,8 @@ body, html {
 
 .image {
 	width: 360px;
+	padding: 10px 10px 0 10px;
 	margin: 0 0 10px 0;
-	padding: 20px 10px 10px 10px;
 }
 
 .imageScroll {
@@ -213,8 +213,7 @@ body, html {
 }
 
 .profileContainer {
-	width: 330px;
-	display: block;
+	width: 360px;
 	margin: 10px auto 10px auto;
 }
 
@@ -229,7 +228,6 @@ body, html {
 	margin-top: 15px;
 }
 
-#followButton:hover,
 #followButton:active,
 #followButton.active,
 .open > .dropdown-toggle.btn-default {
@@ -258,7 +256,11 @@ body, html {
 }
 
 .imageDetails {
-	padding: 10px;
+	width: 360px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 10px 0 10px;
 }
 
 .uploadButton {
@@ -285,16 +287,31 @@ input {
 	font-size: 18px;
 }
 
-.like:hover,
 .like:active,
 .like.active,
 .open > .dropdown-toggle.btn-default {
 	background-color: green;
 }
 
-.dislike:hover,
 .dislike:active,
 .dislike.active,
 .open > .dropdown-toggle.btn-default {
 	background-color: red;
+}
+
+.like {
+	margin-left: 5px;
+}
+
+.dislike {
+	margin-left: -10px;
+}
+
+.gallery {
+	height: 140px;
+	width: 180px;
+	font-family: "Asap";
+	font-size: 22px;
+	color: #ffffff;
+	text-align: center;
 }

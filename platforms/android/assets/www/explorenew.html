@@ -47,32 +47,32 @@
           <div class="row">
             <div class="col-sm-12">
               Image
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-3">
+              Profile Picture
+            </div>
+            <div class="col-xs-5">
               <div class="row">
-                <div class="col-xs-3">
-                  Profile Picture
-                </div>
-                <div class="col-xs-5">
-                  <div class="row">
-                    Username
-                  </div>
-                  <div class="row">
-                    Description
-                  </div>
-                  <div class="row">
-                    Hashtags
-                  </div>
-                </div>
-                <div class="col-xs-2">
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
-                  </button>
-                </div>
-                <div class="col-xs-1">
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-down"></span>
-                  </button>
-                </div>
+                Username
               </div>
+              <div class="row">
+                Description
+              </div>
+              <div class="row">
+                Hashtags
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+              </button>
+            </div>
+            <div class="col-xs-1">
+              <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-thumbs-down"></span>
+              </button>
             </div>
           </div>
         </div>
@@ -156,38 +156,37 @@
         "<div class=\"image\">" +
           "<div class=\"row\">" +
             "<div class=\"col-sm-12\">" +
-            "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
-            "<div class=\"row\">" +
-              "<div class=\"col-xs-3\"><a href=\"profile.html?userID=" +
-              userWhoCreatedImage.id +"\">" + 
-              "<img class=\"img-circle imageProfilePicture\" src=\"" +
-                userWhoCreatedImage.get('profilePictureUrl') +
-              "\" />" +
-              "</a></div>" +
-                "<div class=\"col-xs-5\">" +
-                  "<div class=\"row\"><a href=\"profile.html?userID=" +
-                    userWhoCreatedImage.id + "\">" + userWhoCreatedImage.get('username') +
-                  "</a></div>" +
-                  "<div class=\"row\">" +
-                    imageObject.get('description') +
-                  "</div>" +
-                  "<div class=\"row\">" +
-                    imageObject.get('hashtag') +
-                  "</div>" +
-                "</div>" +
-                "<div class=\"col-xs-2\">" +
-                    "<button type=\"button\" id=\"imageLike" + individualImage +
-                    "\" class=\"btn btn-default btn-sm like\">" +
-                      "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
-                    "</button>" +
-                "</div>" +
-                "<div class=\"col-xs-1\">" +
-                  "<button type=\"button\" id=\"imageDislike" + individualImage +
-                  "\" class=\"btn btn-default btn-sm dislike\">" +
-                    "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
-                  "</button>" +
-                "</div>" +
+              "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
+            "</div>" +
+          "</div>" +
+          "<div class=\"row\">" +
+            "<div class=\"col-xs-3\">" + 
+              "<a href=\"profile.html?userID=" + userWhoCreatedImage.id +"\">" + 
+                "<img class=\"img-circle imageProfilePicture\" src=\"" + userWhoCreatedImage.get('profilePictureUrl') + "\" />" +
+              "</a>" +
+            "</div>" +
+            "<div class=\"col-xs-5\">" +
+              "<div class=\"row\">" +
+                "<a href=\"profile.html?userID=" + userWhoCreatedImage.id + "\">" +
+                  userWhoCreatedImage.get('username') +
+                "</a>" +
               "</div>" +
+              "<div class=\"row\">" +
+                imageObject.get('description') +
+              "</div>" +
+              "<div class=\"row\">" +
+                imageObject.get('hashtag') +
+              "</div>" +
+            "</div>" +
+            "<div class=\"col-xs-1 col-xs-offset-1\">" +
+              "<button type=\"button\" id=\"imageLike" + individualImage + "\" class=\"btn btn-default btn-sm like\">" +
+                "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
+              "</button>" +
+            "</div>" +
+            "<div class=\"col-xs-1 col-xs-offset-1\">" +
+              "<button type=\"button\" id=\"imageDislike" + individualImage + "\" class=\"btn btn-default btn-sm dislike\">" +
+                  "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+                "</button>" +
             "</div>" +
           "</div>" +
         "</div>");

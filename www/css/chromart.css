@@ -213,8 +213,7 @@ body, html {
 }
 
 .profileContainer {
-	width: 330px;
-	display: block;
+	width: 360px;
 	margin: 10px auto 10px auto;
 }
 
@@ -229,7 +228,6 @@ body, html {
 	margin-top: 15px;
 }
 
-#followButton:hover,
 #followButton:active,
 #followButton.active,
 .open > .dropdown-toggle.btn-default {
@@ -258,7 +256,11 @@ body, html {
 }
 
 .imageDetails {
-	padding: 10px;
+	width: 360px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 10px 0 10px;
 }
 
 .uploadButton {
@@ -285,16 +287,58 @@ input {
 	font-size: 18px;
 }
 
-.like:hover,
 .like:active,
 .like.active,
 .open > .dropdown-toggle.btn-default {
 	background-color: green;
 }
 
-.dislike:hover,
 .dislike:active,
 .dislike.active,
 .open > .dropdown-toggle.btn-default {
 	background-color: red;
+}
+
+.like {
+	margin-left: 5px;
+}
+
+.dislike {
+	margin-left: -10px;
+}
+
+.gallery {
+	height: 140px;
+	width: 180px;
+}
+
+.gallery > img {
+	margin-top: -83px;
+}
+
+.gallery > div {
+	position: relative;
+	font-family: "Asap";
+	font-size: 22px;
+	color: #ffffff;
+	text-align: center;
+	border: 1px solid transparent;
+	padding-top: 50px;
+}
+
+.gallery:hover,
+.gallery:focus,
+.gallery:active,
+.gallery.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  opacity: 0.8;
+  border-color: #adadad;
+}
+
+#noGalleries {
+	font-family: "Asap";
+	font-size: 30px;
+	color: #ffffff;
+	text-align: center;
 }
