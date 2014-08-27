@@ -49,6 +49,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploresurreal.h
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\gallery.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\home.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
@@ -121,7 +122,6 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\anime.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\cultural.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\dislikeButton.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\fashion.jpg \
-C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\impressionist.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\likeButton.png \
