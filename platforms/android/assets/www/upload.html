@@ -64,6 +64,7 @@
 
       <div>
         <button onclick="takePicture()" type="button" class="btn btn-default takePic">Take Picture</button>
+        <button onclick="choosePicture()" type="button" class="btn btn-default choosePic">Choose Picture</button>
         <input type="hidden" name="cameraData" id="cameraData" value="" />
         <input type="hidden" id="photoTaken" value="" />
       </div>
@@ -175,7 +176,15 @@
       navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
         destinationType: Camera.DestinationType.DATA_URL
       });
-    }    
+    }
+
+    function choosePicture() {
+      //alert("Click");
+      navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+      });
+    }
 
     function onSuccess(imageData) {
       //alert("yay");

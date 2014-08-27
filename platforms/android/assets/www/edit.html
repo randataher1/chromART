@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Settings</title>
+    <title>Edit</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -39,14 +39,30 @@
 
         <div class="pageHeader">
           <div class="settingsBar">
-            Settings
+            Edit
           </div>
         </div>
 
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-default logout">Logout</button>
+        <div class="editContainer">
+          <div>
+            <!-- <form role="form">
+              <div class="form-group">
+                <input type="name" class="form-control" id="inputFullName" placeholder="Full Name">
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <input type="username" class="form-control" id="inputUsername" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+              </div>
+              <button type="submit" class="btn blueButton toProfile">Submit</button>
+            </form> -->
+          </div>
         </div>
-        
+
       </div>
 
       <div class="clear"></div>
@@ -82,9 +98,8 @@
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    $(".logout").click(function() {
-      Parse.User.logOut();
-      window.location.href = 'index.html';
+    $(".toProfile").click(function() {
+      window.location.href = 'profile.html';
     });
   </script>
 

@@ -13,7 +13,7 @@ body, html {
 .containerDark {
 	width: 100%;
 	position: relative;
-	min-height: 100%;
+	min-height: 100vh;
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -221,12 +221,15 @@ body, html {
 	width: 100%;
 	min-width: 320px;
 	max-width: 500px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	background-color: white;
 }
 
 .profileContainer {
 	margin: 0 auto 0 auto;
-	min-height: 85vh;
+	min-height: 100%;
 }
 
 .profileInfo {
@@ -413,13 +416,45 @@ input {
 
 .settingsBar {
 	height: 45px;
-	padding: 5px;
+	color: #ffffff
+}
+
+.editContainer {
+	margin: 0 auto 0 auto;
+	min-height: 100%;
 }
 
 .glyphicon-cog {
-	font-size: 35px;
+	font-size: 30px;
 	color: #ffffff;
 	float: right;
+	padding: 5px;
+	border: 1px solid transparent;
+}
+
+.glyphicon-cog:hover,
+.glyphicon-cog:focus,
+.glyphicon-cog:active,
+.glyphicon-cog.active {
+	color: #99ff66;
+	border-color: #adadad;
+}
+
+.glyphicon-pencil {
+	font-size: 30px;
+	color: #ffffff;
+	float: right;
+	margin-right: 5px;
+	padding: 5px;
+	border: 1px solid transparent;
+}
+
+.glyphicon-pencil:hover,
+.glyphicon-pencil:focus,
+.glyphicon-pencil:active,
+.glyphicon-pencil.active {
+	color: #99ff66;
+	border-color: #ffffff;
 }
 
 .carousel {
