@@ -6,14 +6,13 @@ body, html {
 	background-image:url('../img/indexBackground.jpg');
 	position: relative;
 	width: 100%;
-	min-width: 320px;
-	height: auto !important;
+	min-height: 100%;
+	min-width: 320px; 
 }
 
 .containerDark {
 	width: 100%;
 	position: relative;
-	height: auto !important;
 	min-height: 100%;
 	background-color: rgba(0, 0, 0, 0.4);
 }
@@ -21,7 +20,7 @@ body, html {
 .containerWhite {
 	width: 100%;
 	position: relative;
-	height: auto !important;
+	height: 100vh;
 	min-height: 100%;
 	background-color: #ffffff;
 }
@@ -223,14 +222,11 @@ body, html {
 	min-width: 320px;
 	max-width: 500px;
 	background-color: white;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 .profileContainer {
 	margin: 0 auto 0 auto;
-	min-height: 640px;
+	min-height: 85vh;
 }
 
 .profileInfo {

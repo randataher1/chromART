@@ -94,6 +94,15 @@
       });
     }
 
+    function displayMessageIfThereAreNo (followedUsers) {
+      if(followedUsers.length === 0) {
+        $(".imageScroll").append(
+          "<div class=\"noImages\">" +
+            "You aren't following any users" +
+          "</div>");
+      }
+    }
+
     //Returns all Image objects of followed users
     function searchForImagesUploadedBy (followedUsers, callback) {
       var Img = Parse.Object.extend("Image");
@@ -289,6 +298,7 @@
     //Uses callback to obtain all information in order
     //Searches for followed users
     searchForFollowedUserObjects(function (followedUserObjects) {
+      displayMessageIfThereAreNo(followedUserObjects);
       //For each followed user, gets user object and adds to array
       $.each(followedUserObjects, function(object, user) {
         followedUsers[object] = user.get('followedUser');
