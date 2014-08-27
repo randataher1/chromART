@@ -29,7 +29,6 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
-
   </head>
 
   <body>
@@ -45,27 +44,22 @@
 
         <div class="editContainer">
           <div>
-            <!-- <form role="form">
+            <form role="form">
               <div class="form-group">
-                <input type="name" class="form-control" id="inputFullName" placeholder="Full Name">
+                <textarea type="text" class="form-control" rows="3" id="inputDescription" placeholder="Description"></textarea>
               </div>
               <div class="form-group">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                <input type="text" class="form-control" id="inputEmail" placeholder="Facebook link">
               </div>
               <div class="form-group">
-                <input type="username" class="form-control" id="inputUsername" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input type="text" class="form-control" id="inputUsername" placeholder="Twitter link">
               </div>
               <button type="submit" class="btn blueButton toProfile">Submit</button>
-            </form> -->
+            </form>
           </div>
         </div>
 
       </div>
-
-      <div class="clear"></div>
 
       <div>
         <nav class="bar bar-tab">
@@ -98,8 +92,10 @@
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
+    window.open('http://www.google.com', '_blank');       // loads in the system browser
+
     $(".toProfile").click(function() {
-      window.location.href = 'profile.html';
+      window.location.href = 'google.com';
     });
   </script>
 
