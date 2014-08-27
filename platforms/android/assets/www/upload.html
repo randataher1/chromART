@@ -119,10 +119,6 @@
         </form>
       </div>
 
-      <div>
-        <button type="button" class="btn btn-default logout">Logout</button>
-      </div>
-
       <div class="clear"></div>
 
       <div>
@@ -142,6 +138,10 @@
           <a class="tab-item active" href="upload.html">
             <span class="icon icon-share"></span>
             <span class="tab-label">Upload</span>
+          </a>
+          <a class="tab-item" href="message.html">
+            <span class="icon icon-compose"></span>
+            <span class="tab-label">Message</span>
           </a>
         </nav>
       </div>
@@ -167,23 +167,23 @@
       var selText = $(this).text();
       $(this).parents('.dropdown').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
       dropdownValue.value = selText;
-      alert(dropdownValue.value);
+      //alert(dropdownValue.value);
     });
 
     function takePicture() {
-      alert("Click");
+      //alert("Click");
       navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
         destinationType: Camera.DestinationType.DATA_URL
       });
     }    
 
     function onSuccess(imageData) {
-      alert("yay");
+      //alert("yay");
       var image = document.getElementById('cameraData');
       image.value = imageData;
       var photoTaken = document.getElementById('photoTaken');
       photoTaken.value = "true";
-      alert(photoTaken.value);
+      //alert(photoTaken.value);
     }
 
     function onFail(message) {
@@ -232,7 +232,7 @@
       var parseFile = new Parse.File(fileName, {base64:imageData.value});
 
       parseFile.save().then(function() {
-          alert("File available at: " + parseFile.url());
+          //alert("File available at: " + parseFile.url());
 
           //Creates new Image object
           var Img = Parse.Object.extend("Image");
@@ -258,7 +258,7 @@
               for (var i = 0; i < results.length; i++) {
                 if ($("#option" + i).is(':checked')) {
                   galleryObject = results[i];
-                  alert('Chosen gallery has ID: ' + galleryObject.id);
+                  //alert('Chosen gallery has ID: ' + galleryObject.id);
                 }
               }
               //If the new gallery choice is chosen, a new Gallery object is instantiated
@@ -271,7 +271,7 @@
                 galleryObject.save(null, {
                   success: function(gal) {
                     // Execute any logic that should take place after the object is saved.
-                    alert('New gallery created with ID: ' + galleryObject.id);
+                    //alert('New gallery created with ID: ' + galleryObject.id);
                   },
                   error: function(img, error) {
                     // Execute any logic that should take place if the save fails.
@@ -291,8 +291,8 @@
                 image.save(null, {
                   success: function(img) {
                     // Execute any logic that should take place after the object is saved.
-                    alert('New image created with ID: ' + image.id);
-                    alert('Image added to: ' + galleryObject.id);
+                    //alert('New image created with ID: ' + image.id);
+                    //alert('Image added to: ' + galleryObject.id);
                     window.location.href = 'profile.html';
                   },
                   error: function(img, error) {
@@ -313,11 +313,6 @@
 
         });
       });
-
-    $(".logout").click(function() {
-      Parse.User.logOut();
-      window.location.href = 'index.html';
-    });
 
   </script>
 

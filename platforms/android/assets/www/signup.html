@@ -94,19 +94,19 @@
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
     function takePicture() {
-      alert("Click");
+      //alert("Click");
       navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
         destinationType: Camera.DestinationType.DATA_URL
       });
     }    
 
     function onSuccess(imageData) {
-      alert("yay");
+      //alert("yay");
       var image = document.getElementById('cameraData');
       image.value = imageData;
       var photoTaken = document.getElementById('photoTaken');
       photoTaken.value = "true";
-      alert(photoTaken.value);
+      //alert(photoTaken.value);
     }
 
     function onFail(message) {
@@ -128,7 +128,7 @@
       var parseFile = new Parse.File(fileName, {base64:imageData.value});
 
       parseFile.save().then(function() {
-        alert("File available at: " + parseFile.url());
+        //alert("File available at: " + parseFile.url());
 
         var user = new Parse.User();
 
@@ -143,7 +143,7 @@
 
         user.signUp(null, {
           success: function(object) {
-            alert("Success!");
+            //alert("Success!");
             Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
               success: function(user) {
 

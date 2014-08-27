@@ -29,7 +29,6 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
-
   </head>
 
   <body>
@@ -41,10 +40,6 @@
 
       <div class="titleText">
         <p>Explore Popular</p>
-      </div>
-
-      <div>
-        <button type="button" class="btn btn-default logout">Logout</button>
       </div>
 
       <div class="clear"></div>
@@ -67,6 +62,10 @@
             <span class="icon icon-share"></span>
             <span class="tab-label">Upload</span>
           </a>
+          <a class="tab-item" href="message.html">
+            <span class="icon icon-compose"></span>
+            <span class="tab-label">Message</span>
+          </a>
         </nav>
       </div>
 
@@ -74,11 +73,6 @@
 
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
-    
-    $(".logout").click(function() {
-      Parse.User.logOut();
-      window.location.href = 'index.html';
-    });
   </script>
 
     <!-- Bootstrap core JavaScript

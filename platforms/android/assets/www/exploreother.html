@@ -29,7 +29,6 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
-
   </head>
 
   <body>
@@ -41,41 +40,7 @@
         </div>
 
         <div class="imageScroll">
-          <div class="image">
-            <div class="row">
-              <div class="col-sm-12">
-                Image
-              </div>
-            </div>
-            <div class="row imageContents">
-              <div class="col-xs-3">
-                Profile Picture
-              </div>
-              <div class="col-xs-5">
-                <div class="row">
-                  Username
-                </div>
-                <div class="row">
-                  Description
-                </div>
-                <div class="row">
-                  Category
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <button type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-thumbs-up"></span>
-                </button>
-                <button type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-thumbs-down"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <button type="button" class="btn btn-default logout">Logout</button>
+          
         </div>
 
         <div class="clear"></div>
@@ -98,6 +63,10 @@
               <span class="icon icon-share"></span>
               <span class="tab-label">Upload</span>
             </a>
+            <a class="tab-item" href="message.html">
+              <span class="icon icon-compose"></span>
+              <span class="tab-label">Message</span>
+            </a>
           </nav>
         </div>
       </div>
@@ -117,7 +86,7 @@
       imageQuery.limit(10);
       imageQuery.find({
         success: function(results) {
-          alert("Found Other images");
+          //alert("Found Other images");
           callback(results);
         },
         error: function(error) {
@@ -145,7 +114,7 @@
       imageLikeQuery.equalTo("image", otherImage);
       imageLikeQuery.find({
         success: function(imageLikeResults) {
-          alert("Found user likes of images");
+          //alert("Found user likes of images");
           callback(imageLikeResults);
         },
         error: function (error) {
@@ -229,7 +198,7 @@
             newImageLike.set("type", "like");
             newImageLike.save(null, {
               success: function(object) {
-                alert("Successfully created new ImageLike object with type like!");
+                //alert("Successfully created new ImageLike object with type like!");
               },
               error: function(object, error) {
                 alert("Failed to create new ImageLike object with type like");
@@ -240,7 +209,7 @@
           else if (imageLike[0].get("type") === "like") {
             $("#imageLike" + imageCount).removeClass("active");
             imageLike[0].destroy({});
-            alert("Successfully destroyed ImageLike object with type like!");
+            //alert("Successfully destroyed ImageLike object with type like!");
           }
           //If there is a like object with type dislike, changes the type of the object
           else {
@@ -249,7 +218,7 @@
             imageLike[0].set("type", "like");
             imageLike[0].save(null, {
               success: function(object) {
-                alert("Successfully changed type of ImageLike object to type like!");
+                //alert("Successfully changed type of ImageLike object to type like!");
               },
               error: function(object, error) {
                 alert("Failed to change type of ImageLike object to type like");
@@ -275,7 +244,7 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
-                alert("Successfully created new ImageLike object with type dislike!");
+                //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {
                 alert("Failed to create new ImageLike object with type dislike");
@@ -286,7 +255,7 @@
           else if (imageLike[0].get("type") === "dislike") {
             $("#imageDislike" + imageCount).removeClass("active");
             imageLike[0].destroy({});
-            alert("Successfully destroyed ImageLike object with type dislike!");
+            //alert("Successfully destroyed ImageLike object with type dislike!");
           }
           //If there is a like object with type like, changes the type of the object
           else {
@@ -295,7 +264,7 @@
             imageLike[0].set("type", "dislike");
             imageLike[0].save(null, {
               success: function(object) {
-                alert("Successfully changed type of ImageLike object to type dislike!");
+                //alert("Successfully changed type of ImageLike object to type dislike!");
               },
               error: function(object, error) {
                 alert("Failed to change type of ImageLike object to type dislike");
@@ -317,11 +286,6 @@
         addLikeFunctionToLikeButton(imageObject, eachImage);
         addDislikeFunctionToDislikeButton(imageObject, eachImage);
       }
-    });
-    
-    $(".logout").click(function() {
-      Parse.User.logOut();
-      window.location.href = 'index.html';
     });
   </script>
 

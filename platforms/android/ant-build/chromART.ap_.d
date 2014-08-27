@@ -46,6 +46,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorephotograp
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\explorepopular.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\exploresurreal.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\gallery.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\home.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \

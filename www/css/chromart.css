@@ -6,9 +6,9 @@ body, html {
 	background-image:url('../img/indexBackground.jpg');
 	position: relative;
 	width: 100%;
-	height: auto !important;
-	min-height: 100%;
-	min-width: 360px; 
+	height: 100%;
+	min-width: 320px;
+	
 }
 
 .containerDark {
@@ -16,7 +16,6 @@ body, html {
 	position: relative;
 	height: auto !important;
 	min-height: 100%;
-	min-width: 360px;
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -25,7 +24,6 @@ body, html {
 	position: relative;
 	height: auto !important;
 	min-height: 100%;
-	min-width: 360px;
 	background-color: #ffffff;
 }
 
@@ -119,7 +117,8 @@ body, html {
 
 .blueButton {
 	height: 50px;
-	width: 300px;
+	width: 80%;
+	max-width: 300px;
 	color: #ffffff;
 	background-color: #4caf99;
 	font-family: 'Estrangelo Edessa';
@@ -138,7 +137,8 @@ body, html {
 
 .pinkButton {
 	height: 50px;
-	width: 300px;
+	width: 80%;
+	max-width: 300px;
 	color: #ffffff;
 	background-color: #d44865;
 	font-family: 'Estrangelo Edessa';
@@ -214,15 +214,14 @@ body, html {
 }
 
 .image {
-	min-width: 360px;
 	width: 100%;
 	padding: 10px 10px 0 10px;
-	margin: 0 0 10px 0;
+	margin: 20px 0 10px 0;
 }
 
 .imageScroll {
 	width: 100%;
-	min-width: 360px;
+	min-width: 320px;
 	max-width: 500px;
 	background-color: white;
 	display: block;
@@ -231,9 +230,8 @@ body, html {
 }
 
 .profileContainer {
-	width: 360px;
 	margin: 0 auto 0 auto;
-	min-height: 640px;
+	min-height: 100%;
 }
 
 .profileInfo {
@@ -285,7 +283,6 @@ body, html {
 }
 
 .imageUploadDetails {
-	width: 360px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -393,9 +390,10 @@ input {
 	font-family: "Asap";
 	font-size: 30px;
 	color: #000000;
-	width: 90%;
 	word-wrap: break-word;
 	text-align: center;
+	padding: 10px 10px 0 10px;
+	margin: 20px 0 10px 0;
 }
 
 @font-face {
@@ -427,4 +425,13 @@ input {
 	font-size: 35px;
 	color: #ffffff;
 	float: right;
+}
+
+.carousel {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.carouselContainer {
+	padding: 15rem 0;
 }

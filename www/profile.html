@@ -70,6 +70,10 @@
             
           </div>
 
+          <div id="proMessageButton">
+
+          </div>
+
           <div id="proFollowInfo">
             
           </div>
@@ -99,6 +103,10 @@
             <a class="tab-item" href="upload.html">
               <span class="icon icon-share"></span>
               <span class="tab-label">Upload</span>
+            </a>
+            <a class="tab-item" href="message.html">
+              <span class="icon icon-compose"></span>
+              <span class="tab-label">Message</span>
             </a>
           </nav>
         </div>
@@ -141,7 +149,7 @@
       var userQuery = new Parse.Query(otherUser);
       userQuery.get(userID, {
         success: function(userBasedonID) {
-          alert("Found user");
+          //alert("Found user");
           callback(userBasedonID);
         },
         error: function(error) {
@@ -195,7 +203,7 @@
       followingQuery.equalTo("followedUser", user);
       followingQuery.find({
         success: function(followObject) {
-          alert("Found Follow object");
+          //alert("Found Follow object");
           callback(followObject);
         },
         error: function(error) {
@@ -226,7 +234,7 @@
       follow.set("followedUser", otherUser);
       follow.save(null, {
         success: function(object) {
-          alert("Success!");
+          //alert("Success!");
         },
         error: function(error) {
           alert("Failed to create new Follow object");
@@ -243,7 +251,7 @@
           document.getElementById("followButton").innerHTML="Follow";
           searchForFollowObjectBasedOnID(user, function (followingObject) {
             followingObject[0].destroy({});
-            alert("Destroyed Follow object");
+            //alert("Destroyed Follow object");
           })
         }
         else {
@@ -262,7 +270,7 @@
       galleryQuery.equalTo("user", user);
       galleryQuery.find({
         success: function(galleryObjects) {
-          alert("Found Gallery objects!");
+          //alert("Found Gallery objects!");
           callback(galleryObjects);
         },
         error: function(error) {
@@ -277,7 +285,7 @@
       imageQuery.equalTo("gallery", gallery);
       imageQuery.first({
         success: function(firstImage) {
-          alert("Found first Image object in gallery!");
+          //alert("Found first Image object in gallery!");
           callback(firstImage);
         },
         error: function(error) {
