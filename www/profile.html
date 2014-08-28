@@ -33,6 +33,8 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
+    <script type="text/javascript" src="js/sessvars.js"></script>
+
   </head>
 
   <body>
@@ -108,7 +110,7 @@
               <span class="icon icon-share"></span>
               <span class="tab-label">Upload</span>
             </a>
-            <a class="tab-item" href="message.html">
+            <a class="tab-item" href="messagedirectory.html">
               <span class="icon icon-compose"></span>
               <span class="tab-label">Message</span>
             </a>
@@ -118,9 +120,10 @@
       </div>
     </div> <!-- /container -->
 
-
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+
+    sessvars.$.clearMem();
 
     var $_GET = {};
     if(document.location.toString().indexOf('?') !== -1) {
@@ -336,6 +339,20 @@
       });
     }
 
+    //Adds message button based on whether the current user is the user of the profile
+    function addMessageButtonToProfile () {
+      $("#proMessageButton").append("<button type=\"button\" class=\"btn pinkButton\"" +
+        "id=\"messageButton\">Message</button>");
+    }
+
+    //Links button to message.html and uses a sessvar object to keep the userID
+    function addMessageFunctionToMessageButton (user) {
+      $("#messageButton").click(function() {
+        sessvars.toUserObject = {userObject: user};
+        window.location.href = 'messagecompose.html';
+      });
+    }
+
     //Finding galleries based on user
     function searchForGalleryBasedOnUser (user, callback) {
       var gallery = Parse.Object.extend("Gallery");
@@ -402,6 +419,8 @@
         searchForFollowObjectBasedOnID(userObject, function (followObjectBasedOnID) {
           addFollowButtonToProfile(followObjectBasedOnID);
           addFollowFunctionToFollowButton(userObject);
+          addMessageButtonToProfile();
+          addMessageFunctionToMessageButton(userObject);
         });
       }
       else {

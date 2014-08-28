@@ -288,6 +288,25 @@ body, html {
   border-color: #adadad;
 }
 
+#messageButton {
+	height: 36px;
+	width: 300px;
+	color: #ffffff;
+	background-color: #d44865;
+	font-family: 'Estrangelo Edessa';
+	font-size: 26px;
+	padding: 0;
+	margin-top: 15px;
+}
+
+#messageButton:active,
+#messageButton.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #EE627F;
+  border-color: #adadad;
+}
+
 .imageResize {
 	display: block;
 	margin-left: auto;
@@ -501,4 +520,41 @@ textarea {
 
 .carouselContainer {
 	padding: 15rem 0;
+}
+
+.messageNav {
+	height: 45px;
+	color: #ffffff;
+	font-family: "Magra";
+	font-size: 15px;
+	text-align: center;
+}
+
+.messageNav > li > a {
+	color: #ffffff;
+}
+
+.messageNavOption {
+	color: #000000;
+	width: 50%;
+}
+
+.messageNav > li > a:hover,
+.messageNav > li > a:focus,
+.messageNav > li > a:active,
+.messageNav > li > a.active {
+	color: #555;
+}
+
+.newMessageContainer {
+	margin-top: 30px;
+}
+
+label {
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: "Magra";
+	font-size: 16px;
 }

@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore Popular</title>
+    <title>Message Directory</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -29,6 +29,8 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+
     <script type="text/javascript" src="js/sessvars.js"></script>
 
   </head>
@@ -36,12 +38,23 @@
   <body>
 
     <div class="container">
-      <div class="pageHeader">
-        <img src="img/logo.png" class="logo center" />
-      </div>
+      <div class="containerWhite">
 
-      <div class="titleText">
-        <p>Explore Popular</p>
+        <div class="pageHeader">
+          <ul class="nav nav-tabs messageNav" role="tablist">
+            <li class="active messageNavOption">
+              <a href="messagedirectory.html">
+                Directory
+              </a>
+            </li>
+            <li class="messageNavOption">
+              <a href="messagecompose.html">
+                Compose New
+              </a>
+            </li>
+          </ul>
+        </div>
+        
       </div>
 
       <div class="clear"></div>
@@ -52,11 +65,11 @@
             <span class="icon icon-home"></span>
             <span class="tab-label">Home</span>
           </a>
-          <a class="tab-item" href="profile.html">
+          <a class="tab-item active" href="profile.html">
             <span class="icon icon-person"></span>
             <span class="tab-label">Profile</span>
           </a>
-          <a class="tab-item active" href="explore.html">
+          <a class="tab-item" href="explore.html">
             <span class="icon icon-pages"></span>
             <span class="tab-label">Explore</span>
           </a>
@@ -73,10 +86,16 @@
 
     </div> <!-- /container -->
 
+
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
     sessvars.$.clearMem();
+
+    $(".logout").click(function() {
+      Parse.User.logOut();
+      window.location.href = 'index.html';
+    });
   </script>
 
     <!-- Bootstrap core JavaScript
