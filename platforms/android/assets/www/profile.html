@@ -258,10 +258,10 @@
       document.getElementById("proPic").innerHTML =  "<img src=\"" + profilePicture + "\" class=\"img-circle profilePicture\" />";
       document.getElementById("proName").innerHTML = profileUsername;
       document.getElementById("proDescription").innerHTML = profileDesc;
-      if (userHasFacebook) {
+      if (userHasFacebook(user)) {
         addFacebookButtonBasedOnUser (user);
       }
-      if (userHasTwitter) {
+      if (userHasTwitter(user)) {
         addTwitterButtonBasedOnUser (user);
       }
       addEmailButtonBasedOnUser(user);
