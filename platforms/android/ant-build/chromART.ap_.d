@@ -77,6 +77,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\icon.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\legal.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\profile.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\settings.html \

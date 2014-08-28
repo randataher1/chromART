@@ -84,6 +84,30 @@ body, html {
 }
 
 @font-face {
+  font-family: 'Asap';
+  font-style: normal;
+  font-weight: 400;
+  src: local('asap'), url(../fonts/asap.woff2) format('woff2');
+}
+
+.terms {
+	font-size: 14px;
+	word-wrap: break-word;
+	max-width: 80%;
+}
+
+.agreement {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 300px;
+	min-width: 80%;
+	font-family: "Asap";
+	font-size: 16px;
+	color: #ffffff;
+}
+
+@font-face {
   font-family: 'Bad Script';
   font-style: normal;
   font-weight: 400;
@@ -105,7 +129,7 @@ body, html {
 	text-align: center;
 	font-size: 50px;
 	color: #BDBCBD;
-	margin: -30px 0 -30px 0;
+	margin: -40px 0 -30px 0;
 	position: relative;
 }
 
@@ -306,13 +330,6 @@ body, html {
 
 #galleryName {
 	margin-top: 10px;
-}
-
-@font-face {
-  font-family: 'Asap';
-  font-style: normal;
-  font-weight: 400;
-  src: local('asap'), url(../fonts/asap.woff2) format('woff2');
 }
 
 input {

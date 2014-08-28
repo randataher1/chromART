@@ -54,6 +54,8 @@
 
   <script type="text/javascript">
 
+    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+
     $(".toSignIn").click(function() {
       window.location.href = 'signin.html';
     });
@@ -62,18 +64,6 @@
       window.location.href = 'signup.html';
     });
 
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
-    
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-      testObject.save({foo: "bar"}, {
-      success: function(object) {
-        $(".success").show();
-      },
-      error: function(model, error) {
-        $(".error").show();
-      }
-    });
   </script>
 
     <!-- Bootstrap core JavaScript
