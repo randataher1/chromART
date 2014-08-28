@@ -53,6 +53,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-xxhd
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-xxhdpi\ic_action_remove.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\_where-is-www.txt \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\conversation.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova_plugins.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\css \
@@ -78,6 +79,8 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\index.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\legal.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\messagecompose.html \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\messagedirectory.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\profile.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\settings.html \
@@ -166,6 +169,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\icheck.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\index.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.min.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\sessvars.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.inappbrowser \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\plugins\org.apache.cordova.camera\www \

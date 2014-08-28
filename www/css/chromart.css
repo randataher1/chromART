@@ -337,6 +337,7 @@ body, html {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0 10px 0 10px;
+	color: #ffffff;
 }
 
 .uploadButton {
@@ -344,7 +345,7 @@ body, html {
 }
 
 #optionLast {
-	margin-left: 0;
+	margin-left: -20px;
 }
 
 #galleryName {
@@ -557,4 +558,8 @@ label {
 	margin-right: auto;
 	font-family: "Magra";
 	font-size: 16px;
+}
+
+.dropdown-menu > li > a {
+	line-height: 1.5;
 }

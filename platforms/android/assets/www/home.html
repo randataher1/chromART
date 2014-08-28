@@ -29,6 +29,8 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
+    <script type="text/javascript" src="js/sessvars.js"></script>
+
   </head>
 
   <body>
@@ -64,7 +66,7 @@
               <span class="icon icon-share"></span>
               <span class="tab-label">Upload</span>
             </a>
-            <a class="tab-item" href="message.html">
+            <a class="tab-item" href="messagedirectory.html">
               <span class="icon icon-compose"></span>
               <span class="tab-label">Message</span>
             </a>
@@ -76,6 +78,8 @@
 
 <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+
+    sessvars.$.clearMem();
 
     //Returns all Follow objects of the current user
     function searchForFollowedUserObjects (callback) {
