@@ -137,6 +137,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.woff \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\magra.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.eot \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.ttf \
@@ -145,6 +146,8 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\abstract.jpg
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\anime.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\cultural.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\dislikeButton.png \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\email.png \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\facebook.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\fashion.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\impressionist.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
@@ -155,6 +158,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\nature.JPG \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\other.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\photography.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\surreal.jpg \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\twitter.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.min.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\icheck.js \

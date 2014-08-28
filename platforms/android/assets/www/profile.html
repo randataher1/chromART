@@ -57,13 +57,13 @@
                 Description
               </div>
               <div class="row" id="proContact">
-                <div class="col-xs-1 col-xs-offset-5">
+                <div class="col-xs-2 col-xs-offset-3" id="linkFacebook">
                   Facebook
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-2" id="linkTwitter">
                   Twitter
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-2" id="linkEmail">
                   Email
                 </div>
               </div>
@@ -196,14 +196,75 @@
 
     var userObject;
 
+    function addFunctionToFacebookButton (user) {
+      $(".facebookButton").click(function() {
+        window.open(user.get("facebook"), '_blank');
+      });
+    }
+
+    function addFunctionToTwitterButton (user) {
+      $(".twitterButton").click(function() {
+        window.open(user.get("twitter"), '_blank');
+      });
+    }
+
+    function addFunctionToEmailButton (user) {
+      $(".emailButton").click(function() {
+        window.location.href = "mailto:" + user.get("email");
+      });
+    }
+
+    function userHasFacebook (user) {
+      if (user.get("facebook") != "") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function userHasTwitter (user) {
+      if (user.get("twitter") != "") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function addFacebookButtonBasedOnUser (user) {
+      var facebookLink = user.get("facebook");
+      document.getElementById("linkFacebook").innerHTML = "<img src=\"img/facebook.png\" class=\"facebookButton\"/>";
+      addFunctionToFacebookButton(user);
+    }
+
+    function addTwitterButtonBasedOnUser (user) {
+      var twitterLink = user.get("twitter");
+      document.getElementById("linkTwitter").innerHTML = "<img src=\"img/twitter.png\" class=\"twitterButton\"/>";
+      addFunctionToTwitterButton(user);
+    }
+
+    function addEmailButtonBasedOnUser (user) {
+      var email = user.get("email");
+      document.getElementById("linkEmail").innerHTML = "<img src=\"img/email.png\" class=\"emailButton\"/>";
+      addFunctionToEmailButton(user);
+    }
+
     //Adds information of user to page
     function addHTMLBasedOnUser (user) {
       var profilePicture = user.get("profilePictureUrl");
       var profileUsername = user.get("username");
       var profileDesc = user.get("profileDescription");
-      document.getElementById("proPic").innerHTML =  "<img src=\"" + profilePicture + "\" class=\"img-circle profilePicture\"/>";
+      document.getElementById("proPic").innerHTML =  "<img src=\"" + profilePicture + "\" class=\"img-circle profilePicture\" />";
       document.getElementById("proName").innerHTML = profileUsername;
       document.getElementById("proDescription").innerHTML = profileDesc;
+      if (userHasFacebook) {
+        addFacebookButtonBasedOnUser (user);
+      }
+      if (userHasTwitter) {
+        addTwitterButtonBasedOnUser (user);
+      }
+      addEmailButtonBasedOnUser(user);
       userObject = user;
     }
 

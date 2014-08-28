@@ -190,7 +190,7 @@ body, html {
 
 .exploreButtons {
 	height: 45px;
-	width: 49%;
+	width: 50%;
 	color: #ffffff;
 	font-family: 'Estrangelo Edessa';
 	font-size: 26px;
@@ -209,13 +209,20 @@ body, html {
 	  -ms-user-select: none;
 	      user-select: none;
 	background-image: none;
-	border: none;
+	border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .image {
 	width: 100%;
 	padding: 10px 10px 0 10px;
 	margin: 20px 0 10px 0;
+}
+
+@font-face {
+  font-family: 'Magra';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Magra'), url(../fonts/magra.woff) format('woff');
 }
 
 .imageScroll {
@@ -226,6 +233,7 @@ body, html {
 	margin-left: auto;
 	margin-right: auto;
 	background-color: white;
+	font-family: "Magra";
 }
 
 .profileContainer {
@@ -273,7 +281,7 @@ body, html {
 }
 
 .imageContents {
-	padding: 0 10px 0 10px;
+	margin: 0 10px 0 10px;
 }
 
 .profilePicture {
@@ -342,8 +350,7 @@ textarea {
 	height: 140px;
 	width: 50%;
 	background-color: rgba(0, 0, 0, 0.9);
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .gallery > img {

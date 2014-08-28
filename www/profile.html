@@ -57,13 +57,13 @@
                 Description
               </div>
               <div class="row" id="proContact">
-                <div class="col-xs-1 col-xs-offset-5" id="linkFacebook">
+                <div class="col-xs-2 col-xs-offset-3" id="linkFacebook">
                   Facebook
                 </div>
-                <div class="col-xs-1" id="linkTwitter">
+                <div class="col-xs-2" id="linkTwitter">
                   Twitter
                 </div>
-                <div class="col-xs-1" id="linkEmail">
+                <div class="col-xs-2" id="linkEmail">
                   Email
                 </div>
               </div>
@@ -209,7 +209,9 @@
     }
 
     function addFunctionToEmailButton (user) {
-
+      $(".emailButton").click(function() {
+        window.location.href = "mailto:" + user.get("email");
+      });
     }
 
     function userHasFacebook (user) {
@@ -262,6 +264,7 @@
       if (userHasTwitter) {
         addTwitterButtonBasedOnUser (user);
       }
+      addEmailButtonBasedOnUser(user);
       userObject = user;
     }
 

@@ -92,10 +92,10 @@
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    window.open('http://www.google.com', '_blank');       // loads in the system browser
-
-    $(".toProfile").click(function() {
-      window.location.href = 'google.com';
+    $("form").on("submit", function(e) {
+      e.preventDefault();
+      
+      window.location.href = 'profile.html';
     });
   </script>
 

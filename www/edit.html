@@ -46,15 +46,15 @@
           <div>
             <form role="form">
               <div class="form-group">
-                <textarea type="text" class="form-control" rows="3" id="inputDescription" placeholder="Description"></textarea>
+                <textarea type="text" class="form-control inputDescription" rows="3" placeholder="Description"></textarea>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" id="inputEmail" placeholder="Facebook link">
+                <input type="text" class="form-control inputFacebook" placeholder="Facebook link">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" id="inputUsername" placeholder="Twitter link">
+                <input type="text" class="form-control inputTwitter" placeholder="Twitter link">
               </div>
-              <button type="submit" class="btn blueButton toProfile">Submit</button>
+              <button type="submit" class="btn blueButton toProfile">Save</button>
             </form>
           </div>
         </div>
@@ -92,8 +92,86 @@
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    $(".toProfile").click(function() {
-      window.location.href = 'google.com';
+    function thereIsADescription () {
+      if ($(".inputDescription").val() != "") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function thereIsAFacebook () {
+      if ($(".inputFacebook").val() != "") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function thereIsATwitter () {
+      if ($(".inputTwitter").val() != "") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function getDescription () {
+      return $(".inputDescription").val();
+    }
+
+    function getFacebook () {
+      $(".inputFacebook").val();
+    }
+
+    function getTwitter () {
+      $(".inputTwitter").val();
+    }
+
+    function setDescription (currentUser) {
+      currentUser.set("profileDescription", getDescription());
+    }
+
+    function setFacebook (currentUser) {
+      currentUser.set("facebook", getFacebook());
+    }
+
+    function setTwitter (currentUser) {
+      currentUser.set("twitter", getTwitter());
+    }
+
+    $("form").on("submit", function(e) {
+      e.preventDefault();
+
+      var user = Parse.User.current();
+
+      if (thereIsADescription()) {
+        setDescription(user);
+      }
+
+      if (thereIsAFacebook()) {
+        setFacebook(user);
+      }
+
+      if (thereIsATwitter()) {
+        setTwitter(user);
+      }
+
+      user.save(null, {
+        success: function(save) {
+          // Execute any logic that should take place after the object is saved.
+          window.location.href = 'profile.html';
+        },
+        error: function(error) {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and description.
+          alert('Failed to save information');
+        }
+      });
+
     });
   </script>
 
