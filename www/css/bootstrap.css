@@ -2356,8 +2356,6 @@ output {
   max-width: 300px;
   height: 50px;
   padding: 6px 12px;
-  text-align: center;
-  font-size: 20px;
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
@@ -2424,7 +2422,6 @@ input[type="month"].input-lg {
   position: relative;
   display: block;
   min-height: 20px;
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 .radio label,
@@ -3135,6 +3132,8 @@ tbody.collapse.in {
   display: none;
   float: left;
   min-width: 160px;
+  max-width: 300px;
+  width: 80%;
   padding: 5px 0;
   margin: 2px 0 0;
   font-size: 14px;
