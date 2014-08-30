@@ -7,7 +7,8 @@ body, html {
 	position: relative;
 	width: 100%;
 	min-width: 320px;
-	height: 100%;
+	min-height: 100%;
+	height: auto !important;
 }
 
 .containerDark {
@@ -471,10 +472,10 @@ textarea {
 }
 
 .settingsBar {
-	height: 45px;
+	height: 50px;
 	color: #ffffff;
 	font-family: "Magra";
-	font-size: 30px;
+	font-size: 35px;
 	text-align: center;
 }
 
@@ -483,7 +484,7 @@ textarea {
 }
 
 .glyphicon-cog {
-	font-size: 30px;
+	font-size: 35px;
 	color: #ffffff;
 	float: right;
 	padding: 5px;
@@ -499,10 +500,9 @@ textarea {
 }
 
 .glyphicon-pencil {
-	font-size: 30px;
+	font-size: 35px;
 	color: #ffffff;
 	float: right;
-	margin-right: 5px;
 	padding: 5px;
 	border: 1px solid transparent;
 }
@@ -589,13 +589,17 @@ label {
 .toDirectory {
 	font-family: "Magra";
 	font-size: 20px;
-	padding: 0 20px;
+	padding: 10px 20px;
+	height: 45px;
+	background-color: #D8D8D8;
 }
 
 .conversationHeader {
 	font-family: "Magra";
 	font-size: 20px;
-	padding: 0 20px;
+	padding: 5px 20px;
+	color: #EE627F;
+	font-weight: bold;
 }
 
 .conversationPicture {
@@ -650,6 +654,8 @@ label {
 .messageContainer {
 	max-height: 50vh;
 	overflow-y: auto;
+	border-top: 1px solid #D8D8D8;
+	border-bottom: 1px solid #D8D8D8;
 }
 
 .logout {
@@ -658,8 +664,17 @@ label {
 	max-width: 300px;
 }
 
+@font-face {
+  font-family: 'Molengo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('molengo'), url(../fonts/molengo.woff) format('woff');
+}
+
 .text {
 	word-wrap: break-word;
+	font-size: 16px;
+	font-family: "Molengo";
 }
 
 .floatRight {
@@ -682,4 +697,9 @@ label {
 
 .sendReply {
 	width: 30%;
+}
+
+.plainButton {
+	font-family: "Molengo";
+	font-size: 20px;
 }

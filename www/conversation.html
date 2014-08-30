@@ -133,7 +133,7 @@
       conversationQuery.equalTo("objectId", conversationID);
       conversationQuery.first({
         success: function(conversationBasedonID) {
-          alert("Found conversation");
+          //alert("Found conversation");
           callback(conversationBasedonID);
         },
         error: function(error) {
@@ -159,7 +159,7 @@
       messageQuery.include("sender");
       messageQuery.find({
         success: function (messagesBasedOnConversation) {
-          alert("Found messages");
+          //alert("Found messages");
           callback(messagesBasedOnConversation);
         },
         error: function (error) {
@@ -174,11 +174,11 @@
 
     function senderIsCurrentUser (senderOfMessage) {
       if (senderOfMessage.id === Parse.User.current().id) {
-        alert("Sender is the current user");
+        //alert("Sender is the current user");
         return true;
       }
       else {
-        alert("Sender is not the current user");
+        //alert("Sender is not the current user");
         return false;
       }
     }
@@ -230,12 +230,25 @@
       message.set("sender", Parse.User.current());
       message.save(null, {
         success: function() {
-          alert("Successfully created new Message object!");
+          //alert("Successfully created new Message object!");
         },
         error: function(error) {
           alert("Failed to create new Message object");
         }
       });
+    }
+
+    function addNewMessageToConversation (callback) {
+      $(".messageContainer").append(
+        "<div class=\"row message\">" +
+          "<div class=\"text col-xs-9\">" +
+            getReplyFormValue() +
+          "</div>" +
+          "<div class=\"col-xs-2 col-xs-offset-1\">" +
+            "<img class=\"img-circle messagePicture\" src=\"" + Parse.User.current().get('profilePictureUrl') + "\" />" +
+          "</div>" +
+        "</div>");
+      callback();
     }
 
     $(".inputReply").val("");
@@ -247,7 +260,7 @@
           //console.log(messages[message]);
           addMessagesBasedOnConversation(messages[message]);
         }
-        $('html, body').scrollTop( $(document).height() );
+        $('.messageContainer').scrollTop($(".messageContainer")[0].scrollHeight);
       })
     });
 
@@ -257,16 +270,10 @@
       if (replyFormValueIsNotEmpty()) {
         searchForConversationBasedOnID(function (conversation) {
           createNewMessage(conversation);
-            $(".messageContainer").append(
-            "<div class=\"row message\">" +
-              "<div class=\"text col-xs-9\">" +
-                getReplyFormValue() +
-              "</div>" +
-              "<div class=\"col-xs-2 col-xs-offset-1\">" +
-                "<img class=\"img-circle messagePicture\" src=\"" + Parse.User.current().get('profilePictureUrl') + "\" />" +
-              "</div>" +
-            "</div>");
+          addNewMessageToConversation(function () {
             $(".inputReply").val("");
+            $('.messageContainer').scrollTop($(".messageContainer")[0].scrollHeight);
+          });
         });
       }
       

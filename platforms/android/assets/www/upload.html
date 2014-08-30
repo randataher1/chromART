@@ -57,18 +57,14 @@
 
   <body>
 
-    <div class="container">
+    <div class="containerWhite">
       <div class="pageHeader">
         <img src="img/logo.png" class="logo center" />
       </div>
 
-      <div class="titleText">
-        <p>Upload</p>
-      </div>
-
       <div>
-        <button onclick="takePicture()" type="button" class="btn btn-default takePic">Take Picture</button>
-        <button onclick="choosePicture()" type="button" class="btn btn-default choosePic">Choose Picture</button>
+        <button onclick="takePicture()" type="button" class="btn btn-default pinkButton takePic">Take Picture</button>
+        <button onclick="choosePicture()" type="button" class="btn btn-default blueButton choosePic">Choose Picture</button>
         <input type="hidden" name="cameraData" id="cameraData" value="" />
         <input type="hidden" id="photoTaken" value="" />
       </div>
@@ -85,9 +81,10 @@
           </div>
         </form>
 
+        <label for="imageName">Category</label>
         <div class="dropdown">
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-            Choose a category
+            Choose category
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -115,10 +112,10 @@
               <label>
                 <input type="radio" name="optionsRadios" id="optionLast" value="optionLast">Add new gallery
               </label>
-                <input type="text" name="newGalleryName" class="form-control" id="galleryName" placeholder="Enter new gallery name" />
             </div>
+            <input type="text" name="newGalleryName" class="form-control" id="galleryName" placeholder="Enter new gallery name" />
           </div>
-          <button type="submit" class="btn btn-default uploadButton\">Upload</button>
+          <button type="submit" class="btn btn-default plainButton uploadButton">Upload</button>
         </form>
       </div>
 

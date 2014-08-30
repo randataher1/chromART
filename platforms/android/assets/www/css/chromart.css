@@ -6,8 +6,9 @@ body, html {
 	background-image:url('../img/indexBackground.jpg');
 	position: relative;
 	width: 100%;
+	min-width: 320px;
 	min-height: 100%;
-	min-width: 320px; 
+	height: auto !important;
 }
 
 .containerDark {
@@ -21,7 +22,6 @@ body, html {
 .containerWhite {
 	width: 100%;
 	position: relative;
-	height: 100vh;
 	min-height: 100%;
 	background-color: #ffffff;
 }
@@ -341,11 +341,13 @@ body, html {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0 10px 0 10px;
-	color: #ffffff;
 }
 
 .uploadButton {
 	margin-top: 20px;
+	width: 80%;
+	height: 50px;
+	max-width: 300px;
 }
 
 #optionLast {
@@ -367,14 +369,12 @@ textarea {
 }
 
 .like:active,
-.like.active,
-.open > .dropdown-toggle.btn-default {
+.like.active {
 	background-color: #99ff66;
 }
 
 .dislike:active,
-.dislike.active,
-.open > .dropdown-toggle.btn-default {
+.dislike.active {
 	background-color: #ff3333;
 }
 
@@ -418,8 +418,7 @@ textarea {
 .gallery:hover,
 .gallery:focus,
 .gallery:active,
-.gallery.active,
-.open > .dropdown-toggle.btn-default {
+.gallery.active {
   background-color: rgba(153, 255, 102, 0.7);
   border-color: #adadad;
 }
@@ -461,23 +460,22 @@ textarea {
 
 #proName {
 	font-family: "Carme";
-	color: #99ff66;
+	color: #009966;
 	font-size: 18px;
 }
 
 #proDescription {
 	font-family: "Carme";
-	color: #ffffff;
 	font-size: 13px;
 	word-wrap: break-word;
 	min-height: 45px;
 }
 
 .settingsBar {
-	height: 45px;
+	height: 50px;
 	color: #ffffff;
 	font-family: "Magra";
-	font-size: 30px;
+	font-size: 35px;
 	text-align: center;
 }
 
@@ -486,7 +484,7 @@ textarea {
 }
 
 .glyphicon-cog {
-	font-size: 30px;
+	font-size: 35px;
 	color: #ffffff;
 	float: right;
 	padding: 5px;
@@ -502,10 +500,9 @@ textarea {
 }
 
 .glyphicon-pencil {
-	font-size: 30px;
+	font-size: 35px;
 	color: #ffffff;
 	float: right;
-	margin-right: 5px;
 	padding: 5px;
 	border: 1px solid transparent;
 }
@@ -531,7 +528,7 @@ textarea {
 	height: 45px;
 	color: #ffffff;
 	font-family: "Magra";
-	font-size: 15px;
+	font-size: 19px;
 	text-align: center;
 }
 
@@ -556,14 +553,151 @@ textarea {
 }
 
 label {
-	text-align: center;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	font-family: "Magra";
-	font-size: 16px;
+	font-size: 17px;
+	padding: 0 34px;
 }
 
 .dropdown-menu > li > a {
-	line-height: 1.5;
+	line-height: 0;
+	padding: 18px 10px;
+}
+
+.radio {
+	padding: 0 20px;
+}
+
+.dropdown-toggle {
+	width: 80%;
+	max-width: 300px;
+	height: 50px;
+	text-align: left;
+	font-family: "Asap";
+	font-size: 18px;
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+.caret {
+	float: right;
+	margin-top: 12px;
+}
+
+.toDirectory {
+	font-family: "Magra";
+	font-size: 20px;
+	padding: 10px 20px;
+	height: 45px;
+	background-color: #D8D8D8;
+}
+
+.conversationHeader {
+	font-family: "Magra";
+	font-size: 20px;
+	padding: 5px 20px;
+	color: #EE627F;
+	font-weight: bold;
+}
+
+.conversationPicture {
+	width: 66px;
+	height: 66px;
+}
+
+.conversation {
+	padding: 10px 10px;
+	margin: 10px 15px;
+	max-width: 330px;
+	border: 1px solid #555;
+	font-family: "Magra";
+	font-size: 16px;
+}
+
+.conversationSubject {
+	font-weight: bold;
+	color: #EE627F;
+}
+
+.conversationUsername {
+	color: #66C9B3;
+}
+
+.conversation:hover,
+.conversation:focus,
+.conversation:active,
+.conversation.active {
+	background-color: #D8D8D8;
+	border-color: #ffffff;
+}
+
+.conversationText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.message {
+	padding: 10px 20px;
+	max-width: 360px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.messagePicture {
+	width: 60px;
+	height: 60px;
+}
+
+.messageContainer {
+	max-height: 50vh;
+	overflow-y: auto;
+}
+
+.logout {
+	width: 80%;
+	height: 50px;
+	max-width: 300px;
+}
+
+@font-face {
+  font-family: 'Molengo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('molengo'), url(../fonts/molengo.woff) format('woff');
+}
+
+.text {
+	word-wrap: break-word;
+	font-size: 16px;
+	font-family: "Molengo";
+}
+
+.floatRight {
+	float: right;
+}
+
+.replyContainer {
+    height: 110px;
+    width: 100%;
+    margin: 15px 0;
+}
+
+.replyBox {
+
+}
+
+.inputReply {
+	width: 70%;
+}
+
+.sendReply {
+	width: 30%;
+}
+
+.plainButton {
+	font-family: "Molengo";
+	font-size: 20px;
 }

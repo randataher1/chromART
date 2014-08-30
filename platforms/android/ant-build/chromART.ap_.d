@@ -142,6 +142,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\glyphicons-halflings-regular.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\magra.woff \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\molengo.woff \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.eot \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.svg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\fonts\ratchicons.ttf \

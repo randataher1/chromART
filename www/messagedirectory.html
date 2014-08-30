@@ -37,59 +37,55 @@
 
   <body>
 
-    <div class="container">
-      <div class="containerWhite">
+    <div class="containerWhite">
 
-        <div class="pageHeader">
-          <ul class="nav nav-tabs messageNav" role="tablist">
-            <li class="active messageNavOption">
-              <a href="messagedirectory.html">
-                Directory
-              </a>
-            </li>
-            <li class="messageNavOption">
-              <a href="messagecompose.html">
-                Compose New
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div class="pageHeader">
+        <ul class="nav nav-tabs messageNav" role="tablist">
+          <li class="active messageNavOption">
+            <a href="messagedirectory.html">
+              Directory
+            </a>
+          </li>
+          <li class="messageNavOption">
+            <a href="messagecompose.html">
+              Compose New
+            </a>
+          </li>
+        </ul>
+      </div>
 
-        <div class="conversationContainer">
-          
-        </div>
+      <div class="conversationContainer">
         
       </div>
+      
+    </div>
 
-      <div class="clear"></div>
+    <div class="clear"></div>
 
-      <div>
-        <nav class="bar bar-tab">
-          <a class="tab-item" href="home.html">
-            <span class="icon icon-home"></span>
-            <span class="tab-label">Home</span>
-          </a>
-          <a class="tab-item" href="profile.html">
-            <span class="icon icon-person"></span>
-            <span class="tab-label">Profile</span>
-          </a>
-          <a class="tab-item" href="explore.html">
-            <span class="icon icon-pages"></span>
-            <span class="tab-label">Explore</span>
-          </a>
-          <a class="tab-item" href="upload.html">
-            <span class="icon icon-share"></span>
-            <span class="tab-label">Upload</span>
-          </a>
-          <a class="tab-item active" href="messagedirectory.html">
-            <span class="icon icon-compose"></span>
-            <span class="tab-label">Message</span>
-          </a>
-        </nav>
-      </div>
-
-    </div> <!-- /container -->
-
+    <div>
+      <nav class="bar bar-tab">
+        <a class="tab-item" href="home.html">
+          <span class="icon icon-home"></span>
+          <span class="tab-label">Home</span>
+        </a>
+        <a class="tab-item" href="profile.html">
+          <span class="icon icon-person"></span>
+          <span class="tab-label">Profile</span>
+        </a>
+        <a class="tab-item" href="explore.html">
+          <span class="icon icon-pages"></span>
+          <span class="tab-label">Explore</span>
+        </a>
+        <a class="tab-item" href="upload.html">
+          <span class="icon icon-share"></span>
+          <span class="tab-label">Upload</span>
+        </a>
+        <a class="tab-item active" href="messagedirectory.html">
+          <span class="icon icon-compose"></span>
+          <span class="tab-label">Message</span>
+        </a>
+      </nav>
+    </div>
 
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
@@ -110,11 +106,12 @@
 
     function searchForConversationsWithCurrentUser (toCurrent, fromCurrent, callback) {
       var conversationQuery = Parse.Query.or(toCurrent, fromCurrent);
-      conversationQuery.include(["toUser.fromUser.subject"]);
-      conversationQuery.descending("createdAt");
+      conversationQuery.include(["fromUser"]);
+      conversationQuery.include(["toUser"]);
+      conversationQuery.descending("updatedAt");
       conversationQuery.find({
         success: function (conversations) {
-          alert("Successfully found conversations");
+          //alert("Successfully found conversations");
           callback(conversations);
         },
         error: function (error) {
@@ -128,11 +125,11 @@
     }
 
     function getOtherUserBasedOnConversation (conversationObject) {
-      if (conversationObject.get("toUser").id === Parse.User.current().id) {
-        return conversationObject.get("fromUser");
+      if (conversationObject.get("fromUser").id === Parse.User.current().id) {
+        return conversationObject.get("toUser");
       }
       else {
-        return conversationObject.get("toUser");
+        return conversationObject.get("fromUser");
       }
     }
 
@@ -144,7 +141,7 @@
       messageQuery.include("sender");
       messageQuery.first({
         success: function (mostRecentMessage) {
-          alert("Found most recent message");
+          //alert("Found most recent message");
           callback(mostRecentMessage);
         },
         error: function (error) {
@@ -154,12 +151,12 @@
     }
 
     function addConversations (conversationObject, conversationNumber) {
-      console.log(conversationObject.createdAt);
+      var otherUser = getOtherUserBasedOnConversation(conversationObject);
       $(".conversationContainer").append(
         "<div class=\"row conversation\" id=\"convoNum" + conversationNumber + "\">" +
           "<div class=\"col-xs-3\">" +
             "<img class=\"img-circle conversationPicture\" src=\"" +
-              getOtherUserBasedOnConversation(conversationObject).get("profilePictureUrl") +
+              otherUser.get("profilePictureUrl") +
             "\" />" +
           "</div>" +
           "<div class=\"col-xs-9\">" +
@@ -167,7 +164,7 @@
               getSubjectBasedOnConversation(conversationObject) +
             "</div>" +
             "<div class=\"row conversationUsername\">" +
-              getOtherUserBasedOnConversation(conversationObject).get("username") +
+              otherUser.get("username") +
             "</div>" +
             "<div class=\"conversationText\" id=\"convoText" + conversationNumber + "\">" +
             "</div>" +
@@ -175,7 +172,7 @@
         "</div>"
         );
       $("#convoNum" + conversationNumber).click(function() {
-        window.location.href = "conversation.html?conversationID=" + conversationObject.id;
+        window.location.href = "conversation.html?conversationID=" + conversationObject.id + "#recentMessage";
       });
     }
 
@@ -187,7 +184,6 @@
 
     searchForConversationsWithCurrentUser(setQueryForConversationsToCurrentUser(), setQueryForConversationsFromCurrentUser(), function (allConversations) {
       for (var singleConversation = 0; singleConversation < allConversations.length; singleConversation++) {
-        //console.log(allConversations[singleConversation].createdAt);
         addConversations(allConversations[singleConversation], singleConversation);
         addMostRecentMessageToConversations(allConversations[singleConversation], singleConversation);
       }
