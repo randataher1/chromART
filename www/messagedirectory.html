@@ -55,9 +55,13 @@
           </ul>
         </div>
 
-        
+        <div class="conversationContainer">
+          
+        </div>
         
       </div>
+
+      <div class="clear"></div>
 
       <div>
         <nav class="bar bar-tab">
@@ -92,9 +96,101 @@
 
     sessvars.$.clearMem();
 
-    $(".logout").click(function() {
-      Parse.User.logOut();
-      window.location.href = 'index.html';
+    function setQueryForConversationsToCurrentUser () {
+      var toCurrentUser = new Parse.Query("Conversation");
+      toCurrentUser.equalTo("toUser", Parse.User.current());
+      return toCurrentUser;
+    }
+
+    function setQueryForConversationsFromCurrentUser () {
+      var fromCurrentUser = new Parse.Query("Conversation");
+      fromCurrentUser.equalTo("fromUser", Parse.User.current());
+      return fromCurrentUser;
+    }
+
+    function searchForConversationsWithCurrentUser (toCurrent, fromCurrent, callback) {
+      var conversationQuery = Parse.Query.or(toCurrent, fromCurrent);
+      conversationQuery.include(["toUser.fromUser.subject"]);
+      conversationQuery.descending("createdAt");
+      conversationQuery.find({
+        success: function (conversations) {
+          alert("Successfully found conversations");
+          callback(conversations);
+        },
+        error: function (error) {
+          alert("Error finding conversations");
+        }
+      });
+    }
+
+    function getSubjectBasedOnConversation (conversationObject) {
+      return conversationObject.get("subject");
+    }
+
+    function getOtherUserBasedOnConversation (conversationObject) {
+      if (conversationObject.get("toUser").id === Parse.User.current().id) {
+        return conversationObject.get("fromUser");
+      }
+      else {
+        return conversationObject.get("toUser");
+      }
+    }
+
+    function searchForMostRecentMessageBasedOnConversation (conversationObject, callback) {
+      var Message = Parse.Object.extend("Message");
+      var messageQuery = new Parse.Query(Message);
+      messageQuery.equalTo("conversation", conversationObject);
+      messageQuery.descending("createdAt");
+      messageQuery.include("sender");
+      messageQuery.first({
+        success: function (mostRecentMessage) {
+          alert("Found most recent message");
+          callback(mostRecentMessage);
+        },
+        error: function (error) {
+          alert("Error finding messages");
+        }
+      });
+    }
+
+    function addConversations (conversationObject, conversationNumber) {
+      console.log(conversationObject.createdAt);
+      $(".conversationContainer").append(
+        "<div class=\"row conversation\" id=\"convoNum" + conversationNumber + "\">" +
+          "<div class=\"col-xs-3\">" +
+            "<img class=\"img-circle conversationPicture\" src=\"" +
+              getOtherUserBasedOnConversation(conversationObject).get("profilePictureUrl") +
+            "\" />" +
+          "</div>" +
+          "<div class=\"col-xs-9\">" +
+            "<div class=\"row conversationSubject\">" +
+              getSubjectBasedOnConversation(conversationObject) +
+            "</div>" +
+            "<div class=\"row conversationUsername\">" +
+              getOtherUserBasedOnConversation(conversationObject).get("username") +
+            "</div>" +
+            "<div class=\"conversationText\" id=\"convoText" + conversationNumber + "\">" +
+            "</div>" +
+          "</div>" +
+        "</div>"
+        );
+      $("#convoNum" + conversationNumber).click(function() {
+        window.location.href = "conversation.html?conversationID=" + conversationObject.id + "#sendButton";
+      });
+    }
+
+    function addMostRecentMessageToConversations (conversationObject, conversationNumber) {
+      searchForMostRecentMessageBasedOnConversation(conversationObject, function (lastMessage) {
+        document.getElementById("convoText" + conversationNumber).innerHTML = lastMessage.get("messageText");
+      });
+    }
+
+    searchForConversationsWithCurrentUser(setQueryForConversationsToCurrentUser(), setQueryForConversationsFromCurrentUser(), function (allConversations) {
+      for (var singleConversation = 0; singleConversation < allConversations.length; singleConversation++) {
+        //console.log(allConversations[singleConversation].createdAt);
+        addConversations(allConversations[singleConversation], singleConversation);
+        addMostRecentMessageToConversations(allConversations[singleConversation], singleConversation);
+      }
     });
   </script>
 

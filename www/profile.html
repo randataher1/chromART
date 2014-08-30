@@ -322,7 +322,7 @@
         //If the user clicks the button when it is active, the Follow object is removed and the button becomes unactive
         if($("#followButton").hasClass("active")) {
           $("#followButton").removeClass("active");
-          document.getElementById("followButton").innerHTML="Follow";
+          document.getElementById("followButton").innerHTML = "Follow";
           searchForFollowObjectBasedOnID(user, function (followingObject) {
             followingObject[0].destroy({});
             //alert("Destroyed Follow object");
@@ -330,7 +330,7 @@
         }
         else {
           $("#followButton").addClass("active");
-          document.getElementById("followButton").innerHTML="Following";
+          document.getElementById("followButton").innerHTML = "Following";
           //Creates new Follow object if user selects the Follow button
           createNewFollowObject(user);
         }

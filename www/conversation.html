@@ -62,7 +62,7 @@
 
       </div>
 
-      <div class="conversationContainer">
+      <div class="messageContainer">
         
       </div>
 
@@ -71,7 +71,7 @@
           <div class="form-group replyBox">
             <textarea type="text" class="form-control inputReply" rows="1" placeholder="Reply"></textarea>
           </div>
-          <button type="submit" class="btn blueButton sendReply">Send</button>
+          <button type="submit" class="btn blueButton sendReply" name="sendButton">Send</button>
         </form>
       </div>
       
@@ -188,7 +188,7 @@
     function addMessagesBasedOnConversation (message) {
       var sender = getSenderBasedOnMessage(message);
       if (senderIsCurrentUser(sender)) {
-        $(".conversationContainer").append(
+        $(".messageContainer").append(
           "<div class=\"row message\">" +
             "<div class=\"text col-xs-9\">" +
               message.get("messageText") +
@@ -199,7 +199,7 @@
           "</div>");
       }
       else {
-        $(".conversationContainer").append(
+        $(".messageContainer").append(
           "<div class=\"row message\">" +
             "<div class=\"col-xs-3\">" +
               "<img class=\"img-circle messagePicture\" src=\"" + sender.get('profilePictureUrl') + "\" />" +
@@ -248,7 +248,7 @@
 
       searchForConversationBasedOnID(function (conversation) {
         createNewMessage(conversation);
-          $(".conversationContainer").append(
+          $(".messageContainer").append(
           "<div class=\"row message\">" +
             "<div class=\"text col-xs-9\">" +
               getReplyFormValue() +
