@@ -23,8 +23,6 @@ body, html {
 	position: relative;
 	min-height: 100%;
 	background-color: #ffffff;
-	border-collapse:collapse;
-    display: table;
 }
 
 .pageHeader {
@@ -606,9 +604,9 @@ label {
 }
 
 .conversation {
-	padding: 10px 15px;
-	margin: 5px 5px;
-	max-width: 350px;
+	padding: 10px 10px;
+	margin: 10px 15px;
+	max-width: 330px;
 	border: 1px solid #555;
 	font-family: "Magra";
 	font-size: 16px;
@@ -649,6 +647,11 @@ label {
 	height: 60px;
 }
 
+.messageContainer {
+	max-height: 50vh;
+	overflow-y: auto;
+}
+
 .logout {
 	width: 80%;
 	height: 50px;
@@ -664,10 +667,9 @@ label {
 }
 
 .replyContainer {
-	display: table-row;
-    vertical-align: bottom;
     height: 110px;
     width: 100%;
+    margin: 15px 0;
 }
 
 .replyBox {

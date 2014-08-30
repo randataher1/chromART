@@ -71,13 +71,11 @@
           <div class="form-group replyBox">
             <textarea type="text" class="form-control inputReply" rows="1" placeholder="Reply"></textarea>
           </div>
-          <button type="submit" class="btn blueButton sendReply" name="sendButton">Send</button>
+          <button type="submit" class="btn blueButton sendReply">Send</button>
         </form>
       </div>
       
     </div>
-
-    <div class="clear"></div>
 
     <div>
       <nav class="bar bar-tab">
@@ -215,6 +213,15 @@
       return $(".inputReply").val();
     }
 
+    function replyFormValueIsNotEmpty () {
+      if (getReplyFormValue() === "") {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+
     function createNewMessage (conversationObject) {
       var Message = Parse.Object.extend("Message");
       var message = new Message();
@@ -240,25 +247,28 @@
           //console.log(messages[message]);
           addMessagesBasedOnConversation(messages[message]);
         }
+        $('html, body').scrollTop( $(document).height() );
       })
     });
 
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      searchForConversationBasedOnID(function (conversation) {
-        createNewMessage(conversation);
-          $(".messageContainer").append(
-          "<div class=\"row message\">" +
-            "<div class=\"text col-xs-9\">" +
-              getReplyFormValue() +
-            "</div>" +
-            "<div class=\"col-xs-2 col-xs-offset-1\">" +
-              "<img class=\"img-circle messagePicture\" src=\"" + Parse.User.current().get('profilePictureUrl') + "\" />" +
-            "</div>" +
-          "</div>");
-          $(".inputReply").val("");
-      });
+      if (replyFormValueIsNotEmpty()) {
+        searchForConversationBasedOnID(function (conversation) {
+          createNewMessage(conversation);
+            $(".messageContainer").append(
+            "<div class=\"row message\">" +
+              "<div class=\"text col-xs-9\">" +
+                getReplyFormValue() +
+              "</div>" +
+              "<div class=\"col-xs-2 col-xs-offset-1\">" +
+                "<img class=\"img-circle messagePicture\" src=\"" + Parse.User.current().get('profilePictureUrl') + "\" />" +
+              "</div>" +
+            "</div>");
+            $(".inputReply").val("");
+        });
+      }
       
     });
 
