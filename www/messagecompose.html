@@ -216,9 +216,9 @@
       conversation.set("toUser", toUser);
       conversation.set("subject", getSubjectFormValue());
       conversation.save(null, {
-        success: function(object) {
+        success: function(conversationObject) {
           alert("Successfully created new Conversation object!");
-          callback(object);
+          callback(conversationObject);
         },
         error: function(error) {
           alert("Failed to create new Conversation object");
@@ -233,7 +233,7 @@
       message.set("messageText", getMessageFormValue());
       message.set("sender", Parse.User.current());
       message.save(null, {
-        success: function(messageObject) {
+        success: function() {
           alert("Successfully created new Message object!");
         },
         error: function(error) {
@@ -268,7 +268,7 @@
           createNewConversationObject(user, function (conversation) {
             createNewMessageObject(conversation);
             console.log(conversation.id);
-            window.location.href = "conversation.html?conversation=" + conversation.id;
+            window.location.href = "conversation.html?conversationID=" + conversation.id;
           });
         }
       });

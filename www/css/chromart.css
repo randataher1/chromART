@@ -6,7 +6,8 @@ body, html {
 	background-image:url('../img/indexBackground.jpg');
 	position: relative;
 	width: 100%;
-	min-width: 320px; 
+	min-width: 320px;
+	height: 100%;
 }
 
 .containerDark {
@@ -22,6 +23,8 @@ body, html {
 	position: relative;
 	min-height: 100%;
 	background-color: #ffffff;
+	border-collapse:collapse;
+    display: table;
 }
 
 .pageHeader {
@@ -527,7 +530,7 @@ textarea {
 	height: 45px;
 	color: #ffffff;
 	font-family: "Magra";
-	font-size: 15px;
+	font-size: 19px;
 	text-align: center;
 }
 
@@ -583,4 +586,62 @@ label {
 .caret {
 	float: right;
 	margin-top: 12px;
+}
+
+.toDirectory {
+	font-family: "Magra";
+	font-size: 20px;
+	padding: 0 20px;
+}
+
+.conversationHeader {
+	font-family: "Magra";
+	font-size: 20px;
+	padding: 0 20px;
+}
+
+.message {
+	padding: 10px 20px;
+	max-width: 360px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.messagePicture {
+	width: 60px;
+	height: 60px;
+}
+
+.logout {
+	width: 80%;
+	height: 50px;
+	max-width: 300px;
+}
+
+.text {
+	word-wrap: break-word;
+}
+
+.floatRight {
+	float: right;
+}
+
+.replyContainer {
+	display: table-row;
+    vertical-align: bottom;
+    height: 110px;
+    width: 100%;
+}
+
+.replyBox {
+
+}
+
+.inputReply {
+	width: 70%;
+}
+
+.sendReply {
+	width: 30%;
 }
