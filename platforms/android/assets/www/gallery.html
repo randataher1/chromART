@@ -128,7 +128,7 @@
       galleryQuery.include("user");
       galleryQuery.first({
         success: function(galleryBasedOnID) {
-          alert("Found gallery");
+          //alert("Found gallery");
           callback(galleryBasedOnID);
         },
         error: function(error) {
@@ -148,7 +148,7 @@
       imageQuery.include("user");
       imageQuery.find({
         success: function(imagesInGallery) {
-          alert("Found images in gallery");
+          //alert("Found images in gallery");
           callback(imagesInGallery);
         },
         error: function(error) {
