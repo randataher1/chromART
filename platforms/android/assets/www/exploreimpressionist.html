@@ -26,7 +26,7 @@
     <![endif]-->
 
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
     <script type="text/javascript" src="js/sessvars.js"></script>
@@ -35,49 +35,47 @@
 
   <body>
 
-    <div class="container">
-      <div class="containerWhite">
-        <div class="pageHeader">
-          <img src="img/logo.png" class="logo center" />
-        </div>
-
-        <div class="imageScroll">
-          
-        </div>
-
-        <div class="clear"></div>
-
-        <div>
-          <nav class="bar bar-tab">
-            <a class="tab-item" href="home.html">
-              <span class="icon icon-home"></span>
-              <span class="tab-label">Home</span>
-            </a>
-            <a class="tab-item" href="profile.html">
-              <span class="icon icon-person"></span>
-              <span class="tab-label">Profile</span>
-            </a>
-            <a class="tab-item active" href="explore.html">
-              <span class="icon icon-pages"></span>
-              <span class="tab-label">Explore</span>
-            </a>
-            <a class="tab-item" href="upload.html">
-              <span class="icon icon-share"></span>
-              <span class="tab-label">Upload</span>
-            </a>
-            <a class="tab-item" href="messagedirectory.html">
-              <span class="icon icon-compose"></span>
-              <span class="tab-label">Message</span>
-            </a>
-          </nav>
-        </div>
+    <div class="containerWhite">
+      <div class="pageHeader">
+        <img src="img/logo.png" class="logo center" />
       </div>
-    </div> <!-- /container -->
+
+      <div class="imageScroll">
+        
+      </div>
+
+      <div class="clear"></div>
+
+      <div>
+        <nav class="bar bar-tab">
+          <a class="tab-item" href="home.html">
+            <span class="icon icon-home"></span>
+            <span class="tab-label">Home</span>
+          </a>
+          <a class="tab-item" href="profile.html">
+            <span class="icon icon-person"></span>
+            <span class="tab-label">Profile</span>
+          </a>
+          <a class="tab-item active" href="explore.html">
+            <span class="icon icon-pages"></span>
+            <span class="tab-label">Explore</span>
+          </a>
+          <a class="tab-item" href="upload.html">
+            <span class="icon icon-share"></span>
+            <span class="tab-label">Upload</span>
+          </a>
+          <a class="tab-item" href="messagedirectory.html">
+            <span class="icon icon-compose"></span>
+            <span class="tab-label">Message</span>
+          </a>
+        </nav>
+      </div>
+    </div>
 
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    sessvars.$.clearMem();
+    sessvars.toUserObject = {};
 
     //Finding most recently created images
     function searchForImpressionistImages (callback) {
@@ -87,6 +85,7 @@
       imageQuery.descending("createdAt");
       imageQuery.equalTo("category", "Impressionist");
       imageQuery.include('user');
+      imageQuery.include("gallery");
       imageQuery.limit(10);
       imageQuery.find({
         success: function(results) {
@@ -118,8 +117,48 @@
       imageLikeQuery.equalTo("image", impressionistImage);
       imageLikeQuery.find({
         success: function(imageLikeResults) {
-          //alert("Found user likes of images");
+          //alert("Found user like objects of images");
           callback(imageLikeResults);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
+    //Returns all ImageLike objects of type like of images
+    function searchForUserLikeObjectsOfTypeLikeOf (impressionistImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("type", "like");
+      imageLikeQuery.equalTo("image", impressionistImage);
+      imageLikeQuery.find({
+        success: function(imageLikes) {
+          //alert("Found likes of image");
+          callback(imageLikes);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
+    //Returns all ImageLike objects of type dislike of images
+    function searchForUserLikeObjectsOfTypeDislikeOf (impressionistImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("type", "dislike");
+      imageLikeQuery.equalTo("image", impressionistImage);
+      imageLikeQuery.find({
+        success: function(imageDislikes) {
+          //alert("Found dislikes of image");
+          callback(imageDislikes);
         },
         error: function (error) {
           alert("Error finding likes of images");
@@ -135,7 +174,7 @@
         "<div class=\"image\">" +
           "<div class=\"row\">" +
             "<div class=\"col-sm-12\">" +
-              "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
+              "<img class=\"imageResize image" + imageObject.id + "\" src=\"" + imageObject.get('url') + "\" />" +
             "</div>" +
           "</div>" +
           "<div class=\"row imageContents\">" +
@@ -157,16 +196,43 @@
                 imageObject.get('category') +
               "</div>" +
             "</div>" +
-            "<div class=\"col-xs-3 col-xs-offset-1\">" +
-              "<button type=\"button\" id=\"imageLike" + individualImage + "\" class=\"btn btn-default btn-sm like\">" +
-                "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
-              "</button>" +
-              "<button type=\"button\" id=\"imageDislike" + individualImage + "\" class=\"btn btn-default btn-sm dislike\">" +
-                  "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+            "<div class=\"col-xs-2\">" +
+              "<div class=\"row\">" +
+                "<button type=\"button\" id=\"imageLike" + individualImage + "\" class=\"btn btn-default btn-sm like\">" +
+                  "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
                 "</button>" +
+              "</div>" +
+              "<div class=\"row\">" +
+                "<div class=\"likeCounter\" id=\"numLikes" + individualImage + "\">" +
+                  "0" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+            "<div class=\"col-xs-2\">" +
+              "<div class=\"row\">" +
+                "<button type=\"button\" id=\"imageDislike" + individualImage + "\" class=\"btn btn-default btn-sm dislike\">" +
+                    "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+                "</button>" +
+              "</div>" +
+              "<div class=\"row\">" +
+                "<div class=\"dislikeCounter\" id=\"numDislikes" + individualImage + "\">" +
+                  "0" +
+                "</div>" +
+              "</div>" +
             "</div>" +
           "</div>" +
         "</div>");
+    }
+
+    //Links button to message.html and uses a sessvar object to keep the userID
+    function addGalleryLinkToImage (individualImage, imagesUploaded) {
+      var imageObject = imagesUploaded[individualImage];
+      var galleryObject = imageObject.get("gallery");
+      $(".image" + imageObject.id).click(function() {
+        sessvars.toImageObject = {activeImage: imageObject};
+        console.log(sessvars.toImageObject);
+        window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
+      });
     }
 
     //Searches for like objects, and if there are, changes look of like buttons
@@ -187,6 +253,18 @@
       });
     }
 
+    function modifyHTMLOfLikeCounter (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOfTypeLikeOf(imageUploaded, function (imageLikes) {
+        document.getElementById("numLikes" + imageCount).innerHTML = imageLikes.length;
+      });
+    }
+
+    function modifyHTMLOfDislikeCounter (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOfTypeDislikeOf(imageUploaded, function (imageDislikes) {
+        document.getElementById("numDislikes" + imageCount).innerHTML = imageDislikes.length;
+      });
+    }
+
     function addLikeFunctionToLikeButton (imageUploaded, imageCount) {
       //Adds like functionality to like button
       $("#imageLike" + imageCount).click(function() {
@@ -202,6 +280,7 @@
             newImageLike.set("type", "like");
             newImageLike.save(null, {
               success: function(object) {
+                document.getElementById("numLikes" + imageCount).innerHTML = "1";
                 //alert("Successfully created new ImageLike object with type like!");
               },
               error: function(object, error) {
@@ -213,6 +292,7 @@
           else if (imageLike[0].get("type") === "like") {
             $("#imageLike" + imageCount).removeClass("active");
             imageLike[0].destroy({});
+            document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type like!");
           }
           //If there is a like object with type dislike, changes the type of the object
@@ -222,6 +302,8 @@
             imageLike[0].set("type", "like");
             imageLike[0].save(null, {
               success: function(object) {
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully changed type of ImageLike object to type like!");
               },
               error: function(object, error) {
@@ -248,6 +330,7 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
+                document.getElementById("numDislikes" + imageCount).innerHTML = "1";
                 //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {
@@ -259,6 +342,7 @@
           else if (imageLike[0].get("type") === "dislike") {
             $("#imageDislike" + imageCount).removeClass("active");
             imageLike[0].destroy({});
+            document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type dislike!");
           }
           //If there is a like object with type like, changes the type of the object
@@ -268,6 +352,8 @@
             imageLike[0].set("type", "dislike");
             imageLike[0].save(null, {
               success: function(object) {
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully changed type of ImageLike object to type dislike!");
               },
               error: function(object, error) {
@@ -286,6 +372,9 @@
       for (var eachImage = 0; eachImage < impressionistImagesUploaded.length; eachImage++) {
         var imageObject = impressionistImagesUploaded[eachImage];
         addHTMLForEach(eachImage, impressionistImagesUploaded);
+        addGalleryLinkToImage(eachImage, impressionistImagesUploaded);
+        modifyHTMLOfLikeCounter(imageObject, eachImage);
+        modifyHTMLOfDislikeCounter(imageObject, eachImage);
         modifyHTMLOfButtons(imageObject, eachImage);
         addLikeFunctionToLikeButton(imageObject, eachImage);
         addDislikeFunctionToDislikeButton(imageObject, eachImage);

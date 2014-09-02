@@ -168,6 +168,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.js 
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\bootstrap.min.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\icheck.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\index.js \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\jquery.mobile.custom.min.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\ratchet.min.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\js\sessvars.js \

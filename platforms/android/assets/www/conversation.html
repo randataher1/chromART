@@ -26,7 +26,7 @@
     <![endif]-->
 
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
     <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -105,7 +105,7 @@
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    sessvars.$.clearMem();
+    sessvars.toUserObject = {};
 
     var $_GET = {};
     if(document.location.toString().indexOf('?') !== -1) {
@@ -124,7 +124,7 @@
     }
 
     //Set conversationID to the ID of the get variable
-    conversationID = $_GET['conversationID'];
+    var conversationID = $_GET['conversationID'];
 
     //Returns conversation based on the GET variable in the URL
     function searchForConversationBasedOnID (callback) {
@@ -238,6 +238,19 @@
       });
     }
 
+    function addNewMessageToConversation (callback) {
+      $(".messageContainer").append(
+        "<div class=\"row message\">" +
+          "<div class=\"text col-xs-9\">" +
+            getReplyFormValue() +
+          "</div>" +
+          "<div class=\"col-xs-2 col-xs-offset-1\">" +
+            "<img class=\"img-circle messagePicture\" src=\"" + Parse.User.current().get('profilePictureUrl') + "\" />" +
+          "</div>" +
+        "</div>");
+      callback();
+    }
+
     $(".inputReply").val("");
 
     searchForConversationBasedOnID(function(conversation) {
@@ -247,7 +260,7 @@
           //console.log(messages[message]);
           addMessagesBasedOnConversation(messages[message]);
         }
-        $('html, body').scrollTop( $(document).height() );
+        $('.messageContainer').scrollTop($(".messageContainer")[0].scrollHeight);
       })
     });
 
@@ -257,16 +270,10 @@
       if (replyFormValueIsNotEmpty()) {
         searchForConversationBasedOnID(function (conversation) {
           createNewMessage(conversation);
-            $(".messageContainer").append(
-            "<div class=\"row message\">" +
-              "<div class=\"text col-xs-9\">" +
-                getReplyFormValue() +
-              "</div>" +
-              "<div class=\"col-xs-2 col-xs-offset-1\">" +
-                "<img class=\"img-circle messagePicture\" src=\"" + Parse.User.current().get('profilePictureUrl') + "\" />" +
-              "</div>" +
-            "</div>");
+          addNewMessageToConversation(function () {
             $(".inputReply").val("");
+            $('.messageContainer').scrollTop($(".messageContainer")[0].scrollHeight);
+          });
         });
       }
       

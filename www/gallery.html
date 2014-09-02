@@ -33,6 +33,8 @@
 
     <script type="text/javascript" src="js/bootstrap.js"></script>
 
+    <script src="js/jquery.mobile.custom.min.js"></script>
+
   </head>
 
   <body>
@@ -272,6 +274,15 @@
         "</div>");
     }
 
+    function addSwipeFunctionToCarousel () {
+      $(".carousel").swiperight(function() {
+        $(".carousel").carousel('prev');
+      });
+      $(".carousel").swipeleft(function() {
+        $(".carousel").carousel('next');
+      });
+    }
+
     function addActiveClassToIndicator () {
       var clickedImageID = sessvars.toImageObject["activeImage"].id;
       $(".indicator" + clickedImageID).addClass("active");
@@ -455,6 +466,7 @@
         for (var eachImage = 0; eachImage < imagesInGallery.length; eachImage++) {
           var imageObject = imagesInGallery[eachImage];
           addHTMLForEach(eachImage, imagesInGallery);
+          addSwipeFunctionToCarousel();
           addActiveClassToIndicator();
           addActiveClassToClickedImage();
           changeHeightOfArrow();

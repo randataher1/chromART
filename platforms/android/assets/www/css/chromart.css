@@ -252,7 +252,7 @@ body, html {
 .imageScroll {
 	width: 100%;
 	min-width: 320px;
-	max-width: 500px;
+	max-width: 450px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -329,6 +329,7 @@ body, html {
 
 .imageContents {
 	margin: 0 10px 0 10px;
+	font-family: "Magra";
 }
 
 .profilePicture {
@@ -379,12 +380,31 @@ textarea {
 }
 
 .like {
-	display: inline;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 .dislike {
-	display: inline;
-	float: right;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.likeCounter {
+	text-align: center;
+}
+
+.dislikeCounter {
+	text-align: center;
+}
+
+.galleryHeader {
+	height: 50px;
+	background-color: #555;
+	color: #ffffff;
+	font-family: "Magra";
+	text-align: center;
+	font-size: 24px;
+	padding: 8px 15px;
 }
 
 .gallery {
@@ -515,13 +535,23 @@ textarea {
 	border-color: #ffffff;
 }
 
-.carousel {
+/*.carousel {
 	margin-left: auto;
 	margin-right: auto;
-}
+}*/
 
 .carouselContainer {
-	padding: 15rem 0;
+	padding: 5px;
+}
+
+.carousel-indicators {
+	bottom: 0px;
+}
+
+.imageCaption {
+	position: static;
+	color: #000;
+	text-shadow: none;
 }
 
 .messageNav {
@@ -654,6 +684,8 @@ label {
 .messageContainer {
 	max-height: 50vh;
 	overflow-y: auto;
+	border-top: 1px solid #D8D8D8;
+	border-bottom: 1px solid #D8D8D8;
 }
 
 .logout {
