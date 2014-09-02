@@ -90,8 +90,6 @@
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    sessvars.toUserObject = {};
-
     function setQueryForConversationsToCurrentUser () {
       var toCurrentUser = new Parse.Query("Conversation");
       toCurrentUser.equalTo("toUser", Parse.User.current());

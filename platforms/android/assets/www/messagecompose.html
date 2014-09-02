@@ -264,6 +264,7 @@
         else {
           createNewConversationObject(user, function (conversation) {
             createNewMessageObject(conversation, function() {
+              sessvars.toUserObject = {};
               window.location.href = "conversation.html?conversationID=" + conversation.id;
             });
           });
