@@ -43,16 +43,16 @@
       </div>
 
       <form role="form">
-        <textarea class="form-control terms" type="text" rows="11" placeholder="Any person who has posted works to chromART are either the copyright owners of the component parts of that work or are posting the work under license from a copyright owner or said person agent or otherwise as permitted by law. No individual, group, or company may reproduce, distribute, publicly display or perform, or prepare derivative works based on any of the Content including any such works without the express, written consent of chromART or the appropriate owner of copyright in such works. chromART does not claim ownership rights in your works or other materials posted by you to chromART (Your Content). You agree not to distribute any part of the Service other than Your Content in any medium. You agree not to alter or modify any part of the Service unless expressly permitted to do so by us or by use of functions on the Service provided by us. The Service being specified as the app itself, and all components of app, and all content created by the chromART company. chromART does not claim ownership rights in Your Content. For the sole purpose of enabling us to make your Content available through the Service, you grant to chromART an exclusive, royalty-free license to reproduce, distribute, re-format, store, prepare derivative works based on, and publicly display and perform Your Content. You agree that chromART may at any time, and without notice, suspend or terminate any part of the Service, or refuse to fulfill any order, or any part of any order or terminate your membership and delete any Content stored on the Service, if you fail to comply with the Terms or applicable law." readonly></textarea>
+        <textarea class="form-control terms" type="text" rows="8" placeholder="Any person who has posted works to chromART are either the copyright owners of the component parts of that work or are posting the work under license from a copyright owner or said person agent or otherwise as permitted by law. No individual, group, or company may reproduce, distribute, publicly display or perform, or prepare derivative works based on any of the Content including any such works without the express, written consent of chromART or the appropriate owner of copyright in such works. chromART does not claim ownership rights in your works or other materials posted by you to chromART (Your Content). You agree not to distribute any part of the Service other than Your Content in any medium. You agree not to alter or modify any part of the Service unless expressly permitted to do so by us or by use of functions on the Service provided by us. The Service being specified as the app itself, and all components of app, and all content created by the chromART company. chromART does not claim ownership rights in Your Content. For the sole purpose of enabling us to make your Content available through the Service, you grant to chromART an exclusive, royalty-free license to reproduce, distribute, re-format, store, prepare derivative works based on, and publicly display and perform Your Content. You agree that chromART may at any time, and without notice, suspend or terminate any part of the Service, or refuse to fulfill any order, or any part of any order or terminate your membership and delete any Content stored on the Service, if you fail to comply with the Terms or applicable law." readonly></textarea>
         <div class="checkbox agreement">
-          <label>
+          <label class="checkboxLabel">
             <input type="checkbox" class="check"> I have read this Agreement and agree to the terms and conditions.
           </label>
         </div>
-        <button type="submit" class="btn btn-default disabled submitButton">Submit</button>
+        <button type="submit" class="btn btn-default disabled plainButton submitButton">Submit</button>
       </form>
 
-      <div class="clear"></div>
+      <button type="button" class="btn btn-default plainButton toIndex">Go Back</button>
 
     </div> <!-- /container -->
 
@@ -73,6 +73,10 @@
     $("form").on("submit", function(e) {
       e.preventDefault();
       window.location.href = 'profile.html';
+    });
+
+    $(".toIndex").click(function() {
+      window.location.href = 'index.html';
     });
 
   </script>
