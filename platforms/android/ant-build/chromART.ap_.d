@@ -53,6 +53,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-xxhd
 C:\Users\User\Desktop\src\chromART\platforms\android\ant-build\res\drawable-xxhdpi\ic_action_remove.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\_where-is-www.txt \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\config.xml \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\conversation.html \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova.js \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\cordova_plugins.js \
