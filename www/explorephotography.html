@@ -85,6 +85,7 @@
       imageQuery.descending("createdAt");
       imageQuery.equalTo("category", "Photography");
       imageQuery.include('user');
+      imageQuery.include("gallery");
       imageQuery.limit(10);
       imageQuery.find({
         success: function(results) {
@@ -173,7 +174,7 @@
         "<div class=\"image\">" +
           "<div class=\"row\">" +
             "<div class=\"col-sm-12\">" +
-              "<img class=\"imageResize\" src=\"" + imageObject.get('url') + "\" />" +
+              "<img class=\"imageResize image" + imageObject.id + "\" src=\"" + imageObject.get('url') + "\" />" +
             "</div>" +
           "</div>" +
           "<div class=\"row imageContents\">" +
@@ -221,6 +222,17 @@
             "</div>" +
           "</div>" +
         "</div>");
+    }
+
+    //Links button to message.html and uses a sessvar object to keep the userID
+    function addGalleryLinkToImage (individualImage, imagesUploaded) {
+      var imageObject = imagesUploaded[individualImage];
+      var galleryObject = imageObject.get("gallery");
+      $(".image" + imageObject.id).click(function() {
+        sessvars.toImageObject = {activeImage: imageObject};
+        console.log(sessvars.toImageObject);
+        window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
+      });
     }
 
     //Searches for like objects, and if there are, changes look of like buttons
@@ -360,6 +372,7 @@
       for (var eachImage = 0; eachImage < photographyImagesUploaded.length; eachImage++) {
         var imageObject = photographyImagesUploaded[eachImage];
         addHTMLForEach(eachImage, photographyImagesUploaded);
+        addGalleryLinkToImage(eachImage, photographyImagesUploaded);
         modifyHTMLOfLikeCounter(imageObject, eachImage);
         modifyHTMLOfDislikeCounter(imageObject, eachImage);
         modifyHTMLOfButtons(imageObject, eachImage);

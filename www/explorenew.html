@@ -220,6 +220,7 @@
       var galleryObject = imageObject.get("gallery");
       $(".image" + imageObject.id).click(function() {
         sessvars.toImageObject = {activeImage: imageObject};
+        console.log(sessvars.toImageObject);
         window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
       });
     }
