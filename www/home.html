@@ -143,6 +143,46 @@
       });
     }
 
+    //Returns all ImageLike objects of type like of images
+    function searchForUserLikeObjectsOfTypeLikeOf (recentlyUploadedImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("type", "like");
+      imageLikeQuery.equalTo("image", recentlyUploadedImage);
+      imageLikeQuery.find({
+        success: function(imageLikes) {
+          //alert("Found likes of image");
+          callback(imageLikes);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
+    //Returns all ImageLike objects of type dislike of images
+    function searchForUserLikeObjectsOfTypeDislikeOf (recentlyUploadedImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("type", "dislike");
+      imageLikeQuery.equalTo("image", recentlyUploadedImage);
+      imageLikeQuery.find({
+        success: function(imageDislikes) {
+          //alert("Found dislikes of image");
+          callback(imageDislikes);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
     //Adds each image and their contents to page
     function addHTMLForEach (individualImage, imagesUploaded) {
       var imageObject = imagesUploaded[individualImage];
@@ -230,6 +270,18 @@
       });
     }
 
+    function modifyHTMLOfLikeCounter (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOfTypeLikeOf(imageUploaded, function (imageLikes) {
+        document.getElementById("numLikes" + imageCount).innerHTML = imageLikes.length;
+      });
+    }
+
+    function modifyHTMLOfDislikeCounter (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOfTypeDislikeOf(imageUploaded, function (imageDislikes) {
+        document.getElementById("numDislikes" + imageCount).innerHTML = imageDislikes.length;
+      });
+    }
+
     function addLikeFunctionToLikeButton (imageUploaded, imageCount) {
       //Adds like functionality to like button
       $("#imageLike" + imageCount).click(function() {
@@ -245,6 +297,7 @@
             newImageLike.set("type", "like");
             newImageLike.save(null, {
               success: function(object) {
+                document.getElementById("numLikes" + imageCount).innerHTML = "1";
                 //alert("Successfully created new ImageLike object with type like!");
               },
               error: function(object, error) {
@@ -256,6 +309,7 @@
           else if (imageLike[0].get("type") === "like") {
             $("#imageLike" + imageCount).removeClass("active");
             imageLike[0].destroy({});
+            document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type like!");
           }
           //If there is a like object with type dislike, changes the type of the object
@@ -265,6 +319,8 @@
             imageLike[0].set("type", "like");
             imageLike[0].save(null, {
               success: function(object) {
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully changed type of ImageLike object to type like!");
               },
               error: function(object, error) {
@@ -291,6 +347,7 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
+                document.getElementById("numDislikes" + imageCount).innerHTML = "1";
                 //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {
@@ -302,6 +359,7 @@
           else if (imageLike[0].get("type") === "dislike") {
             $("#imageDislike" + imageCount).removeClass("active");
             imageLike[0].destroy({});
+            document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type dislike!");
           }
           //If there is a like object with type like, changes the type of the object
@@ -311,6 +369,8 @@
             imageLike[0].set("type", "dislike");
             imageLike[0].save(null, {
               success: function(object) {
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully changed type of ImageLike object to type dislike!");
               },
               error: function(object, error) {
@@ -342,6 +402,8 @@
           var imageObject = imagesUploadedByFollowedUsers[eachImage];
           addHTMLForEach(eachImage, imagesUploadedByFollowedUsers);
           addGalleryLinkToImage(eachImage, imagesUploadedByFollowedUsers);
+          modifyHTMLOfLikeCounter(imageObject, eachImage);
+          modifyHTMLOfDislikeCounter(imageObject, eachImage);
           modifyHTMLOfButtons(imageObject, eachImage);
           addLikeFunctionToLikeButton(imageObject, eachImage);
           addDislikeFunctionToDislikeButton(imageObject, eachImage);
