@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore Popular</title>
+    <title>Gallery</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -26,12 +26,12 @@
     <![endif]-->
 
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-
     <script type="text/javascript" src="js/sessvars.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap.js"></script>
 
   </head>
 
@@ -41,20 +41,77 @@
 
       <div class="carouselContainer">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+          </ol>
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div class="item active">
               <img src="img/anime.jpg">
               <div class="carousel-caption imageCaption">
-                Hi
+                <div class="row imageContents">
+                  <div class="col-xs-3"> 
+                    <a href="profile.html?userID="> 
+                      <img class="img-circle imageProfilePicture" src="" />
+                    </a>
+                  </div>
+                  <div class="col-xs-5">
+                    <div class="row">
+                      <a href="profile.html?userID=">
+                        Username
+                      </a>
+                    </div>
+                    <div class="row">
+                      Description
+                    </div>
+                    <div class="row">
+                      Category
+                    </div>
+                  </div>
+                  <div class="col-xs-2">
+                    <div class="row">
+                      <button type="button" id="imageLike" class="btn btn-default btn-sm like">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                      </button>
+                    </div>
+                    <div class="row">
+                      <div class="likeCounter" id="numLikes">
+                        0
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-2">
+                    <div class="row">
+                      <button type="button" id="imageDislike" class="btn btn-default btn-sm dislike">
+                          <span class="glyphicon glyphicon-thumbs-down"></span>
+                      </button>
+                    </div>
+                    <div class="row">
+                      <div class="dislikeCounter" id="numDislikes">
+                        0
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="item">
               <img src="img/nature.jpg">
-              <div class="carousel-caption imageCaption">
-                there
-              </div>
+            </div>
+            <div class="item">
+              <img src="img/impressionist.jpg">
+            </div>
+            <div class="item">
+              <img src="img/abstract.jpg">
+            </div>
+            <div class="item">
+              <img src="img/modern.jpg">
             </div>
           </div>
 
@@ -66,6 +123,7 @@
             <span class="glyphicon glyphicon-chevron-right"></span>
           </a>
         </div>
+
       </div>
 
       <div class="clear"></div>
@@ -101,6 +159,91 @@
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
     sessvars.$.clearMem();
+
+    var $_GET = {};
+    if(document.location.toString().indexOf('?') !== -1) {
+        var query = document.location
+                       .toString()
+                       // get the query string
+                       .replace(/^.*?\?/, '')
+                       // and remove any existing hash string (thanks, @vrijdenker)
+                       .replace(/#.*$/, '')
+                       .split('&');
+
+        for(var i=0, l=query.length; i<l; i++) {
+           var aux = decodeURIComponent(query[i]).split('=');
+           $_GET[aux[0]] = aux[1];
+        }
+    }
+
+    //Set galleryID to the ID of the get variable
+    var galleryID = $_GET['galleryID'];
+
+    function searchForGalleryBasedOnID (callback) {
+      var Gallery = Parse.Object.extend("Gallery");
+      var galleryQuery = new Parse.Query(Gallery);
+      galleryQuery.equalTo("objectId", galleryID);
+      galleryQuery.include("user");
+      galleryQuery.first({
+        success: function(galleryBasedonID) {
+          alert("Found gallery");
+          callback(galleryBasedonID);
+        },
+        error: function(error) {
+          alert("Error finding gallery");
+        }
+      });
+    }
+
+    function searchForImagesBasedOnGallery (galleryObject, callback) {
+      var Img = Parse.Object.extend("Image");
+      var imageQuery = new Parse.Query(Img);
+      imageQuery.equalTo("gallery", galleryObject);
+      imageQuery.include("user");
+      imageQuery.find({
+        success: function(imagesInGallery) {
+          alert("Found images in gallery");
+          callback(imagesInGallery);
+        },
+        error: function(error) {
+          alert("Error finding images in gallery");
+        }
+      });
+    }
+
+    function getUserBasedOnGallery (galleryObject) {
+      return galleryObject.get("user");
+    }
+
+    // //Removes arrows from first and last images
+    // function checkitem () {
+    //   var $this;
+    //   $this = $(".carousel");
+      
+    //   if ($(".carousel .carousel-inner .item:first").hasClass("active")) {
+    //     $this.children(".left").hide();
+    //     $this.children(".right").show();
+    //   }
+    //   else if ($(".carousel .carousel-inner .item:last").hasClass("active")) {
+    //     $this.children(".right").hide();
+    //     $this.children(".left").show();
+    //   }
+    //   else {
+    //     $this.children(".carousel-control").show();
+    //   }
+    // };
+
+    // checkitem();
+
+    // $(".carousel").on("slid.bs.carousel", "", checkitem);
+
+    function changeHeightOfArrow (imageClass) {
+      var $this;
+      $this = $(".carousel");
+      var height = $("." + imageClass).css( "height" );
+      $this.children(".carousel-control").css("height", height);
+    }
+
   </script>
 
     <!-- Bootstrap core JavaScript
