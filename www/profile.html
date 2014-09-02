@@ -399,6 +399,7 @@
             "</div>" +
           "</div>");
         changeImageOf(eachGallery, individualGallery);
+        addGalleryLinkToGallery(individualGallery, eachGallery);
       }
       if(galleries.length === 0) {
         $("#proGalleries").append(
@@ -406,6 +407,17 @@
             user.get("username") + " has no galleries" +
           "</div>");
       }
+    }
+
+    //Links button to message.html and uses a sessvar object to keep the userID
+    function addGalleryLinkToGallery (galleryObject, galleryNum) {
+      searchForFirstImageIn (galleryObject, function (firstImage) {
+        $("#gallery" + galleryNum).click(function() {
+          sessvars.toImageObject = {activeImage: firstImage};
+          console.log(sessvars.toImageObject);
+          window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
+        });
+      });
     }
 
     searchForUserBasedOnID(function (userObjectBasedOnID) {
