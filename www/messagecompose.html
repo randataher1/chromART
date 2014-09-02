@@ -242,6 +242,7 @@
     if (!sessvarsObjectIsUndefined()) {
       searchForUserObjectBasedOnSessvars (function(user) {
         $(".inputRecipient").val(user.get("username"));
+        sessvars.toUserObject = {};
       })
     }
 
@@ -264,7 +265,6 @@
         else {
           createNewConversationObject(user, function (conversation) {
             createNewMessageObject(conversation, function() {
-              sessvars.toUserObject = {};
               window.location.href = "conversation.html?conversationID=" + conversation.id;
             });
           });

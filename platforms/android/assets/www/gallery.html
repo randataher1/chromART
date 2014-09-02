@@ -222,7 +222,7 @@
         "<li data-target=\"#carousel-example-generic\" class=\"indicator" + imageObject.id + "\" data-slide-to=\"" + individualImage + "\"></li>");
       $(".carousel-inner").append(
         "<div class=\"item galleryImageContainer" + imageObject.id + "\">" +
-          "<img src=\"" + imageObject.get('url') + "\" class=\" image" + individualImage + "\">" +
+          "<img src=\"" + imageObject.get('url') + "\" class=\"galleryImage image" + individualImage + "\">" +
           "<div class=\"carousel-caption imageCaption\">" +
             "<div class=\"row imageContents\">" +
               "<div class=\"col-xs-3\">" + 
@@ -444,6 +444,7 @@
       if ($(".carousel .carousel-inner .item:first").hasClass("active") && $(".carousel .carousel-inner .item:last").hasClass("active")) {
         $this.children(".left").hide();
         $this.children(".right").hide();
+        $this.children(".carousel-indicators").hide();
       }
       else if ($(".carousel .carousel-inner .item:first").hasClass("active")) {
         $this.children(".left").hide();
@@ -456,7 +457,18 @@
       else {
         $this.children(".carousel-control").show();
       }
-    };    
+    };
+
+    $('.carousel-control.left').click(function() {
+      $('.Carousel').carousel('prev');
+      changeHeightOfArrow();
+      changeHeightOfIndicators();
+    });
+    $('.carousel-control.right').click(function() {
+      $('.Carousel').carousel('next');
+      changeHeightOfArrow();
+      changeHeightOfIndicators();
+    });
 
     searchForGalleryBasedOnID(function (galleryBasedOnID) {
       addGalleryHeader(galleryBasedOnID);
@@ -469,16 +481,6 @@
           addActiveClassToClickedImage();
           changeHeightOfArrow();
           changeHeightOfIndicators();
-          $('.carousel-control.left').click(function() {
-            $('.Carousel').carousel('prev');
-            changeHeightOfArrow();
-            changeHeightOfIndicators();
-          });
-          $('.carousel-control.right').click(function() {
-            $('.Carousel').carousel('next');
-            changeHeightOfArrow();
-            changeHeightOfIndicators();
-          });
           modifyHTMLOfLikeCounter(imageObject, eachImage);
           modifyHTMLOfDislikeCounter(imageObject, eachImage);
           modifyHTMLOfButtons(imageObject, eachImage);

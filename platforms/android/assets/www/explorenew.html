@@ -261,6 +261,8 @@
           //If the like button is clicked and there isn't an ImageLike object, creates a new one with type like
           if(imageLike.length === 0) {
             $("#imageLike" + imageCount).addClass("active");
+            imageUploaded.increment("likes");
+            imageUploaded.save();
             var newImageLikeObject = Parse.Object.extend("ImageLike");
             var newImageLike = new newImageLikeObject();
             newImageLike.set("user", Parse.User.current());
@@ -279,6 +281,8 @@
           //If there is a like object with type like, removes the like object
           else if (imageLike[0].get("type") === "like") {
             $("#imageLike" + imageCount).removeClass("active");
+            imageUploaded.increment("likes", -1);
+            imageUploaded.save();
             imageLike[0].destroy({});
             document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type like!");
@@ -287,6 +291,8 @@
           else {
             $("#imageDislike" + imageCount).removeClass("active");
             $("#imageLike" + imageCount).addClass("active");
+            imageUploaded.increment("likes", 2);
+            imageUploaded.save();
             imageLike[0].set("type", "like");
             imageLike[0].save(null, {
               success: function(object) {
@@ -311,6 +317,8 @@
           //If the dislike button is clicked and there isn't an ImageLike object, creates a new one with type dislike
           if(imageLike.length === 0) {
             $("#imageDislike" + imageCount).addClass("active");
+            imageUploaded.increment("likes", -1);
+            imageUploaded.save();
             var newImageDislikeObject = Parse.Object.extend("ImageLike");
             var newImageDislike = new newImageDislikeObject();
             newImageDislike.set("user", Parse.User.current());
@@ -329,6 +337,8 @@
           //If there is a like object with type dislike, removes the like object
           else if (imageLike[0].get("type") === "dislike") {
             $("#imageDislike" + imageCount).removeClass("active");
+            imageUploaded.increment("likes");
+            imageUploaded.save();
             imageLike[0].destroy({});
             document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type dislike!");
@@ -337,6 +347,8 @@
           else {
             $("#imageLike" + imageCount).removeClass("active");
             $("#imageDislike" + imageCount).addClass("active");
+            imageUploaded.increment("likes", -2);
+            imageUploaded.save();
             imageLike[0].set("type", "dislike");
             imageLike[0].save(null, {
               success: function(object) {

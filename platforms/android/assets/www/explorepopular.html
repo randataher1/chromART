@@ -35,13 +35,13 @@
 
   <body>
 
-    <div class="container">
+    <div class="containerWhite">
       <div class="pageHeader">
         <img src="img/logo.png" class="logo center" />
       </div>
 
-      <div class="titleText">
-        <p>Explore Popular</p>
+      <div class="imageScroll">
+        
       </div>
 
       <div class="clear"></div>
@@ -70,13 +70,315 @@
           </a>
         </nav>
       </div>
-
-    </div> <!-- /container -->
+    </div>
 
   <script type="text/javascript">
     Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    sessvars.$.clearMem();
+    //Finding most recently created images
+    function searchForMostPopularImages (callback) {
+      //Finding most recently created images and adding to imageScroll
+      var otherImage = Parse.Object.extend("Image");
+      var imageQuery = new Parse.Query(otherImage);
+      imageQuery.descending("likes");
+      imageQuery.include('user');
+      imageQuery.include('gallery');
+      imageQuery.limit(10);
+      imageQuery.find({
+        success: function(results) {
+          //alert("Found most popular images");
+          callback(results);
+        },
+        error: function(error) {
+          alert("Error finding most popular images");
+        }
+      });
+    }
+
+    //Returns all ImageLike objects of images
+    function searchForUserLikeObjectsOf (popularImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("image", popularImage);
+      imageLikeQuery.find({
+        success: function(imageLikeResults) {
+          //alert("Found user like objects of images");
+          callback(imageLikeResults);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
+    //Returns all ImageLike objects of type like of images
+    function searchForUserLikeObjectsOfTypeLikeOf (popularImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("type", "like");
+      imageLikeQuery.equalTo("image", popularImage);
+      imageLikeQuery.find({
+        success: function(imageLikes) {
+          //alert("Found likes of image");
+          callback(imageLikes);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
+    //Returns all ImageLike objects of type dislike of images
+    function searchForUserLikeObjectsOfTypeDislikeOf (popularImage, callback) {
+      var imageLikeObject = Parse.Object.extend("ImageLike");
+      var imageLikeQuery = new Parse.Query(imageLikeObject);
+      //Look for an existing ImageLike object that points to current user and the image
+      imageLikeQuery.include(['user.image']);
+      imageLikeQuery.equalTo("user", Parse.User.current());
+      imageLikeQuery.equalTo("type", "dislike");
+      imageLikeQuery.equalTo("image", popularImage);
+      imageLikeQuery.find({
+        success: function(imageDislikes) {
+          //alert("Found dislikes of image");
+          callback(imageDislikes);
+        },
+        error: function (error) {
+          alert("Error finding likes of images");
+        }
+      });
+    }
+
+    //Adds each image and their contents to page
+    function addHTMLForEach (individualImage, imagesUploaded) {
+      var imageObject = imagesUploaded[individualImage];
+      var userWhoCreatedImage = imageObject.get('user');
+      $(".imageScroll").append(
+        "<div class=\"image\">" +
+          "<div class=\"row\">" +
+            "<div class=\"col-sm-12\">" +
+              "<img class=\"imageResize image" + imageObject.id + "\" src=\"" + imageObject.get('url') + "\" />" +
+            "</div>" +
+          "</div>" +
+          "<div class=\"row imageContents\">" +
+            "<div class=\"col-xs-3\">" + 
+              "<a href=\"profile.html?userID=" + userWhoCreatedImage.id +"\">" + 
+                "<img class=\"img-circle imageProfilePicture\" src=\"" + userWhoCreatedImage.get('profilePictureUrl') + "\" />" +
+              "</a>" +
+            "</div>" +
+            "<div class=\"col-xs-5\">" +
+              "<div class=\"row\">" +
+                "<a href=\"profile.html?userID=" + userWhoCreatedImage.id + "\">" +
+                  userWhoCreatedImage.get('username') +
+                "</a>" +
+              "</div>" +
+              "<div class=\"row\">" +
+                imageObject.get('description') +
+              "</div>" +
+              "<div class=\"row\">" +
+                imageObject.get('category') +
+              "</div>" +
+            "</div>" +
+            "<div class=\"col-xs-2\">" +
+              "<div class=\"row\">" +
+                "<button type=\"button\" id=\"imageLike" + individualImage + "\" class=\"btn btn-default btn-sm like\">" +
+                  "<span class=\"glyphicon glyphicon-thumbs-up\"></span>" +
+                "</button>" +
+              "</div>" +
+              "<div class=\"row\">" +
+                "<div class=\"likeCounter\" id=\"numLikes" + individualImage + "\">" +
+                  "0" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+            "<div class=\"col-xs-2\">" +
+              "<div class=\"row\">" +
+                "<button type=\"button\" id=\"imageDislike" + individualImage + "\" class=\"btn btn-default btn-sm dislike\">" +
+                    "<span class=\"glyphicon glyphicon-thumbs-down\"></span>" +
+                "</button>" +
+              "</div>" +
+              "<div class=\"row\">" +
+                "<div class=\"dislikeCounter\" id=\"numDislikes" + individualImage + "\">" +
+                  "0" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+          "</div>" +
+        "</div>");
+    }
+
+    //Links button to message.html and uses a sessvar object to keep the userID
+    function addGalleryLinkToImage (individualImage, imagesUploaded) {
+      var imageObject = imagesUploaded[individualImage];
+      var galleryObject = imageObject.get("gallery");
+      $(".image" + imageObject.id).click(function() {
+        sessvars.toImageObject = {activeImage: imageObject};
+        console.log(sessvars.toImageObject);
+        window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
+      });
+    }
+
+    //Searches for like objects, and if there are, changes look of like buttons
+    function modifyHTMLOfButtons (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOf(imageUploaded, function (imageLike) {
+        console.log(imageLike);
+        if(imageLike.length === 0) {
+          console.log("No likes or dislikes for image: " + imageCount);
+        }
+        //If there is an object with type like, make the like button active
+        else if(imageLike[0].get("type") === "like") {
+          $("#imageLike" + imageCount).addClass("active");
+        }
+        //If there is an object with type dislike, make the dislike button active
+        else {
+          $("#imageDislike" + imageCount).addClass("active");
+        }
+      });
+    }
+
+    function modifyHTMLOfLikeCounter (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOfTypeLikeOf(imageUploaded, function (imageLikes) {
+        document.getElementById("numLikes" + imageCount).innerHTML = imageLikes.length;
+      });
+    }
+
+    function modifyHTMLOfDislikeCounter (imageUploaded, imageCount) {
+      searchForUserLikeObjectsOfTypeDislikeOf(imageUploaded, function (imageDislikes) {
+        document.getElementById("numDislikes" + imageCount).innerHTML = imageDislikes.length;
+      });
+    }
+
+    function addLikeFunctionToLikeButton (imageUploaded, imageCount) {
+      //Adds like functionality to like button
+      $("#imageLike" + imageCount).click(function() {
+        //Every time button is clicked, searches for existing ImageLike object
+        searchForUserLikeObjectsOf(imageUploaded, function (imageLike) {
+          //If the like button is clicked and there isn't an ImageLike object, creates a new one with type like
+          if(imageLike.length === 0) {
+            $("#imageLike" + imageCount).addClass("active");
+            imageUploaded.increment("likes");
+            imageUploaded.save();
+            var newImageLikeObject = Parse.Object.extend("ImageLike");
+            var newImageLike = new newImageLikeObject();
+            newImageLike.set("user", Parse.User.current());
+            newImageLike.set("image", imageUploaded);
+            newImageLike.set("type", "like");
+            newImageLike.save(null, {
+              success: function(object) {
+                document.getElementById("numLikes" + imageCount).innerHTML = "1";
+                //alert("Successfully created new ImageLike object with type like!");
+              },
+              error: function(object, error) {
+                alert("Failed to create new ImageLike object with type like");
+              }
+            });
+          }
+          //If there is a like object with type like, removes the like object
+          else if (imageLike[0].get("type") === "like") {
+            $("#imageLike" + imageCount).removeClass("active");
+            imageUploaded.increment("likes", -1);
+            imageUploaded.save();
+            imageLike[0].destroy({});
+            document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+            //alert("Successfully destroyed ImageLike object with type like!");
+          }
+          //If there is a like object with type dislike, changes the type of the object
+          else {
+            $("#imageDislike" + imageCount).removeClass("active");
+            $("#imageLike" + imageCount).addClass("active");
+            imageUploaded.increment("likes", 2);
+            imageUploaded.save();
+            imageLike[0].set("type", "like");
+            imageLike[0].save(null, {
+              success: function(object) {
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
+                //alert("Successfully changed type of ImageLike object to type like!");
+              },
+              error: function(object, error) {
+                alert("Failed to change type of ImageLike object to type like");
+              }
+            });
+          }
+        });
+      });
+    }
+
+    function addDislikeFunctionToDislikeButton (imageUploaded, imageCount) {
+      //Adds like functionality to dislike button
+      $("#imageDislike" + imageCount).click(function() {
+        //Every time button is clicked, searches for existing ImageLike object
+        searchForUserLikeObjectsOf(imageUploaded, function (imageLike) {
+          //If the dislike button is clicked and there isn't an ImageLike object, creates a new one with type dislike
+          if(imageLike.length === 0) {
+            $("#imageDislike" + imageCount).addClass("active");
+            imageUploaded.increment("likes", -1);
+            imageUploaded.save();
+            var newImageDislikeObject = Parse.Object.extend("ImageLike");
+            var newImageDislike = new newImageDislikeObject();
+            newImageDislike.set("user", Parse.User.current());
+            newImageDislike.set("image", imageUploaded);
+            newImageDislike.set("type", "dislike");
+            newImageDislike.save(null, {
+              success: function(object) {
+                document.getElementById("numDislikes" + imageCount).innerHTML = "1";
+                //alert("Successfully created new ImageLike object with type dislike!");
+              },
+              error: function(object, error) {
+                alert("Failed to create new ImageLike object with type dislike");
+              }
+            });
+          }
+          //If there is a like object with type dislike, removes the like object
+          else if (imageLike[0].get("type") === "dislike") {
+            $("#imageDislike" + imageCount).removeClass("active");
+            imageUploaded.increment("likes");
+            imageUploaded.save();
+            imageLike[0].destroy({});
+            document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
+            //alert("Successfully destroyed ImageLike object with type dislike!");
+          }
+          //If there is a like object with type like, changes the type of the object
+          else {
+            $("#imageLike" + imageCount).removeClass("active");
+            $("#imageDislike" + imageCount).addClass("active");
+            imageUploaded.increment("likes", -2);
+            imageUploaded.save();
+            imageLike[0].set("type", "dislike");
+            imageLike[0].save(null, {
+              success: function(object) {
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+                //alert("Successfully changed type of ImageLike object to type dislike!");
+              },
+              error: function(object, error) {
+                alert("Failed to change type of ImageLike object to type dislike");
+              }
+            });
+          }
+        });
+      });
+    }
+
+    searchForMostPopularImages(function (popularImagesUploaded) {
+      console.log(popularImagesUploaded);
+      //For each image, appends HTML
+      for (var eachImage = 0; eachImage < popularImagesUploaded.length; eachImage++) {
+        var imageObject = popularImagesUploaded[eachImage];
+        addHTMLForEach(eachImage, popularImagesUploaded);
+        addGalleryLinkToImage(eachImage, popularImagesUploaded);
+        modifyHTMLOfLikeCounter(imageObject, eachImage);
+        modifyHTMLOfDislikeCounter(imageObject, eachImage);
+        modifyHTMLOfButtons(imageObject, eachImage);
+        addLikeFunctionToLikeButton(imageObject, eachImage);
+        addDislikeFunctionToDislikeButton(imageObject, eachImage);
+      }
+    });
   </script>
 
     <!-- Bootstrap core JavaScript

@@ -254,6 +254,7 @@
           image.set("description", $("#imageDesc").val());
           image.set("category", dropdownValue.value);
           image.set("url", parseFile.url());
+          image.set("likes", 0);
           
           var otherGallery = Parse.Object.extend("Gallery");
           var galleryQuery = new Parse.Query(otherGallery);
