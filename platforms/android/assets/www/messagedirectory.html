@@ -154,17 +154,17 @@
       var otherUser = getOtherUserBasedOnConversation(conversationObject);
       $(".conversationContainer").append(
         "<div class=\"row conversation\" id=\"convoNum" + conversationNumber + "\">" +
-          "<div class=\"col-xs-3\">" +
+          "<div class=\"col-xs-2\">" +
             "<img class=\"img-circle conversationPicture\" src=\"" +
               otherUser.get("profilePictureUrl") +
             "\" />" +
           "</div>" +
-          "<div class=\"col-xs-9\">" +
-            "<div class=\"row conversationSubject\">" +
-              getSubjectBasedOnConversation(conversationObject) +
-            "</div>" +
+          "<div class=\"col-xs-9 conversationPadding\">" +
             "<div class=\"row conversationUsername\">" +
               otherUser.get("username") +
+            "</div>" +
+            "<div class=\"row conversationSubject\">" +
+              getSubjectBasedOnConversation(conversationObject) +
             "</div>" +
             "<div class=\"conversationText\" id=\"convoText" + conversationNumber + "\">" +
             "</div>" +

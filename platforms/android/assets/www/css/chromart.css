@@ -633,26 +633,33 @@ label {
 }
 
 .conversationPicture {
-	width: 66px;
-	height: 66px;
+	width: 50px;
+	height: 50px;
+	margin: 4px 0;
 }
 
 .conversation {
 	padding: 10px 10px;
 	margin: 10px 15px;
 	max-width: 330px;
-	border: 1px solid #555;
+	border: 1px solid #ddd;
 	font-family: "Magra";
 	font-size: 16px;
 }
 
 .conversationSubject {
 	font-weight: bold;
-	color: #EE627F;
+	color: #66C9B3;
+	font-size: 15px;
 }
 
 .conversationUsername {
-	color: #66C9B3;
+	color: #333;
+	font-size: 13px;
+}
+
+.conversationPadding {
+	padding-left: 15px;
 }
 
 .conversation:hover,
@@ -664,6 +671,7 @@ label {
 }
 
 .conversationText {
+	font-size: 13px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -682,7 +690,7 @@ label {
 }
 
 .messageContainer {
-	max-height: 50vh;
+	max-height: 67vh;
 	overflow-y: auto;
 	border-top: 1px solid #D8D8D8;
 	border-bottom: 1px solid #D8D8D8;
@@ -712,21 +720,30 @@ label {
 }
 
 .replyContainer {
-    height: 110px;
     width: 100%;
     margin: 15px 0;
 }
 
 .replyBox {
-
+	display: inline-block;
+    min-height: 0px;
+    margin-bottom: 0;
+    width: 63%;
 }
 
 .inputReply {
-	width: 70%;
+	width: 81%;
+	min-height: 50px;
+    min-width: 185px;
+    padding-left: 10px;
+    padding-top: 12px;
 }
 
 .sendReply {
 	width: 30%;
+	display: inline-block;
+    position: relative;
+    top: -21px;
 }
 
 .plainButton {
