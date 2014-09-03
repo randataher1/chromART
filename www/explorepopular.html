@@ -95,6 +95,15 @@
       });
     }
 
+    function displayMessageIfThereAreNo (images) {
+      if(images.length === 0) {
+        $(".imageScroll").append(
+          "<div class=\"noImages\">" +
+            "There are no Popular images" +
+          "</div>");
+      }
+    }
+
     //Returns all ImageLike objects of images
     function searchForUserLikeObjectsOf (popularImage, callback) {
       var imageLikeObject = Parse.Object.extend("ImageLike");
@@ -367,6 +376,7 @@
 
     searchForMostPopularImages(function (popularImagesUploaded) {
       console.log(popularImagesUploaded);
+      displayMessageIfThereAreNo(popularImagesUploaded);
       //For each image, appends HTML
       for (var eachImage = 0; eachImage < popularImagesUploaded.length; eachImage++) {
         var imageObject = popularImagesUploaded[eachImage];

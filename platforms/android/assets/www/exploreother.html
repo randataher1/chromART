@@ -377,6 +377,7 @@
 
     searchForOtherImages(function (otherImagesUploaded) {
       console.log(otherImagesUploaded);
+      displayMessageIfThereAreNo(otherImagesUploaded);
       //For each image, appends HTML
       for (var eachImage = 0; eachImage < otherImagesUploaded.length; eachImage++) {
         var imageObject = otherImagesUploaded[eachImage];

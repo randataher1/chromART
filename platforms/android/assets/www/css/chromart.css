@@ -591,6 +591,10 @@ label {
 	padding: 0 34px;
 }
 
+.checkboxLabel {
+	padding: 20px 34px 0 34px;
+}
+
 .dropdown-menu > li > a {
 	line-height: 0;
 	padding: 18px 10px;

@@ -119,6 +119,66 @@
       //alert(photoTaken.value);
     }
 
+    function getFullNameValue () {
+      return $("#inputFullName").val();
+    }
+
+    function thereIsNotAFullName () {
+      if (getFullNameValue() === "") {
+        //alert("There isn't a full name");
+        return true;
+      }
+      else {
+        //alert("There is a full name");
+        return false;
+      }
+    }
+
+    function getEmailValue () {
+      return $("#inputEmail").val();
+    }
+
+    function thereIsNotAnEmail () {
+      if (getEmailValue() === "") {
+        //alert("There is not an email");
+        return true;
+      }
+      else {
+        //alert("There is an email");
+        return false;
+      }
+    }
+
+    function getUsernameValue () {
+      return $("#inputUsername").val();
+    }
+
+    function thereIsNotAUsername () {
+      if (getUsernameValue() === "") {
+        //alert("There is not a username");
+        return true;
+      }
+      else {
+        //alert("There is a username");
+        return false;
+      }
+    }
+
+    function getPasswordValue () {
+      return $("#inputPassword").val();
+    }
+
+    function thereIsNotAPassword () {
+      if (getPasswordValue() === "") {
+        //alert("There is not a password");
+        return true;
+      }
+      else {
+        //alert("There is a password");
+        return false;
+      }
+    }
+
     function onFail(message) {
         alert('Failed because: ' + message);
     }
@@ -126,64 +186,76 @@
     $("form").on("submit", function(e) {
       e.preventDefault();
 
-      var photoTaken = document.getElementById('photoTaken');
-      if(photoTaken.value != "true") {
-        alert("Take a picture first");
-        return false;
+      if (thereIsNotAFullName()) {
+        alert("Please enter a full name");
       }
+      else if (thereIsNotAnEmail()) {
+        alert("Please enter an email");
+      }
+      else if (thereIsNotAUsername()) {
+        alert("Please enter a username");
+      }
+      else if (thereIsNotAPassword()) {
+        alert("Please enter a password");
+      }
+      else {
+        var photoTaken = document.getElementById('photoTaken');
+        if(photoTaken.value != "true") {
+          alert("Take a picture first");
+          return false;
+        }
 
-      var fileName = "photo" + ".jpeg";
-      var serverUrl = 'https://api.parse.com/1/files/' + fileName;
-      imageData = document.getElementById("cameraData");
-      var parseFile = new Parse.File(fileName, {base64:imageData.value});
+        var fileName = "photo" + ".jpeg";
+        var serverUrl = 'https://api.parse.com/1/files/' + fileName;
+        imageData = document.getElementById("cameraData");
+        var parseFile = new Parse.File(fileName, {base64:imageData.value});
 
-      parseFile.save().then(function() {
-        //alert("File available at: " + parseFile.url());
+        parseFile.save().then(function() {
+          //alert("File available at: " + parseFile.url());
 
-        var user = new Parse.User();
+          var user = new Parse.User();
 
-        user.set("fullname", $("#inputFullName").val());
-        user.set("email", $("#inputEmail").val());
-        user.set("username", $("#inputUsername").val());
-        user.set("password", $("#inputPassword").val());
-        //user.set("emailVerified", false);
+          user.set("fullname", $("#inputFullName").val());
+          user.set("email", $("#inputEmail").val());
+          user.set("username", $("#inputUsername").val());
+          user.set("password", $("#inputPassword").val());
+          //user.set("emailVerified", false);
 
-        user.set("profileDescription", "");
-        user.set("facebook", "");
-        user.set("twitter", "");
-        user.set("profilePictureUrl", parseFile.url());
+          user.set("profileDescription", "");
+          user.set("facebook", "");
+          user.set("twitter", "");
+          user.set("profilePictureUrl", parseFile.url());
 
-        user.signUp(null, {
-          success: function(object) {
-            //alert("Success!");
-            Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
-              success: function(user) {
+          user.signUp(null, {
+            success: function(object) {
+              //alert("Success!");
+              Parse.User.logIn($("#inputUsername").val(), $("#inputPassword").val(), {
+                success: function(user) {
 
-                user.save(null, {
-                  success: function(save) {
-                    // Execute any logic that should take place after the object is saved.
-                    window.location.href = 'legal.html';
-                  },
-                  error: function(save, error) {
-                    // Execute any logic that should take place if the save fails.
-                    // error is a Parse.Error with an error code and description.
-                    alert('Failed to create new user');
-                  }
-                });
+                  user.save(null, {
+                    success: function(save) {
+                      // Execute any logic that should take place after the object is saved.
+                      window.location.href = 'legal.html';
+                    },
+                    error: function(save, error) {
+                      // Execute any logic that should take place if the save fails.
+                      // error is a Parse.Error with an error code and description.
+                      alert('Failed to create new user');
+                    }
+                  });
 
-              },
-              error: function(user, error) {
-                alert("There was an error logging in. Please try again.");
-              }
-            })
-          },
-          error: function(model, error) {
-            alert("There was an error signing up. Please try again.");
-          }
+                },
+                error: function(user, error) {
+                  alert("There was an error logging in. Please try again.");
+                }
+              })
+            },
+            error: function(model, error) {
+              alert("There was an error signing up. Please try again.");
+            }
+          });
         });
-
-      });
-
+      }
     });
 
     $(".toIndex").click(function() {
