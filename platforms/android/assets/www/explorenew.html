@@ -277,7 +277,9 @@
             newImageLike.set("type", "like");
             newImageLike.save(null, {
               success: function(object) {
-                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                 //alert("Successfully created new ImageLike object with type like!");
               },
               error: function(object, error) {
@@ -291,7 +293,9 @@
             imageUploaded.increment("likes", -1);
             imageUploaded.save();
             imageLike[0].destroy({});
-            document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+            modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+            modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+            //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type like!");
           }
           //If there is a like object with type dislike, changes the type of the object
@@ -303,8 +307,10 @@
             imageLike[0].set("type", "like");
             imageLike[0].save(null, {
               success: function(object) {
-                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
-                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
+                modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully changed type of ImageLike object to type like!");
               },
               error: function(object, error) {
@@ -333,7 +339,7 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
-                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                 //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {
