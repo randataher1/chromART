@@ -340,7 +340,9 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
-                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                 //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {
@@ -354,7 +356,9 @@
             imageUploaded.increment("likes");
             imageUploaded.save();
             imageLike[0].destroy({});
-            document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
+            modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+            modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+            //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
             //alert("Successfully destroyed ImageLike object with type dislike!");
           }
           //If there is a like object with type like, changes the type of the object
@@ -366,8 +370,10 @@
             imageLike[0].set("type", "dislike");
             imageLike[0].save(null, {
               success: function(object) {
-                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
-                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+                modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
+                //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully changed type of ImageLike object to type dislike!");
               },
               error: function(object, error) {
