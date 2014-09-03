@@ -40,7 +40,8 @@
     <div class="containerWhite">
 
       <div class="toDirectory">
-        Back to directory
+        <span class="glyphicon glyphicon-chevron-left toDirectoryArrow"></span>
+        <span class="otherUser"></span>
       </div>
 
       <div class="conversationHeader">
@@ -114,6 +115,8 @@
       var Conversation = Parse.Object.extend("Conversation");
       var conversationQuery = new Parse.Query(Conversation);
       conversationQuery.equalTo("objectId", conversationID);
+      conversationQuery.include("toUser");
+      conversationQuery.include("fromUser");
       conversationQuery.first({
         success: function(conversationBasedonID) {
           //alert("Found conversation");
@@ -132,6 +135,22 @@
     function addSubjectBasedOnConversation (conversationObject) {
       $(".conversationHeader").append(
         getSubjectBasedOnConversation(conversationObject));
+    }
+
+    function getOtherUserBasedOnConversation (conversationObject) {
+      if (conversationObject.get("fromUser").id === Parse.User.current().id) {
+        return conversationObject.get("toUser");
+      }
+      else {
+        return conversationObject.get("fromUser");
+      }
+    }
+
+    function addOtherUsernameToTop (conversationObject) {
+      var otherUser = getOtherUserBasedOnConversation(conversationObject);
+      console.log(otherUser);
+      $(".otherUser").append(
+        otherUser.get("username"));
     }
 
     function searchForMessagesBasedOnConversation (conversationObject, callback) {
@@ -170,11 +189,11 @@
       var sender = getSenderBasedOnMessage(message);
       if (senderIsCurrentUser(sender)) {
         $(".messageContainer").append(
-          "<div class=\"row message\">" +
-            "<div class=\"text col-xs-9\">" +
+          "<div class=\"message floatRight\">" +
+            "<div class=\"text\">" +
               message.get("messageText") +
             "</div>" +
-            "<div class=\"col-xs-2 col-xs-offset-1\">" +
+            "<div>" +
               "<img class=\"img-circle messagePicture\" src=\"" + sender.get('profilePictureUrl') + "\" />" +
             "</div>" +
           "</div>");
@@ -182,10 +201,10 @@
       else {
         $(".messageContainer").append(
           "<div class=\"row message\">" +
-            "<div class=\"col-xs-3\">" +
+            "<div>" +
               "<img class=\"img-circle messagePicture\" src=\"" + sender.get('profilePictureUrl') + "\" />" +
             "</div>" +
-            "<div class=\"text col-xs-9\">" +
+            "<div class=\"text\">" +
               message.get("messageText") +
             "</div>" +
           "</div>");
@@ -237,6 +256,7 @@
     $(".inputReply").val("");
 
     searchForConversationBasedOnID(function(conversation) {
+      addOtherUsernameToTop(conversation);
       addSubjectBasedOnConversation(conversation);
       searchForMessagesBasedOnConversation(conversation, function(messages) {
         for (var message = 0; message < messages.length; message++) {

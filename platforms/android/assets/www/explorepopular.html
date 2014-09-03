@@ -84,6 +84,7 @@
       imageQuery.include('user');
       imageQuery.include('gallery');
       imageQuery.limit(10);
+      imageQuery.greaterThan("likes", 0);
       imageQuery.find({
         success: function(results) {
           //alert("Found most popular images");

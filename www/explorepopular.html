@@ -84,6 +84,7 @@
       imageQuery.include('user');
       imageQuery.include('gallery');
       imageQuery.limit(10);
+      imageQuery.greaterThan("likes", 0);
       imageQuery.find({
         success: function(results) {
           //alert("Found most popular images");
@@ -129,7 +130,6 @@
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
-      imageLikeQuery.equalTo("user", Parse.User.current());
       imageLikeQuery.equalTo("type", "like");
       imageLikeQuery.equalTo("image", popularImage);
       imageLikeQuery.find({
@@ -149,7 +149,6 @@
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
-      imageLikeQuery.equalTo("user", Parse.User.current());
       imageLikeQuery.equalTo("type", "dislike");
       imageLikeQuery.equalTo("image", popularImage);
       imageLikeQuery.find({

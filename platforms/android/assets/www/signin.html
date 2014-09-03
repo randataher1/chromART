@@ -55,7 +55,7 @@
           <button type="submit" class="btn pinkButton">Confirm</button>
         </form>
         <button type="button" class="btn toSignUp blueButton">Sign Up</button>
-        <button type="button" class="btn btn-default plainButton toIndex">Go Back</button>
+        <button type="button" class="btn grayButton toIndex">Go Back</button>
       </div>
 
     </div> <!-- /container -->
@@ -80,7 +80,21 @@
           window.location.href = 'home.html';
         },
         error: function(user, error) {
-          $(".error").show();
+          if (error.code === Parse.Error.USERNAME_MISSING) {
+            alert("Please enter a username.");
+          }
+          else if (error.code === Parse.Error.PASSWORD_MISSING) {
+            alert("Please enter a password.");
+          }
+          else if (error.code === Parse.Error.CONNECTION_FAILED) {
+            alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+          }
+          else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+            alert("Parse is having a problem. Please try again later.");
+          }
+          else {
+            alert("Error logging in");
+          }
         }
       })
 

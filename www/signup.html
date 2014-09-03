@@ -235,23 +235,61 @@
                   user.save(null, {
                     success: function(save) {
                       // Execute any logic that should take place after the object is saved.
-                      window.location.href = 'legal.html';
+                      window.location.href = "legal.html";
                     },
                     error: function(save, error) {
-                      // Execute any logic that should take place if the save fails.
-                      // error is a Parse.Error with an error code and description.
-                      alert('Failed to create new user');
+                      if (error.code === Parse.Error.CONNECTION_FAILED) {
+                        alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+                      }
+                      else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                        alert("Parse is having a problem. Please try again later.");
+                      }
+                      else {
+                        alert("There was an error making a new user. Please try again.");
+                      }
                     }
                   });
 
                 },
                 error: function(user, error) {
-                  alert("There was an error logging in. Please try again.");
+                  if (error.code === Parse.Error.CONNECTION_FAILED) {
+                    alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+                  }
+                  else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                    alert("Parse is having a problem. Please try again later.");
+                  }
+                  else {
+                    alert("There was an error logging in. Please try again.");
+                  }
                 }
               })
             },
             error: function(model, error) {
-              alert("There was an error signing up. Please try again.");
+              alert(Parse.Error.PASSWORD_MISSING);
+              if (error.code === Parse.Error.USERNAME_MISSING) {
+                alert("Please enter a username.");
+              }
+              else if (error.code === Parse.Error.PASSWORD_MISSING) {
+                alert("Please enter a password.");
+              }
+              else if (error.code === Parse.Error.EMAIL_MISSING) {
+                alert("Please enter an email.");
+              }
+              else if (error.code === Parse.Error.USERNAME_TAKEN) {
+                alert("That username has already been taken. Please use another one.");
+              }
+              else if (error.code === Parse.Error.EMAIL_TAKEN) {
+                alert("That email has already been taken. Please use another one.");
+              }
+              else if (error.code === Parse.Error.CONNECTION_FAILED) {
+                alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+              }
+              else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                alert("Parse is having a problem. Please try again later.");
+              }
+              else {
+                alert("There was an error signing up. Please try again.");
+              }
             }
           });
         });
