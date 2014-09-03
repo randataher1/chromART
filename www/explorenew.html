@@ -277,7 +277,7 @@
             newImageLike.set("type", "like");
             newImageLike.save(null, {
               success: function(object) {
-                document.getElementById("numLikes" + imageCount).innerHTML = "1";
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                 //alert("Successfully created new ImageLike object with type like!");
               },
               error: function(object, error) {
@@ -333,7 +333,7 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
-                document.getElementById("numDislikes" + imageCount).innerHTML = "1";
+                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
                 //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {

@@ -147,7 +147,6 @@
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
-      imageLikeQuery.equalTo("user", Parse.User.current());
       imageLikeQuery.equalTo("type", "like");
       imageLikeQuery.equalTo("image", recentlyUploadedImage);
       imageLikeQuery.find({
@@ -167,7 +166,6 @@
       var imageLikeQuery = new Parse.Query(imageLikeObject);
       //Look for an existing ImageLike object that points to current user and the image
       imageLikeQuery.include(['user.image']);
-      imageLikeQuery.equalTo("user", Parse.User.current());
       imageLikeQuery.equalTo("type", "dislike");
       imageLikeQuery.equalTo("image", recentlyUploadedImage);
       imageLikeQuery.find({
