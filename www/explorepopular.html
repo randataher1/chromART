@@ -334,7 +334,7 @@
             newImageDislike.set("type", "dislike");
             newImageDislike.save(null, {
               success: function(object) {
-                document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+                document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                 //alert("Successfully created new ImageLike object with type dislike!");
               },
               error: function(object, error) {
