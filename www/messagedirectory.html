@@ -45,6 +45,8 @@
       </div>
 
       <div class="conversationContainer">
+
+        <img src="img/loader.gif" id="loading-indicator" style="display:none" />
         
       </div>
       
@@ -82,6 +84,9 @@
     <script type="text/javascript" src="js/sessvars.js"></script>
 
     <script type="text/javascript">
+
+      $('#loading-indicator').show();
+
       Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
       function setQueryForConversationsToCurrentUser () {
@@ -211,6 +216,7 @@
           addConversations(allConversations[singleConversation], singleConversation);
           addMostRecentMessageToConversations(allConversations[singleConversation], singleConversation);
         }
+        $('#loading-indicator').hide();
       });
     </script>
 
