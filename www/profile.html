@@ -157,7 +157,18 @@
             callback(userBasedonID);
           },
           error: function(error) {
-            alert("Error finding user");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to look for this user! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            // else {
+            //   alert("Error finding the user.");
+            // }
           }
         });
       }
@@ -280,7 +291,19 @@
             callback(followObject);
           },
           error: function(error) {
-            alert("Error finding Follow object");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to see if you follow this user! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("There was an error while checking to see if you follow this user. Sorry!");
+            }
+            //alert("Error finding Follow object");
           }
         });
       }
@@ -310,7 +333,18 @@
             //alert("Success!");
           },
           error: function(error) {
-            alert("Failed to create new Follow object");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("Failed to follow the user");
+            }
           }
         });
       }
@@ -361,7 +395,18 @@
             callback(galleryObjects);
           },
           error: function(error) {
-            alert("Error finding Gallery objects");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to find this user's galleries! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("Error finding the galleries of this user");
+            }
           }
         });
       }
@@ -376,7 +421,18 @@
             callback(firstImage);
           },
           error: function(error) {
-            alert("Error finding Image object");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("Error finding the images in these galleries");
+            }
           }
         });
       }

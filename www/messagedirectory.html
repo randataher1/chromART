@@ -107,7 +107,18 @@
             callback(conversations);
           },
           error: function (error) {
-            alert("Error finding conversations");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to find your conversations! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("Error finding your conversations. Please try again.");
+            }
           }
         });
       }
@@ -146,7 +157,18 @@
             callback(mostRecentMessage);
           },
           error: function (error) {
-            alert("Error finding messages");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to find the most recent messages in each conversation! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("Error finding the most recent messages in each conversation. Please try again.");
+            }
           }
         });
       }
