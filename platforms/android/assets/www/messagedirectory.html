@@ -11,9 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <link href="css/ratchet.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -24,14 +22,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
-
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-
-    <script type="text/javascript" src="js/sessvars.js"></script>
 
   </head>
 
@@ -86,119 +76,121 @@
       </nav>
     </div>
 
-  <script type="text/javascript">
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/sessvars.js"></script>
 
-    function setQueryForConversationsToCurrentUser () {
-      var toCurrentUser = new Parse.Query("Conversation");
-      toCurrentUser.equalTo("toUser", Parse.User.current());
-      return toCurrentUser;
-    }
+    <script type="text/javascript">
+      Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    function setQueryForConversationsFromCurrentUser () {
-      var fromCurrentUser = new Parse.Query("Conversation");
-      fromCurrentUser.equalTo("fromUser", Parse.User.current());
-      return fromCurrentUser;
-    }
+      function setQueryForConversationsToCurrentUser () {
+        var toCurrentUser = new Parse.Query("Conversation");
+        toCurrentUser.equalTo("toUser", Parse.User.current());
+        return toCurrentUser;
+      }
 
-    function searchForConversationsWithCurrentUser (toCurrent, fromCurrent, callback) {
-      var conversationQuery = Parse.Query.or(toCurrent, fromCurrent);
-      conversationQuery.include(["fromUser"]);
-      conversationQuery.include(["toUser"]);
-      conversationQuery.descending("updatedAt");
-      conversationQuery.find({
-        success: function (conversations) {
-          //alert("Successfully found conversations");
-          callback(conversations);
-        },
-        error: function (error) {
-          alert("Error finding conversations");
+      function setQueryForConversationsFromCurrentUser () {
+        var fromCurrentUser = new Parse.Query("Conversation");
+        fromCurrentUser.equalTo("fromUser", Parse.User.current());
+        return fromCurrentUser;
+      }
+
+      function searchForConversationsWithCurrentUser (toCurrent, fromCurrent, callback) {
+        var conversationQuery = Parse.Query.or(toCurrent, fromCurrent);
+        conversationQuery.include(["fromUser"]);
+        conversationQuery.include(["toUser"]);
+        conversationQuery.descending("updatedAt");
+        conversationQuery.find({
+          success: function (conversations) {
+            //alert("Successfully found conversations");
+            callback(conversations);
+          },
+          error: function (error) {
+            alert("Error finding conversations");
+          }
+        });
+      }
+
+      function displayMessageIfThereAreNo (conversations) {
+        if(conversations.length === 0) {
+          $(".conversationContainer").append(
+            "<div class=\"noConversations\">" +
+              "You do not have any conversations" +
+            "</div>");
         }
-      });
-    }
+      }
 
-    function displayMessageIfThereAreNo (conversations) {
-      if(conversations.length === 0) {
+      function getSubjectBasedOnConversation (conversationObject) {
+        return conversationObject.get("subject");
+      }
+
+      function getOtherUserBasedOnConversation (conversationObject) {
+        if (conversationObject.get("fromUser").id === Parse.User.current().id) {
+          return conversationObject.get("toUser");
+        }
+        else {
+          return conversationObject.get("fromUser");
+        }
+      }
+
+      function searchForMostRecentMessageBasedOnConversation (conversationObject, callback) {
+        var Message = Parse.Object.extend("Message");
+        var messageQuery = new Parse.Query(Message);
+        messageQuery.equalTo("conversation", conversationObject);
+        messageQuery.descending("createdAt");
+        messageQuery.include("sender");
+        messageQuery.first({
+          success: function (mostRecentMessage) {
+            //alert("Found most recent message");
+            callback(mostRecentMessage);
+          },
+          error: function (error) {
+            alert("Error finding messages");
+          }
+        });
+      }
+
+      function addConversations (conversationObject, conversationNumber) {
+        var otherUser = getOtherUserBasedOnConversation(conversationObject);
         $(".conversationContainer").append(
-          "<div class=\"noConversations\">" +
-            "You do not have any conversations" +
-          "</div>");
+          "<div class=\"row conversation\" id=\"convoNum" + conversationNumber + "\">" +
+            "<div class=\"col-xs-2\">" +
+              "<img class=\"img-circle conversationPicture\" src=\"" +
+                otherUser.get("profilePictureUrl") +
+              "\" />" +
+            "</div>" +
+            "<div class=\"col-xs-9 conversationPadding\">" +
+              "<div class=\"row conversationUsername\">" +
+                otherUser.get("username") +
+              "</div>" +
+              "<div class=\"row conversationSubject\">" +
+                getSubjectBasedOnConversation(conversationObject) +
+              "</div>" +
+              "<div class=\"conversationText\" id=\"convoText" + conversationNumber + "\">" +
+              "</div>" +
+            "</div>" +
+          "</div>"
+          );
+        $("#convoNum" + conversationNumber).click(function() {
+          window.location.href = "conversation.html?conversationID=" + conversationObject.id + "#recentMessage";
+        });
       }
-    }
 
-    function getSubjectBasedOnConversation (conversationObject) {
-      return conversationObject.get("subject");
-    }
-
-    function getOtherUserBasedOnConversation (conversationObject) {
-      if (conversationObject.get("fromUser").id === Parse.User.current().id) {
-        return conversationObject.get("toUser");
+      function addMostRecentMessageToConversations (conversationObject, conversationNumber) {
+        searchForMostRecentMessageBasedOnConversation(conversationObject, function (lastMessage) {
+          document.getElementById("convoText" + conversationNumber).innerHTML = lastMessage.get("messageText");
+        });
       }
-      else {
-        return conversationObject.get("fromUser");
-      }
-    }
 
-    function searchForMostRecentMessageBasedOnConversation (conversationObject, callback) {
-      var Message = Parse.Object.extend("Message");
-      var messageQuery = new Parse.Query(Message);
-      messageQuery.equalTo("conversation", conversationObject);
-      messageQuery.descending("createdAt");
-      messageQuery.include("sender");
-      messageQuery.first({
-        success: function (mostRecentMessage) {
-          //alert("Found most recent message");
-          callback(mostRecentMessage);
-        },
-        error: function (error) {
-          alert("Error finding messages");
+      searchForConversationsWithCurrentUser(setQueryForConversationsToCurrentUser(), setQueryForConversationsFromCurrentUser(), function (allConversations) {
+        displayMessageIfThereAreNo(allConversations);
+        for (var singleConversation = 0; singleConversation < allConversations.length; singleConversation++) {
+          addConversations(allConversations[singleConversation], singleConversation);
+          addMostRecentMessageToConversations(allConversations[singleConversation], singleConversation);
         }
       });
-    }
+    </script>
 
-    function addConversations (conversationObject, conversationNumber) {
-      var otherUser = getOtherUserBasedOnConversation(conversationObject);
-      $(".conversationContainer").append(
-        "<div class=\"row conversation\" id=\"convoNum" + conversationNumber + "\">" +
-          "<div class=\"col-xs-2\">" +
-            "<img class=\"img-circle conversationPicture\" src=\"" +
-              otherUser.get("profilePictureUrl") +
-            "\" />" +
-          "</div>" +
-          "<div class=\"col-xs-9 conversationPadding\">" +
-            "<div class=\"row conversationUsername\">" +
-              otherUser.get("username") +
-            "</div>" +
-            "<div class=\"row conversationSubject\">" +
-              getSubjectBasedOnConversation(conversationObject) +
-            "</div>" +
-            "<div class=\"conversationText\" id=\"convoText" + conversationNumber + "\">" +
-            "</div>" +
-          "</div>" +
-        "</div>"
-        );
-      $("#convoNum" + conversationNumber).click(function() {
-        window.location.href = "conversation.html?conversationID=" + conversationObject.id + "#recentMessage";
-      });
-    }
-
-    function addMostRecentMessageToConversations (conversationObject, conversationNumber) {
-      searchForMostRecentMessageBasedOnConversation(conversationObject, function (lastMessage) {
-        document.getElementById("convoText" + conversationNumber).innerHTML = lastMessage.get("messageText");
-      });
-    }
-
-    searchForConversationsWithCurrentUser(setQueryForConversationsToCurrentUser(), setQueryForConversationsFromCurrentUser(), function (allConversations) {
-      displayMessageIfThereAreNo(allConversations);
-      for (var singleConversation = 0; singleConversation < allConversations.length; singleConversation++) {
-        addConversations(allConversations[singleConversation], singleConversation);
-        addMostRecentMessageToConversations(allConversations[singleConversation], singleConversation);
-      }
-    });
-  </script>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
   </body>
 </html>

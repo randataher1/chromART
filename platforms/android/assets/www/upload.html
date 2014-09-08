@@ -11,9 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <link href="css/ratchet.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
     
     <link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
@@ -26,32 +24,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript" src="cordova.js"></script>
-
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
-
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-
-    <script type="text/javascript" src="js/sessvars.js"></script>
-
-    <script type="text/javascript">
-      var pictureSource;   // picture source
-      var destinationType; // sets the format of returned value 
-
-      // Wait for Cordova to connect with the device
-      //
-      document.addEventListener("deviceready",onDeviceReady,false);
-
-      // Cordova is ready to be used!
-      //
-      function onDeviceReady() {
-          pictureSource=navigator.camera.PictureSourceType;
-          destinationType=navigator.camera.DestinationType;
-      }
-    </script>
 
   </head>
 
@@ -148,187 +120,205 @@
 
     </div> <!-- /container -->
 
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/sessvars.js"></script>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
+      var pictureSource;   // picture source
+      var destinationType; // sets the format of returned value 
 
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+      // Wait for Cordova to connect with the device
+      //
+      document.addEventListener("deviceready",onDeviceReady,false);
 
-    sessvars.toUserObject = {};
-
-    $('.dropdown-toggle').dropdown();
-
-    $(".dropdown-menu").each(function(){
-      var parentWidth = $(this).parent().innerWidth();
-      var menuWidth = $(this).innerWidth();
-      var margin = (parentWidth / 2) - (menuWidth / 2);
-      margin = margin + "px";
-      $(this).css("margin-left", margin);
-    });
-
-    $(".dropdown-menu li a").click(function(){
-      var selText = $(this).text();
-      $(this).parents('.dropdown').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-      dropdownValue.value = selText;
-      //alert(dropdownValue.value);
-    });
-
-    function takePicture() {
-      //alert("Click");
-      navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL
-      });
-    }
-
-    function choosePicture() {
-      //alert("Click");
-      navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY
-      });
-    }
-
-    function onSuccess(imageData) {
-      //alert("yay");
-      var image = document.getElementById('cameraData');
-      image.value = imageData;
-      var photoTaken = document.getElementById('photoTaken');
-      photoTaken.value = "true";
-      //alert(photoTaken.value);
-    }
-
-    function onFail(message) {
-        alert('Failed because: ' + message);
-    }
-
-    userID = Parse.User.current().id;
-
-    //Finding galleries based on userID and adding to upload
-    var otherGallery = Parse.Object.extend("Gallery");
-    var galleryQuery = new Parse.Query(otherGallery);
-    galleryQuery.equalTo("user", Parse.User.current());
-    galleryQuery.find({
-      success: function(results) {
-        // The object was retrieved successfully.
-        //Loops through all galleries with the current userID and lists them in the form.
-        for(var i = 0; i < results.length; i++) {
-          var object = results[i];
-          $("#gallerySelect").prepend("<div class=\"form-group radio\">" +
-            "<label>" +
-              "<input type=\"radio\" name=\"optionsRadios\" id=\"option" + i + "\" value=\"option" + i + "\">" + object.get('name')
-              + "</label>" +
-          "</div>");
-        }
-      },
-      error: function(error) {
-        // The object was not retrieved successfully.
-        // error is a Parse.Error with an error code and description.
-        alert("User load error");
+      // Cordova is ready to be used!
+      //
+      function onDeviceReady() {
+          pictureSource=navigator.camera.PictureSourceType;
+          destinationType=navigator.camera.DestinationType;
       }
-    });
+    </script>
 
-    //When the "Upload" button is pressed, a new Image is created
-    $("form").on("submit", function(e) {
-      e.preventDefault();
+    <script type="text/javascript">
 
-      var photoTaken = document.getElementById('photoTaken');
-      if(photoTaken.value != "true") {
-        alert("Take a picture first");
-        return false;
-      }
+      Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-      var fileName = Parse.User.current().id + ".jpeg";
-      var serverUrl = 'https://api.parse.com/1/files/' + fileName;
-      imageData = document.getElementById("cameraData");
-      var parseFile = new Parse.File(fileName, {base64:imageData.value});
+      sessvars.toUserObject = {};
 
-      parseFile.save().then(function() {
-          //alert("File available at: " + parseFile.url());
+      $('.dropdown-toggle').dropdown();
 
-          //Creates new Image object
-          var Img = Parse.Object.extend("Image");
-          var image = new Img();
+      $(".dropdown-menu").each(function(){
+        var parentWidth = $(this).parent().innerWidth();
+        var menuWidth = $(this).innerWidth();
+        var margin = (parentWidth / 2) - (menuWidth / 2);
+        margin = margin + "px";
+        $(this).css("margin-left", margin);
+      });
 
-          //Sets values of image based on user input
-          image.set("user", Parse.User.current());
-          image.set("title", $("#imageName").val());
-          image.set("description", $("#imageDesc").val());
-          image.set("category", dropdownValue.value);
-          image.set("url", parseFile.url());
-          image.set("likes", 0);
-          
-          var otherGallery = Parse.Object.extend("Gallery");
-          var galleryQuery = new Parse.Query(otherGallery);
-          galleryQuery.equalTo("user", Parse.User.current());
+      $(".dropdown-menu li a").click(function(){
+        var selText = $(this).text();
+        $(this).parents('.dropdown').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+        dropdownValue.value = selText;
+        //alert(dropdownValue.value);
+      });
 
-          galleryQuery.find({
-            success: function(results) {
-              // The object was retrieved successfully.
-              //Creates a variable galleryID which can later be set to the chosen gallery
-              var galleryObject;
-              //Loops through all existing galleries and sets a variable to the ID of the chosen gallery
-              for (var i = 0; i < results.length; i++) {
-                if ($("#option" + i).is(':checked')) {
-                  galleryObject = results[i];
-                  //alert('Chosen gallery has ID: ' + galleryObject.id);
-                }
-              }
-              //If the new gallery choice is chosen, a new Gallery object is instantiated
-              if ($("#optionLast").is(':checked')) {
-                var Gallery = Parse.Object.extend("Gallery");
-                var galleryObject = new Gallery();
-                //All values set for new Gallery object
-                galleryObject.set("user", Parse.User.current());
-                galleryObject.set("name", $("#galleryName").val());
-                galleryObject.save(null, {
-                  success: function(gal) {
-                    // Execute any logic that should take place after the object is saved.
-                    //alert('New gallery created with ID: ' + galleryObject.id);
-                  },
-                  error: function(img, error) {
-                    // Execute any logic that should take place if the save fails.
-                    // error is a Parse.Error with an error code and description.
-                    alert('Failed to create new gallery');
-                  }
-                });
-              }
-              //Error checking if user has not chosen a radio button
-              if (! ($("[id^=option]").is(':checked'))) {
-                alert("Please choose a gallery");
-              }
-              //If a gallery has been chosen, the image is given a galleryObject
-              else {
-                image.set("gallery", galleryObject);
-                //Saves all values to new Image object
-                image.save(null, {
-                  success: function(img) {
-                    // Execute any logic that should take place after the object is saved.
-                    //alert('New image created with ID: ' + image.id);
-                    //alert('Image added to: ' + galleryObject.id);
-                    window.location.href = 'profile.html';
-                  },
-                  error: function(img, error) {
-                    // Execute any logic that should take place if the save fails.
-                    // error is a Parse.Error with an error code and description.
-                    alert('Failed to update image');
-                  }
-                });
-              }
-              
-            },
-            error: function(error) {
-              // The object was not retrieved successfully.
-              // error is a Parse.Error with an error code and description.
-              alert("Please create a new gallery");
-            }
-          });
-
+      function takePicture() {
+        //alert("Click");
+        navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL
         });
+      }
+
+      function choosePicture() {
+        //alert("Click");
+        navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+        });
+      }
+
+      function onSuccess(imageData) {
+        //alert("yay");
+        var image = document.getElementById('cameraData');
+        image.value = imageData;
+        var photoTaken = document.getElementById('photoTaken');
+        photoTaken.value = "true";
+        //alert(photoTaken.value);
+      }
+
+      function onFail(message) {
+          alert('Failed because: ' + message);
+      }
+
+      userID = Parse.User.current().id;
+
+      //Finding galleries based on userID and adding to upload
+      var otherGallery = Parse.Object.extend("Gallery");
+      var galleryQuery = new Parse.Query(otherGallery);
+      galleryQuery.equalTo("user", Parse.User.current());
+      galleryQuery.find({
+        success: function(results) {
+          // The object was retrieved successfully.
+          //Loops through all galleries with the current userID and lists them in the form.
+          for(var i = 0; i < results.length; i++) {
+            var object = results[i];
+            $("#gallerySelect").prepend("<div class=\"form-group radio\">" +
+              "<label>" +
+                "<input type=\"radio\" name=\"optionsRadios\" id=\"option" + i + "\" value=\"option" + i + "\">" + object.get('name')
+                + "</label>" +
+            "</div>");
+          }
+        },
+        error: function(error) {
+          // The object was not retrieved successfully.
+          // error is a Parse.Error with an error code and description.
+          alert("User load error");
+        }
       });
 
-  </script>
+      //When the "Upload" button is pressed, a new Image is created
+      $("form").on("submit", function(e) {
+        e.preventDefault();
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+        var photoTaken = document.getElementById('photoTaken');
+        if(photoTaken.value != "true") {
+          alert("Take a picture first");
+          return false;
+        }
+
+        var fileName = Parse.User.current().id + ".jpeg";
+        var serverUrl = 'https://api.parse.com/1/files/' + fileName;
+        imageData = document.getElementById("cameraData");
+        var parseFile = new Parse.File(fileName, {base64:imageData.value});
+
+        parseFile.save().then(function() {
+            //alert("File available at: " + parseFile.url());
+
+            //Creates new Image object
+            var Img = Parse.Object.extend("Image");
+            var image = new Img();
+
+            //Sets values of image based on user input
+            image.set("user", Parse.User.current());
+            image.set("title", $("#imageName").val());
+            image.set("description", $("#imageDesc").val());
+            image.set("category", dropdownValue.value);
+            image.set("url", parseFile.url());
+            image.set("likes", 0);
+            
+            var otherGallery = Parse.Object.extend("Gallery");
+            var galleryQuery = new Parse.Query(otherGallery);
+            galleryQuery.equalTo("user", Parse.User.current());
+
+            galleryQuery.find({
+              success: function(results) {
+                // The object was retrieved successfully.
+                //Creates a variable galleryID which can later be set to the chosen gallery
+                var galleryObject;
+                //Loops through all existing galleries and sets a variable to the ID of the chosen gallery
+                for (var i = 0; i < results.length; i++) {
+                  if ($("#option" + i).is(':checked')) {
+                    galleryObject = results[i];
+                    //alert('Chosen gallery has ID: ' + galleryObject.id);
+                  }
+                }
+                //If the new gallery choice is chosen, a new Gallery object is instantiated
+                if ($("#optionLast").is(':checked')) {
+                  var Gallery = Parse.Object.extend("Gallery");
+                  var galleryObject = new Gallery();
+                  //All values set for new Gallery object
+                  galleryObject.set("user", Parse.User.current());
+                  galleryObject.set("name", $("#galleryName").val());
+                  galleryObject.save(null, {
+                    success: function(gal) {
+                      // Execute any logic that should take place after the object is saved.
+                      //alert('New gallery created with ID: ' + galleryObject.id);
+                    },
+                    error: function(img, error) {
+                      // Execute any logic that should take place if the save fails.
+                      // error is a Parse.Error with an error code and description.
+                      alert('Failed to create new gallery');
+                    }
+                  });
+                }
+                //Error checking if user has not chosen a radio button
+                if (! ($("[id^=option]").is(':checked'))) {
+                  alert("Please choose a gallery");
+                }
+                //If a gallery has been chosen, the image is given a galleryObject
+                else {
+                  image.set("gallery", galleryObject);
+                  //Saves all values to new Image object
+                  image.save(null, {
+                    success: function(img) {
+                      // Execute any logic that should take place after the object is saved.
+                      //alert('New image created with ID: ' + image.id);
+                      //alert('Image added to: ' + galleryObject.id);
+                      window.location.href = 'profile.html';
+                    },
+                    error: function(img, error) {
+                      // Execute any logic that should take place if the save fails.
+                      // error is a Parse.Error with an error code and description.
+                      alert('Failed to update image');
+                    }
+                  });
+                }
+                
+              },
+              error: function(error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and description.
+                alert("Please create a new gallery");
+              }
+            });
+
+          });
+        });
+
+    </script>
+
   </body>
 </html>

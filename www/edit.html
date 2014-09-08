@@ -11,9 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <link href="css/ratchet.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -24,12 +22,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
-
-    <script type="text/javascript" src="js/sessvars.js"></script>
 
   </head>
 
@@ -89,94 +81,95 @@
       </nav>
     </div>
 
-  <script type="text/javascript">
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/sessvars.js"></script>
 
-    function thereIsADescription () {
-      if ($(".inputDescription").val() != "") {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
+    <script type="text/javascript">
+      Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    function thereIsAFacebook () {
-      if ($(".inputFacebook").val() != "") {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-
-    function thereIsATwitter () {
-      if ($(".inputTwitter").val() != "") {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-
-    function getDescription () {
-      return $(".inputDescription").val();
-    }
-
-    function getFacebook () {
-      return $(".inputFacebook").val();
-    }
-
-    function getTwitter () {
-      return $(".inputTwitter").val();
-    }
-
-    function setDescription (currentUser) {
-      currentUser.set("profileDescription", getDescription());
-    }
-
-    function setFacebook (currentUser) {
-      currentUser.set("facebook", getFacebook());
-    }
-
-    function setTwitter (currentUser) {
-      currentUser.set("twitter", getTwitter());
-    }
-
-    $("form").on("submit", function(e) {
-      e.preventDefault();
-
-      var user = Parse.User.current();
-
-      if (thereIsADescription()) {
-        setDescription(user);
-      }
-
-      if (thereIsAFacebook()) {
-        setFacebook(user);
-      }
-
-      if (thereIsATwitter()) {
-        setTwitter(user);
-      }
-
-      user.save(null, {
-        success: function(save) {
-          // Execute any logic that should take place after the object is saved.
-          window.location.href = 'profile.html';
-        },
-        error: function(error) {
-          // Execute any logic that should take place if the save fails.
-          // error is a Parse.Error with an error code and description.
-          alert('Failed to save information');
+      function thereIsADescription () {
+        if ($(".inputDescription").val() != "") {
+          return true;
         }
+        else {
+          return false;
+        }
+      }
+
+      function thereIsAFacebook () {
+        if ($(".inputFacebook").val() != "") {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
+      function thereIsATwitter () {
+        if ($(".inputTwitter").val() != "") {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
+      function getDescription () {
+        return $(".inputDescription").val();
+      }
+
+      function getFacebook () {
+        return $(".inputFacebook").val();
+      }
+
+      function getTwitter () {
+        return $(".inputTwitter").val();
+      }
+
+      function setDescription (currentUser) {
+        currentUser.set("profileDescription", getDescription());
+      }
+
+      function setFacebook (currentUser) {
+        currentUser.set("facebook", getFacebook());
+      }
+
+      function setTwitter (currentUser) {
+        currentUser.set("twitter", getTwitter());
+      }
+
+      $("form").on("submit", function(e) {
+        e.preventDefault();
+
+        var user = Parse.User.current();
+
+        if (thereIsADescription()) {
+          setDescription(user);
+        }
+
+        if (thereIsAFacebook()) {
+          setFacebook(user);
+        }
+
+        if (thereIsATwitter()) {
+          setTwitter(user);
+        }
+
+        user.save(null, {
+          success: function(save) {
+            // Execute any logic that should take place after the object is saved.
+            window.location.href = 'profile.html';
+          },
+          error: function(error) {
+            // Execute any logic that should take place if the save fails.
+            // error is a Parse.Error with an error code and description.
+            alert('Failed to save information');
+          }
+        });
+
       });
+    </script>
 
-    });
-  </script>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
   </body>
 </html>

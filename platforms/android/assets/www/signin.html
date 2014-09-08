@@ -11,9 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <link href="css/ratchet.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
     
     <link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
@@ -26,10 +24,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 
   </head>
 
@@ -60,49 +54,48 @@
 
     </div> <!-- /container -->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
 
-<script type="text/javascript">
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+    <script type="text/javascript">
+      Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    $(".toSignUp").click(function() {
-      window.location.href = 'signup.html';
-    });
+      $(".toSignUp").click(function() {
+        window.location.href = 'signup.html';
+      });
 
-    $(".toIndex").click(function() {
-      window.location.href = 'index.html';
-    });
+      $(".toIndex").click(function() {
+        window.location.href = 'index.html';
+      });
 
-    $("form").on("submit", function(e) {
-      e.preventDefault();
+      $("form").on("submit", function(e) {
+        e.preventDefault();
 
-      Parse.User.logIn($("#loginUsername").val(), $("#loginPassword").val(), {
-        success: function(user) {
-          window.location.href = 'home.html';
-        },
-        error: function(user, error) {
-          if (error.code === Parse.Error.USERNAME_MISSING) {
-            alert("Please enter a username.");
+        Parse.User.logIn($("#loginUsername").val(), $("#loginPassword").val(), {
+          success: function(user) {
+            window.location.href = 'home.html';
+          },
+          error: function(user, error) {
+            if (error.code === Parse.Error.USERNAME_MISSING) {
+              alert("Please enter a username.");
+            }
+            else if (error.code === Parse.Error.PASSWORD_MISSING) {
+              alert("Please enter a password.");
+            }
+            else if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else {
+              alert("Error logging in");
+            }
           }
-          else if (error.code === Parse.Error.PASSWORD_MISSING) {
-            alert("Please enter a password.");
-          }
-          else if (error.code === Parse.Error.CONNECTION_FAILED) {
-            alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
-          }
-          else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
-            alert("Parse is having a problem. Please try again later.");
-          }
-          else {
-            alert("Error logging in");
-          }
-        }
-      })
+        })
 
-    });
-  </script>
+      });
+    </script>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
   </body>
 </html>

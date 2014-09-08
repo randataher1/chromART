@@ -11,9 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <link href="css/ratchet.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -24,14 +22,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
-
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-
-    <script type="text/javascript" src="js/sessvars.js"></script>
 
   </head>
 
@@ -103,180 +93,182 @@
       </nav>
     </div>
 
-  <script type="text/javascript">
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/sessvars.js"></script>
 
-    function sessvarsObjectIsUndefined () {
-      if (sessvars.toUserObject === undefined) {
-        //alert("There isn't an object");
-        return true;
-      }
-      else {
-        //alert("There is an object");
-        return false;
-      }
-    }
+    <script type="text/javascript">
+      Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-    function searchForUserObjectBasedOnSessvars (callback) {
-      var userObject = Parse.Object.extend("_User");
-      var userQuery = new Parse.Query(userObject);
-      userQuery.equalTo("objectId", sessvars.toUserObject["userObject"].id);
-      userQuery.first({
-        success: function(userObject) {
-          //alert("Found User object");
-          callback(userObject);
-        },
-        error: function(error) {
-          alert("Error finding User object");
-        }
-      });
-    }
-
-    function getUserFormValue () {
-      return $(".inputRecipient").val();
-    }
-
-    function thereIsNotAUserInTheForm () {
-      if (getUserFormValue() === "") {
-        //alert("There isn't a user");
-        return true;
-      }
-      else {
-        //alert("There is a user");
-        return false;
-      }
-    }
-
-    //Looks for user objects that pertain to the entered value
-    function searchForUserObjectBasedOnFormValue (callback) {
-      var userObject = Parse.Object.extend("_User");
-      var userQuery = new Parse.Query(userObject);
-      userQuery.equalTo("username", getUserFormValue());
-      userQuery.first({
-        success: function(userObject) {
-          //alert("Found User object");
-          callback(userObject);
-        },
-        error: function(error) {
-          alert("Error finding User object");
-        }
-      });
-    }
-
-    function theUserIsNotValid (user) {
-      if (user.length != 0) {
-        //alert("The user exists");
-        return false;
-      }
-      else {
-        //alert("The user doesn't exist");
-        return true;
-      }
-    }
-
-    function getSubjectFormValue () {
-      return $(".inputSubject").val();
-    }
-
-    function thereIsNotASubjectInTheForm () {
-      if (getSubjectFormValue() === "") {
-        //alert("There isn't a subject");
-        return true;
-      }
-      else {
-        //alert("There is a subject");
-        return false;
-      }
-    }
-
-    function getMessageFormValue () {
-      return $(".inputMessage").val();
-    }
-
-    function thereIsNotAMessageInTheForm () {
-      if (getMessageFormValue() === "") {
-        //alert("There isn't a message");
-        return true;
-      }
-      else {
-        //alert("There is a message");
-        return false;
-      }
-    }
-
-    //Creates new conversation object
-    function createNewConversationObject (toUser, callback) {
-      var Conversation = Parse.Object.extend("Conversation");
-      var conversation = new Conversation();
-      conversation.set("fromUser", Parse.User.current());
-      conversation.set("toUser", toUser);
-      conversation.set("subject", getSubjectFormValue());
-      conversation.save(null, {
-        success: function(conversationObject) {
-          //alert("Successfully created new Conversation object!");
-          callback(conversationObject);
-        },
-        error: function(error) {
-          alert("Failed to create new Conversation object");
-        }
-      });
-    }
-
-    function createNewMessageObject (conversationObject, callback) {
-      var Message = Parse.Object.extend("Message");
-      var message = new Message();
-      message.set("conversation", conversationObject);
-      message.set("messageText", getMessageFormValue());
-      message.set("sender", Parse.User.current());
-      message.save(null, {
-        success: function() {
-          //alert("Successfully created new Message object!");
-          callback();
-        },
-        error: function(error) {
-          alert("Failed to create new Message object");
-        }
-      });
-    }
-
-    if (!sessvarsObjectIsUndefined()) {
-      searchForUserObjectBasedOnSessvars (function(user) {
-        $(".inputRecipient").val(user.get("username"));
-        sessvars.toUserObject = {};
-      })
-    }
-
-    $("form").on("submit", function(e) {
-      e.preventDefault();
-
-      searchForUserObjectBasedOnFormValue(function (user) {
-        if (thereIsNotAUserInTheForm()) {
-          alert("Please enter a user");
-        }
-        else if (thereIsNotASubjectInTheForm()) {
-          alert("Please enter a subject");
-        }
-        else if (thereIsNotAMessageInTheForm()) {
-          alert("Please enter a message");
-        }
-        else if (theUserIsNotValid(user)) {
-          alert("There is no user with that username");
+      function sessvarsObjectIsUndefined () {
+        if (sessvars.toUserObject === undefined) {
+          //alert("There isn't an object");
+          return true;
         }
         else {
-          createNewConversationObject(user, function (conversation) {
-            createNewMessageObject(conversation, function() {
-              window.location.href = "conversation.html?conversationID=" + conversation.id;
-            });
-          });
+          //alert("There is an object");
+          return false;
         }
+      }
+
+      function searchForUserObjectBasedOnSessvars (callback) {
+        var userObject = Parse.Object.extend("_User");
+        var userQuery = new Parse.Query(userObject);
+        userQuery.equalTo("objectId", sessvars.toUserObject["userObject"].id);
+        userQuery.first({
+          success: function(userObject) {
+            //alert("Found User object");
+            callback(userObject);
+          },
+          error: function(error) {
+            alert("Error finding User object");
+          }
+        });
+      }
+
+      function getUserFormValue () {
+        return $(".inputRecipient").val();
+      }
+
+      function thereIsNotAUserInTheForm () {
+        if (getUserFormValue() === "") {
+          //alert("There isn't a user");
+          return true;
+        }
+        else {
+          //alert("There is a user");
+          return false;
+        }
+      }
+
+      //Looks for user objects that pertain to the entered value
+      function searchForUserObjectBasedOnFormValue (callback) {
+        var userObject = Parse.Object.extend("_User");
+        var userQuery = new Parse.Query(userObject);
+        userQuery.equalTo("username", getUserFormValue());
+        userQuery.first({
+          success: function(userObject) {
+            //alert("Found User object");
+            callback(userObject);
+          },
+          error: function(error) {
+            alert("Error finding User object");
+          }
+        });
+      }
+
+      function theUserIsNotValid (user) {
+        if (user.length != 0) {
+          //alert("The user exists");
+          return false;
+        }
+        else {
+          //alert("The user doesn't exist");
+          return true;
+        }
+      }
+
+      function getSubjectFormValue () {
+        return $(".inputSubject").val();
+      }
+
+      function thereIsNotASubjectInTheForm () {
+        if (getSubjectFormValue() === "") {
+          //alert("There isn't a subject");
+          return true;
+        }
+        else {
+          //alert("There is a subject");
+          return false;
+        }
+      }
+
+      function getMessageFormValue () {
+        return $(".inputMessage").val();
+      }
+
+      function thereIsNotAMessageInTheForm () {
+        if (getMessageFormValue() === "") {
+          //alert("There isn't a message");
+          return true;
+        }
+        else {
+          //alert("There is a message");
+          return false;
+        }
+      }
+
+      //Creates new conversation object
+      function createNewConversationObject (toUser, callback) {
+        var Conversation = Parse.Object.extend("Conversation");
+        var conversation = new Conversation();
+        conversation.set("fromUser", Parse.User.current());
+        conversation.set("toUser", toUser);
+        conversation.set("subject", getSubjectFormValue());
+        conversation.save(null, {
+          success: function(conversationObject) {
+            //alert("Successfully created new Conversation object!");
+            callback(conversationObject);
+          },
+          error: function(error) {
+            alert("Failed to create new Conversation object");
+          }
+        });
+      }
+
+      function createNewMessageObject (conversationObject, callback) {
+        var Message = Parse.Object.extend("Message");
+        var message = new Message();
+        message.set("conversation", conversationObject);
+        message.set("messageText", getMessageFormValue());
+        message.set("sender", Parse.User.current());
+        message.save(null, {
+          success: function() {
+            //alert("Successfully created new Message object!");
+            callback();
+          },
+          error: function(error) {
+            alert("Failed to create new Message object");
+          }
+        });
+      }
+
+      if (!sessvarsObjectIsUndefined()) {
+        searchForUserObjectBasedOnSessvars (function(user) {
+          $(".inputRecipient").val(user.get("username"));
+          sessvars.toUserObject = {};
+        })
+      }
+
+      $("form").on("submit", function(e) {
+        e.preventDefault();
+
+        searchForUserObjectBasedOnFormValue(function (user) {
+          if (thereIsNotAUserInTheForm()) {
+            alert("Please enter a user");
+          }
+          else if (thereIsNotASubjectInTheForm()) {
+            alert("Please enter a subject");
+          }
+          else if (thereIsNotAMessageInTheForm()) {
+            alert("Please enter a message");
+          }
+          else if (theUserIsNotValid(user)) {
+            alert("There is no user with that username");
+          }
+          else {
+            createNewConversationObject(user, function (conversation) {
+              createNewMessageObject(conversation, function() {
+                window.location.href = "conversation.html?conversationID=" + conversation.id;
+              });
+            });
+          }
+        });
+
       });
 
-    });
+    </script>
 
-  </script>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
   </body>
 </html>

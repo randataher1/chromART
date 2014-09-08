@@ -11,13 +11,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <link href="css/ratchet.css" rel="stylesheet">
-
     <link href="css/chromart.css" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Carme' rel='stylesheet' type='text/css'>
-
     <link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -28,12 +25,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
-
-    <script type="text/javascript" src="js/sessvars.js"></script>
 
   </head>
 
@@ -118,328 +109,329 @@
 
     </div>
 
-  <script type="text/javascript">
-    Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/sessvars.js"></script>
 
-    var $_GET = {};
-    if(document.location.toString().indexOf('?') !== -1) {
-        var query = document.location
-                       .toString()
-                       // get the query string
-                       .replace(/^.*?\?/, '')
-                       // and remove any existing hash string (thanks, @vrijdenker)
-                       .replace(/#.*$/, '')
-                       .split('&');
+    <script type="text/javascript">
+      Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
-        for(var i=0, l=query.length; i<l; i++) {
-           var aux = decodeURIComponent(query[i]).split('=');
-           $_GET[aux[0]] = aux[1];
-        }
-    }
+      var $_GET = {};
+      if(document.location.toString().indexOf('?') !== -1) {
+          var query = document.location
+                         .toString()
+                         // get the query string
+                         .replace(/^.*?\?/, '')
+                         // and remove any existing hash string (thanks, @vrijdenker)
+                         .replace(/#.*$/, '')
+                         .split('&');
 
-    // set userID to the user id we get from the get variable
-    if ($_GET['userID']) {
-        userID = $_GET['userID'];
-    }
-    // handle profile.html case with the current logged in user
-    else { 
-        userID = Parse.User.current().id; // where User was previously set by the parse User object
-    }
-
-    //Returns user based on the GET variable in the URL
-    function searchForUserBasedOnID (callback) {
-      var otherUser = Parse.Object.extend("_User");
-      var userQuery = new Parse.Query(otherUser);
-      userQuery.get(userID, {
-        success: function(userBasedonID) {
-          //alert("Found user");
-          callback(userBasedonID);
-        },
-        error: function(error) {
-          alert("Error finding user");
-        }
-      });
-    }
-
-    //If the current user ID is the same as the ID in the URL
-    function checkIfUserIDIsCurrentUserID (userId) {
-      if(userId === Parse.User.current().id) {
-        return true;
+          for(var i=0, l=query.length; i<l; i++) {
+             var aux = decodeURIComponent(query[i]).split('=');
+             $_GET[aux[0]] = aux[1];
+          }
       }
-      else {
-        return false;
+
+      // set userID to the user id we get from the get variable
+      if ($_GET['userID']) {
+          userID = $_GET['userID'];
       }
-    }
-
-    //If userID is that of current user, add Settings bar
-    function addSettingsBar () {
-      $(".pageHeader").append(
-        "<div class=\"settingsBar\">" +
-          "<div class=\"settings\">" +
-            "<span class=\"glyphicon glyphicon-cog\">" +
-            "</span>" +
-          "</div>" +
-          "<div class=\"edit\">" +
-            "<span class=\"glyphicon glyphicon-pencil\">" +
-            "</span>" +
-          "</div>" +
-        "</div>");
-      $(".settings").click(function() {
-        window.location.href = 'settings.html';
-      });
-      $(".edit").click(function() {
-        window.location.href = 'edit.html';
-      });
-
-    }
-
-    var userObject;
-
-    function addFunctionToFacebookButton (user) {
-      $(".facebookButton").click(function() {
-        window.open(user.get("facebook"), '_blank');
-      });
-    }
-
-    function addFunctionToTwitterButton (user) {
-      $(".twitterButton").click(function() {
-        window.open(user.get("twitter"), '_blank');
-      });
-    }
-
-    function addFunctionToEmailButton (user) {
-      $(".emailButton").click(function() {
-        window.location.href = "mailto:" + user.get("email");
-      });
-    }
-
-    function userHasFacebook (user) {
-      if (user.get("facebook") != "") {
-        return true;
+      // handle profile.html case with the current logged in user
+      else { 
+          userID = Parse.User.current().id; // where User was previously set by the parse User object
       }
-      else {
-        return false;
+
+      //Returns user based on the GET variable in the URL
+      function searchForUserBasedOnID (callback) {
+        var otherUser = Parse.Object.extend("_User");
+        var userQuery = new Parse.Query(otherUser);
+        userQuery.get(userID, {
+          success: function(userBasedonID) {
+            //alert("Found user");
+            callback(userBasedonID);
+          },
+          error: function(error) {
+            alert("Error finding user");
+          }
+        });
       }
-    }
 
-    function userHasTwitter (user) {
-      if (user.get("twitter") != "") {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-
-    function addFacebookButtonBasedOnUser (user) {
-      var facebookLink = user.get("facebook");
-      document.getElementById("linkFacebook").innerHTML = "<img src=\"img/facebook.png\" class=\"facebookButton\"/>";
-      addFunctionToFacebookButton(user);
-    }
-
-    function addTwitterButtonBasedOnUser (user) {
-      var twitterLink = user.get("twitter");
-      document.getElementById("linkTwitter").innerHTML = "<img src=\"img/twitter.png\" class=\"twitterButton\"/>";
-      addFunctionToTwitterButton(user);
-    }
-
-    function addEmailButtonBasedOnUser (user) {
-      var email = user.get("email");
-      document.getElementById("linkEmail").innerHTML = "<img src=\"img/email.png\" class=\"emailButton\"/>";
-      addFunctionToEmailButton(user);
-    }
-
-    //Adds information of user to page
-    function addHTMLBasedOnUser (user) {
-      var profilePicture = user.get("profilePictureUrl");
-      var profileUsername = user.get("username");
-      var profileDesc = user.get("profileDescription");
-      document.getElementById("proPic").innerHTML =  "<img src=\"" + profilePicture + "\" class=\"img-circle profilePicture\" />";
-      document.getElementById("proName").innerHTML = profileUsername;
-      document.getElementById("proDescription").innerHTML = profileDesc;
-      if (userHasFacebook(user)) {
-        addFacebookButtonBasedOnUser (user);
-      }
-      if (userHasTwitter(user)) {
-        addTwitterButtonBasedOnUser (user);
-      }
-      addEmailButtonBasedOnUser(user);
-      userObject = user;
-    }
-
-    //Checks if the current user is following the user of the profile that is being viewed
-    function searchForFollowObjectBasedOnID (user, callback) {
-      var following = Parse.Object.extend("Follow");
-      var followingQuery = new Parse.Query(following);
-      followingQuery.equalTo("user", Parse.User.current());
-      followingQuery.equalTo("followedUser", user);
-      followingQuery.find({
-        success: function(followObject) {
-          //alert("Found Follow object");
-          callback(followObject);
-        },
-        error: function(error) {
-          alert("Error finding Follow object");
-        }
-      });
-    }
-
-    //Adds follow button based on whether the current user is following the user or not
-    function addFollowButtonToProfile (followingObject) {
-      //If there is a following object, appends an active button
-      if(followingObject.length === 0) {
-        $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
-          "id=\"followButton\">Follow</button>");
-      }
-      //If there isn't, appends a non-active button
-      else {
-        $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton active\"" +
-          "id=\"followButton\">Following</button>");
-      }
-    }
-
-    //Creates new follow object
-    function createNewFollowObject (otherUser) {
-      var Follow = Parse.Object.extend("Follow");
-      var follow = new Follow();
-      follow.set("user", Parse.User.current());
-      follow.set("followedUser", otherUser);
-      follow.save(null, {
-        success: function(object) {
-          //alert("Success!");
-        },
-        error: function(error) {
-          alert("Failed to create new Follow object");
-        }
-      });
-    }
-
-    function addFollowFunctionToFollowButton (user) {
-      //Adds follow functionality to button
-      $("#followButton").click(function() {
-        //If the user clicks the button when it is active, the Follow object is removed and the button becomes unactive
-        if($("#followButton").hasClass("active")) {
-          $("#followButton").removeClass("active");
-          document.getElementById("followButton").innerHTML = "Follow";
-          searchForFollowObjectBasedOnID(user, function (followingObject) {
-            followingObject[0].destroy({});
-            //alert("Destroyed Follow object");
-          })
+      //If the current user ID is the same as the ID in the URL
+      function checkIfUserIDIsCurrentUserID (userId) {
+        if(userId === Parse.User.current().id) {
+          return true;
         }
         else {
-          $("#followButton").addClass("active");
-          document.getElementById("followButton").innerHTML = "Following";
-          //Creates new Follow object if user selects the Follow button
-          createNewFollowObject(user);
+          return false;
         }
-      });
-    }
+      }
 
-    //Adds message button based on whether the current user is the user of the profile
-    function addMessageButtonToProfile () {
-      $("#proMessageButton").append("<button type=\"button\" class=\"btn pinkButton\"" +
-        "id=\"messageButton\">Message</button>");
-    }
-
-    //Links button to message.html and uses a sessvar object to keep the userID
-    function addMessageFunctionToMessageButton (user) {
-      $("#messageButton").click(function() {
-        sessvars.toUserObject = {userObject: user};
-        window.location.href = 'messagecompose.html';
-      });
-    }
-
-    //Finding galleries based on user
-    function searchForGalleryBasedOnUser (user, callback) {
-      var gallery = Parse.Object.extend("Gallery");
-      var galleryQuery = new Parse.Query(gallery);
-      galleryQuery.equalTo("user", user);
-      galleryQuery.find({
-        success: function(galleryObjects) {
-          //alert("Found Gallery objects!");
-          callback(galleryObjects);
-        },
-        error: function(error) {
-          alert("Error finding Gallery objects");
-        }
-      });
-    }
-
-    function searchForFirstImageIn (gallery, callback) {
-      var image = Parse.Object.extend("Image");
-      var imageQuery = new Parse.Query(image);
-      imageQuery.equalTo("gallery", gallery);
-      imageQuery.first({
-        success: function(firstImage) {
-          //alert("Found first Image object in gallery!");
-          callback(firstImage);
-        },
-        error: function(error) {
-          alert("Error finding Image object");
-        }
-      });
-    }
-
-    function changeImageOf (galleryDiv, gallery) {
-      searchForFirstImageIn(gallery, function(backgroundImage) {
-        $("#gallery" + galleryDiv).append("<img src=\"" + backgroundImage.get("url") + "\" />");
-      });
-    }
-
-    //Adding galleries to profile
-    function addGalleries (galleries, user) {
-      for(var eachGallery = 0; eachGallery < galleries.length; eachGallery++) {
-        var individualGallery = galleries[eachGallery];
-        $("#proGalleries").append(
-          "<div class=\"col-xs-6 gallery\" id=\"gallery" + eachGallery + "\">" +
-            "<div>" +
-              individualGallery.get('name') +
+      //If userID is that of current user, add Settings bar
+      function addSettingsBar () {
+        $(".pageHeader").append(
+          "<div class=\"settingsBar\">" +
+            "<div class=\"settings\">" +
+              "<span class=\"glyphicon glyphicon-cog\">" +
+              "</span>" +
+            "</div>" +
+            "<div class=\"edit\">" +
+              "<span class=\"glyphicon glyphicon-pencil\">" +
+              "</span>" +
             "</div>" +
           "</div>");
-        changeImageOf(eachGallery, individualGallery);
-        addGalleryLinkToGallery(individualGallery, eachGallery);
-      }
-      if(galleries.length === 0) {
-        $("#proGalleries").append(
-          "<div class=\"noGalleries\">" +
-            user.get("username") + " has no galleries" +
-          "</div>");
-      }
-    }
-
-    //Links button to message.html and uses a sessvar object to keep the userID
-    function addGalleryLinkToGallery (galleryObject, galleryNum) {
-      searchForFirstImageIn (galleryObject, function (firstImage) {
-        $("#gallery" + galleryNum).click(function() {
-          sessvars.toImageObject = {activeImage: firstImage};
-          console.log(sessvars.toImageObject);
-          window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
+        $(".settings").click(function() {
+          window.location.href = 'settings.html';
         });
-      });
-    }
+        $(".edit").click(function() {
+          window.location.href = 'edit.html';
+        });
 
-    searchForUserBasedOnID(function (userObjectBasedOnID) {
-      addHTMLBasedOnUser(userObjectBasedOnID);
-      searchForGalleryBasedOnUser(userObjectBasedOnID, function(galleriesBasedOnUser) {
-        addGalleries(galleriesBasedOnUser, userObjectBasedOnID);
-      });
-      if(!checkIfUserIDIsCurrentUserID(userID)) {
-        searchForFollowObjectBasedOnID(userObject, function (followObjectBasedOnID) {
-          addFollowButtonToProfile(followObjectBasedOnID);
-          addFollowFunctionToFollowButton(userObject);
-          addMessageButtonToProfile();
-          addMessageFunctionToMessageButton(userObject);
+      }
+
+      var userObject;
+
+      function addFunctionToFacebookButton (user) {
+        $(".facebookButton").click(function() {
+          window.open(user.get("facebook"), '_blank');
         });
       }
-      else {
-        addSettingsBar();
-        $(".profileNav").addClass("active");
-      }
-    });
-  </script>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+      function addFunctionToTwitterButton (user) {
+        $(".twitterButton").click(function() {
+          window.open(user.get("twitter"), '_blank');
+        });
+      }
+
+      function addFunctionToEmailButton (user) {
+        $(".emailButton").click(function() {
+          window.location.href = "mailto:" + user.get("email");
+        });
+      }
+
+      function userHasFacebook (user) {
+        if (user.get("facebook") != "") {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
+      function userHasTwitter (user) {
+        if (user.get("twitter") != "") {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
+      function addFacebookButtonBasedOnUser (user) {
+        var facebookLink = user.get("facebook");
+        document.getElementById("linkFacebook").innerHTML = "<img src=\"img/facebook.png\" class=\"facebookButton\"/>";
+        addFunctionToFacebookButton(user);
+      }
+
+      function addTwitterButtonBasedOnUser (user) {
+        var twitterLink = user.get("twitter");
+        document.getElementById("linkTwitter").innerHTML = "<img src=\"img/twitter.png\" class=\"twitterButton\"/>";
+        addFunctionToTwitterButton(user);
+      }
+
+      function addEmailButtonBasedOnUser (user) {
+        var email = user.get("email");
+        document.getElementById("linkEmail").innerHTML = "<img src=\"img/email.png\" class=\"emailButton\"/>";
+        addFunctionToEmailButton(user);
+      }
+
+      //Adds information of user to page
+      function addHTMLBasedOnUser (user) {
+        var profilePicture = user.get("profilePictureUrl");
+        var profileUsername = user.get("username");
+        var profileDesc = user.get("profileDescription");
+        document.getElementById("proPic").innerHTML =  "<img src=\"" + profilePicture + "\" class=\"img-circle profilePicture\" />";
+        document.getElementById("proName").innerHTML = profileUsername;
+        document.getElementById("proDescription").innerHTML = profileDesc;
+        if (userHasFacebook(user)) {
+          addFacebookButtonBasedOnUser (user);
+        }
+        if (userHasTwitter(user)) {
+          addTwitterButtonBasedOnUser (user);
+        }
+        addEmailButtonBasedOnUser(user);
+        userObject = user;
+      }
+
+      //Checks if the current user is following the user of the profile that is being viewed
+      function searchForFollowObjectBasedOnID (user, callback) {
+        var following = Parse.Object.extend("Follow");
+        var followingQuery = new Parse.Query(following);
+        followingQuery.equalTo("user", Parse.User.current());
+        followingQuery.equalTo("followedUser", user);
+        followingQuery.find({
+          success: function(followObject) {
+            //alert("Found Follow object");
+            callback(followObject);
+          },
+          error: function(error) {
+            alert("Error finding Follow object");
+          }
+        });
+      }
+
+      //Adds follow button based on whether the current user is following the user or not
+      function addFollowButtonToProfile (followingObject) {
+        //If there is a following object, appends an active button
+        if(followingObject.length === 0) {
+          $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton\"" +
+            "id=\"followButton\">Follow</button>");
+        }
+        //If there isn't, appends a non-active button
+        else {
+          $("#proFollowButton").append("<button type=\"button\" class=\"btn blueButton active\"" +
+            "id=\"followButton\">Following</button>");
+        }
+      }
+
+      //Creates new follow object
+      function createNewFollowObject (otherUser) {
+        var Follow = Parse.Object.extend("Follow");
+        var follow = new Follow();
+        follow.set("user", Parse.User.current());
+        follow.set("followedUser", otherUser);
+        follow.save(null, {
+          success: function(object) {
+            //alert("Success!");
+          },
+          error: function(error) {
+            alert("Failed to create new Follow object");
+          }
+        });
+      }
+
+      function addFollowFunctionToFollowButton (user) {
+        //Adds follow functionality to button
+        $("#followButton").click(function() {
+          //If the user clicks the button when it is active, the Follow object is removed and the button becomes unactive
+          if($("#followButton").hasClass("active")) {
+            $("#followButton").removeClass("active");
+            document.getElementById("followButton").innerHTML = "Follow";
+            searchForFollowObjectBasedOnID(user, function (followingObject) {
+              followingObject[0].destroy({});
+              //alert("Destroyed Follow object");
+            })
+          }
+          else {
+            $("#followButton").addClass("active");
+            document.getElementById("followButton").innerHTML = "Following";
+            //Creates new Follow object if user selects the Follow button
+            createNewFollowObject(user);
+          }
+        });
+      }
+
+      //Adds message button based on whether the current user is the user of the profile
+      function addMessageButtonToProfile () {
+        $("#proMessageButton").append("<button type=\"button\" class=\"btn pinkButton\"" +
+          "id=\"messageButton\">Message</button>");
+      }
+
+      //Links button to message.html and uses a sessvar object to keep the userID
+      function addMessageFunctionToMessageButton (user) {
+        $("#messageButton").click(function() {
+          sessvars.toUserObject = {userObject: user};
+          window.location.href = 'messagecompose.html';
+        });
+      }
+
+      //Finding galleries based on user
+      function searchForGalleryBasedOnUser (user, callback) {
+        var gallery = Parse.Object.extend("Gallery");
+        var galleryQuery = new Parse.Query(gallery);
+        galleryQuery.equalTo("user", user);
+        galleryQuery.find({
+          success: function(galleryObjects) {
+            //alert("Found Gallery objects!");
+            callback(galleryObjects);
+          },
+          error: function(error) {
+            alert("Error finding Gallery objects");
+          }
+        });
+      }
+
+      function searchForFirstImageIn (gallery, callback) {
+        var image = Parse.Object.extend("Image");
+        var imageQuery = new Parse.Query(image);
+        imageQuery.equalTo("gallery", gallery);
+        imageQuery.first({
+          success: function(firstImage) {
+            //alert("Found first Image object in gallery!");
+            callback(firstImage);
+          },
+          error: function(error) {
+            alert("Error finding Image object");
+          }
+        });
+      }
+
+      function changeImageOf (galleryDiv, gallery) {
+        searchForFirstImageIn(gallery, function(backgroundImage) {
+          $("#gallery" + galleryDiv).append("<img src=\"" + backgroundImage.get("url") + "\" />");
+        });
+      }
+
+      //Adding galleries to profile
+      function addGalleries (galleries, user) {
+        for(var eachGallery = 0; eachGallery < galleries.length; eachGallery++) {
+          var individualGallery = galleries[eachGallery];
+          $("#proGalleries").append(
+            "<div class=\"col-xs-6 gallery\" id=\"gallery" + eachGallery + "\">" +
+              "<div>" +
+                individualGallery.get('name') +
+              "</div>" +
+            "</div>");
+          changeImageOf(eachGallery, individualGallery);
+          addGalleryLinkToGallery(individualGallery, eachGallery);
+        }
+        if(galleries.length === 0) {
+          $("#proGalleries").append(
+            "<div class=\"noGalleries\">" +
+              user.get("username") + " has no galleries" +
+            "</div>");
+        }
+      }
+
+      //Links button to message.html and uses a sessvar object to keep the userID
+      function addGalleryLinkToGallery (galleryObject, galleryNum) {
+        searchForFirstImageIn (galleryObject, function (firstImage) {
+          $("#gallery" + galleryNum).click(function() {
+            sessvars.toImageObject = {activeImage: firstImage};
+            console.log(sessvars.toImageObject);
+            window.location.href = 'gallery.html?galleryID=' + galleryObject.id;
+          });
+        });
+      }
+
+      searchForUserBasedOnID(function (userObjectBasedOnID) {
+        addHTMLBasedOnUser(userObjectBasedOnID);
+        searchForGalleryBasedOnUser(userObjectBasedOnID, function(galleriesBasedOnUser) {
+          addGalleries(galleriesBasedOnUser, userObjectBasedOnID);
+        });
+        if(!checkIfUserIDIsCurrentUserID(userID)) {
+          searchForFollowObjectBasedOnID(userObject, function (followObjectBasedOnID) {
+            addFollowButtonToProfile(followObjectBasedOnID);
+            addFollowFunctionToFollowButton(userObject);
+            addMessageButtonToProfile();
+            addMessageFunctionToMessageButton(userObject);
+          });
+        }
+        else {
+          addSettingsBar();
+          $(".profileNav").addClass("active");
+        }
+      });
+    </script>
+    
   </body>
 </html>
