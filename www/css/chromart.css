@@ -491,6 +491,18 @@ textarea {
 	margin: 20px 0 10px 0;
 }
 
+.noConversations {
+	margin-left: auto;
+	margin-right: auto;
+	font-family: "Asap";
+	font-size: 30px;
+	color: #000000;
+	word-wrap: break-word;
+	text-align: center;
+	padding: 10px 10px 0 10px;
+	margin: 20px 0 10px 0;
+}
+
 @font-face {
   font-family: 'Carme';
   font-style: normal;

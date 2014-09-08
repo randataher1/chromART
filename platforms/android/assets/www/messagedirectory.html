@@ -117,6 +117,15 @@
       });
     }
 
+    function displayMessageIfThereAreNo (conversations) {
+      if(conversations.length === 0) {
+        $(".conversationContainer").append(
+          "<div class=\"noConversations\">" +
+            "You do not have any conversations" +
+          "</div>");
+      }
+    }
+
     function getSubjectBasedOnConversation (conversationObject) {
       return conversationObject.get("subject");
     }
@@ -180,6 +189,7 @@
     }
 
     searchForConversationsWithCurrentUser(setQueryForConversationsToCurrentUser(), setQueryForConversationsFromCurrentUser(), function (allConversations) {
+      displayMessageIfThereAreNo(allConversations);
       for (var singleConversation = 0; singleConversation < allConversations.length; singleConversation++) {
         addConversations(allConversations[singleConversation], singleConversation);
         addMostRecentMessageToConversations(allConversations[singleConversation], singleConversation);
