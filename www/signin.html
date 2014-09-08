@@ -68,31 +68,63 @@
         window.location.href = 'index.html';
       });
 
+      function getUsernameValue () {
+        return $("#loginUsername").val();
+      }
+
+      function thereIsNotAUsername () {
+        if (getUsernameValue() === "") {
+          //alert("There is not a username");
+          return true;
+        }
+        else {
+          //alert("There is a username");
+          return false;
+        }
+      }
+
+      function getPasswordValue () {
+        return $("#loginPassword").val();
+      }
+
+      function thereIsNotAPassword () {
+        if (getPasswordValue() === "") {
+          //alert("There is not a password");
+          return true;
+        }
+        else {
+          //alert("There is a password");
+          return false;
+        }
+      }
+
       $("form").on("submit", function(e) {
         e.preventDefault();
 
-        Parse.User.logIn($("#loginUsername").val(), $("#loginPassword").val(), {
-          success: function(user) {
-            window.location.href = 'home.html';
-          },
-          error: function(user, error) {
-            if (error.code === Parse.Error.USERNAME_MISSING) {
-              alert("Please enter a username.");
+        if (thereIsNotAUsername()) {
+          alert("Please enter a username");
+        }
+        else if (thereIsNotAPassword()) {
+          alert("Please enter a password");
+        }
+        else {
+          Parse.User.logIn($("#loginUsername").val(), $("#loginPassword").val(), {
+            success: function(user) {
+              window.location.href = 'home.html';
+            },
+            error: function(user, error) {
+              if (error.code === Parse.Error.CONNECTION_FAILED) {
+                alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
+              }
+              else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                alert("Parse is having a problem. Please try again later.");
+              }
+              else {
+                alert("Error logging in");
+              }
             }
-            else if (error.code === Parse.Error.PASSWORD_MISSING) {
-              alert("Please enter a password.");
-            }
-            else if (error.code === Parse.Error.CONNECTION_FAILED) {
-              alert("Uh oh, we couldn't connect to the Parse Cloud! Please try again.");
-            }
-            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
-              alert("Parse is having a problem. Please try again later.");
-            }
-            else {
-              alert("Error logging in");
-            }
-          }
-        })
+          })
+        }
 
       });
     </script>

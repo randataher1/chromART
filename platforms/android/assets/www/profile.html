@@ -37,6 +37,9 @@
       </div>
 
       <div class="profileContainer">
+
+        <img src="img/loader.gif" id="loading-indicator" style="display:none" />
+
         <div class="row profileInfo">
           <div class="col-xs-4" id="proPic">
             
@@ -114,6 +117,9 @@
     <script type="text/javascript" src="js/sessvars.js"></script>
 
     <script type="text/javascript">
+
+      $('#loading-indicator').show();
+
       Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
       var $_GET = {};
@@ -424,14 +430,16 @@
             addFollowFunctionToFollowButton(userObject);
             addMessageButtonToProfile();
             addMessageFunctionToMessageButton(userObject);
+            $('#loading-indicator').hide();
           });
         }
         else {
           addSettingsBar();
           $(".profileNav").addClass("active");
+          $('#loading-indicator').hide();
         }
       });
     </script>
-    
+
   </body>
 </html>

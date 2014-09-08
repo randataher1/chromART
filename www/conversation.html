@@ -39,6 +39,8 @@
       </div>
 
       <div class="messageContainer">
+
+        <img src="img/loader.gif" id="loading-indicator" style="display:none" />
         
       </div>
 
@@ -84,6 +86,9 @@
     <script type="text/javascript" src="js/sessvars.js"></script>
 
     <script type="text/javascript">
+
+      $('#loading-indicator').show();
+
       Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
       var $_GET = {};
@@ -259,6 +264,7 @@
             addMessagesBasedOnConversation(messages[message]);
           }
           $('.messageContainer').scrollTop($(".messageContainer")[0].scrollHeight);
+          $('#loading-indicator').hide();
         })
       });
 

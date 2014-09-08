@@ -158,6 +158,7 @@ C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\fashion.jpg 
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\impressionist.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\indexBackground.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\likeButton.png \
+C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\loader.gif \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\logo.png \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\modern.jpg \
 C:\Users\User\Desktop\src\chromART\platforms\android\assets\www\img\nature.JPG \

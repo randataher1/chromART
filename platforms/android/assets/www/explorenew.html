@@ -33,7 +33,9 @@
       </div>
 
       <div class="imageScroll">
-        
+
+        <img src="img/loader.gif" id="loading-indicator" style="display:none" />
+
       </div>
 
       <div class="clear"></div>
@@ -69,6 +71,9 @@
     <script type="text/javascript" src="js/sessvars.js"></script>
 
     <script type="text/javascript">
+
+      $('#loading-indicator').show();
+
       Parse.initialize("Og5SrfaWadYcXArMTgGM1gJwHy750LoBtJVRV0JA", "aCd8Z5xLTOomMPazIG4i8z691PncoCBnKjW5iL1u");
 
       //Finding most recently created images
@@ -394,6 +399,7 @@
           addLikeFunctionToLikeButton(imageObject, eachImage);
           addDislikeFunctionToDislikeButton(imageObject, eachImage);
         }
+        $('#loading-indicator').hide();
       });
     </script>
 

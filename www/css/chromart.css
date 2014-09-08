@@ -26,6 +26,12 @@ body, html {
 	background-color: #ffffff;
 }
 
+#loading-indicator {
+  position: absolute;
+  left: 46%;
+  top: 45vh;
+}
+
 .pageHeader {
 	background-color: #404040;
 	margin-left: auto;
