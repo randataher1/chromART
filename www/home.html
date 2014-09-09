@@ -88,7 +88,18 @@
             callback(followResults);
           },
           error: function(error) {
-            alert("Error finding followed users");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to find your followed users! Please try again.");
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("There was an error finding your followed users. Please try again.");
+            }
           }
         });
       }
@@ -117,7 +128,19 @@
             callback(imageResults);
           },
           error: function (error) {
-            alert("Error finding images of followed users");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              alert("Uh oh, we couldn't connect to the Parse Cloud to find the images! Please try again.");
+              return;
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("There was an error finding images. Please try again.");
+            }
           }
         });
       }
@@ -136,7 +159,19 @@
             callback(imageLikeResults);
           },
           error: function (error) {
-            alert("Error finding likes of images of followed users");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              //alert("Uh oh, we couldn't connect to the Parse Cloud to see your likes! Please try again.");
+              return;
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            else {
+              alert("There was an error finding your likes. Please try again.");
+            }
           }
         });
       }
@@ -155,7 +190,19 @@
             callback(imageLikes);
           },
           error: function (error) {
-            alert("Error finding likes of images");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              //alert("Uh oh, we couldn't connect to the Parse Cloud to see if you like anything! Please try again.");
+              return;
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            // else {
+            //   alert("Error finding likes of images");
+            // }
           }
         });
       }
@@ -174,7 +221,19 @@
             callback(imageDislikes);
           },
           error: function (error) {
-            alert("Error finding likes of images");
+            if (error.code === Parse.Error.CONNECTION_FAILED) {
+              //alert("Uh oh, we couldn't connect to the Parse Cloud to see if you dislike anything! Please try again.");
+              return;
+            }
+            else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+              alert("Parse is having a problem. Please try again later.");
+            }
+            else if (error.code === Parse.Error.TIMEOUT) {
+              alert("The request timed out. Please try again.");
+            }
+            // else {
+            //   alert("Error finding likes of images");
+            // }
           }
         });
       }
@@ -295,11 +354,25 @@
               newImageLike.set("type", "like");
               newImageLike.save(null, {
                 success: function(object) {
-                  document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                  modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                  modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                  //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                   //alert("Successfully created new ImageLike object with type like!");
                 },
                 error: function(object, error) {
-                  alert("Failed to create new ImageLike object with type like");
+                  if (error.code === Parse.Error.CONNECTION_FAILED) {
+                    alert("Uh oh, we couldn't connect to the Parse Cloud to like the image! Please try again.");
+                  }
+                  else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                    alert("Parse is having a problem. Please try again later.");
+                  }
+                  else if (error.code === Parse.Error.TIMEOUT) {
+                    alert("The request timed out. Please try again.");
+                  }
+                  else {
+                    alert("There was an error liking the image. Please try again.");
+                    //alert("Failed to create new ImageLike object with type like");
+                  }
                 }
               });
             }
@@ -309,7 +382,9 @@
               imageUploaded.increment("likes", -1);
               imageUploaded.save();
               imageLike[0].destroy({});
-              document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+              modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+              modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+              //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
               //alert("Successfully destroyed ImageLike object with type like!");
             }
             //If there is a like object with type dislike, changes the type of the object
@@ -321,12 +396,26 @@
               imageLike[0].set("type", "like");
               imageLike[0].save(null, {
                 success: function(object) {
-                  document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
-                  document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
+                  modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                  modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                  //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                  //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
                   //alert("Successfully changed type of ImageLike object to type like!");
                 },
                 error: function(object, error) {
-                  alert("Failed to change type of ImageLike object to type like");
+                  if (error.code === Parse.Error.CONNECTION_FAILED) {
+                    alert("Uh oh, we couldn't connect to the Parse Cloud to dislike the image! Please try again.");
+                  }
+                  else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                    alert("Parse is having a problem. Please try again later.");
+                  }
+                  else if (error.code === Parse.Error.TIMEOUT) {
+                    alert("The request timed out. Please try again.");
+                  }
+                  else {
+                    alert("There was an error disliking the image. Please try again.");
+                    //alert("Failed to change type of ImageLike object to type like");
+                  }
                 }
               });
             }
@@ -351,11 +440,25 @@
               newImageDislike.set("type", "dislike");
               newImageDislike.save(null, {
                 success: function(object) {
-                  document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
+                  modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                  modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                  //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML + 1).toString();
                   //alert("Successfully created new ImageLike object with type dislike!");
                 },
                 error: function(object, error) {
-                  alert("Failed to create new ImageLike object with type dislike");
+                  if (error.code === Parse.Error.CONNECTION_FAILED) {
+                    alert("Uh oh, we couldn't connect to the Parse Cloud to dislike the image! Please try again.");
+                  }
+                  else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                    alert("Parse is having a problem. Please try again later.");
+                  }
+                  else if (error.code === Parse.Error.TIMEOUT) {
+                    alert("The request timed out. Please try again.");
+                  }
+                  else {
+                    alert("There was an error liking the image. Please try again.");
+                    //alert("Failed to create new ImageLike object with type dislike");
+                  }
                 }
               });
             }
@@ -365,7 +468,9 @@
               imageUploaded.increment("likes");
               imageUploaded.save();
               imageLike[0].destroy({});
-              document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
+              modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+              modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+              //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML - 1).toString();
               //alert("Successfully destroyed ImageLike object with type dislike!");
             }
             //If there is a like object with type like, changes the type of the object
@@ -377,12 +482,26 @@
               imageLike[0].set("type", "dislike");
               imageLike[0].save(null, {
                 success: function(object) {
-                  document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
-                  document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
+                  modifyHTMLOfLikeCounter(imageUploaded, imageCount);
+                  modifyHTMLOfDislikeCounter(imageUploaded, imageCount);
+                  //document.getElementById("numDislikes" + imageCount).innerHTML = (+document.getElementById("numDislikes" + imageCount).innerHTML + 1).toString();
+                  //document.getElementById("numLikes" + imageCount).innerHTML = (+document.getElementById("numLikes" + imageCount).innerHTML - 1).toString();
                   //alert("Successfully changed type of ImageLike object to type dislike!");
                 },
                 error: function(object, error) {
-                  alert("Failed to change type of ImageLike object to type dislike");
+                  if (error.code === Parse.Error.CONNECTION_FAILED) {
+                    alert("Uh oh, we couldn't connect to the Parse Cloud to dislike the image! Please try again.");
+                  }
+                  else if (error.code === Parse.Error.INTERNAL_SERVER_ERROR) {
+                    alert("Parse is having a problem. Please try again later.");
+                  }
+                  else if (error.code === Parse.Error.TIMEOUT) {
+                    alert("The request timed out. Please try again.");
+                  }
+                  else {
+                    alert("There was an error liking the image. Please try again.");
+                    //alert("Failed to change type of ImageLike object to type dislike");
+                  }
                 }
               });
             }
