@@ -415,6 +415,10 @@
         });
       }
 
+      $('#myCarousel').carousel({
+        interval: 2000
+      });
+
       function changeHeightOfArrow () {
         var $this;
         $this = $(".carousel");
@@ -454,14 +458,15 @@
       };
 
       $('.carousel-control.left').click(function() {
-        $('.Carousel').carousel('prev');
         changeHeightOfArrow();
         changeHeightOfIndicators();
+        //$('.Carousel').carousel('prev');
       });
+
       $('.carousel-control.right').click(function() {
-        $('.Carousel').carousel('next');
         changeHeightOfArrow();
         changeHeightOfIndicators();
+        //$('.Carousel').carousel('next');
       });
 
       searchForGalleryBasedOnID(function (galleryBasedOnID) {
