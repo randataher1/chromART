@@ -19,6 +19,5 @@
 
     <preference name="orientation" value="portrait" />
 
-    <!-- We'll include the Barcode plugin as an example -->
-    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+    <gap:plugin name="org.apache.cordova.camera" version="0.2.9" />
 </widget>
