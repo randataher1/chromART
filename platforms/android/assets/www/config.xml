@@ -17,6 +17,8 @@
       Hardeep Shoker 
     </author>
 
+    <preference name="Orientation" value="portrait" />
+
     <!-- We'll include the Barcode plugin as an example -->
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 </widget>
